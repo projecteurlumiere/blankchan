@@ -1,8 +1,8 @@
 <h1>hello</h1>
-<h2>here are threads:</h2>
 
+<h2>here are threads:</h2>
   <li>
     <% @topics.each do | topic | %>
-      <ul><%= "#{topic.id}" %></ul>
+      <ul><%= link_to topic.id, board_topic_url(@board.name, topic) %></ul>
     <% end %>
   </li>
