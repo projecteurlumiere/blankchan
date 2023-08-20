@@ -6,7 +6,7 @@ class BoardsController < ApplicationController
   def show
     @board = Board.find_by(name: params[:id])
     if @board
-      @threads = Thread.all
+      @topics = Topic.all
       render "show"
     else
       render_404

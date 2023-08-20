@@ -1,2 +1,8 @@
 <h1>hello</h1>
 <h2>here are threads:</h2>
+
+  <li>
+    <% @topics.each do | topic | %>
+      <ul><%= "#{topic.id}" %></ul>
+    <% end %>
+  </li>
