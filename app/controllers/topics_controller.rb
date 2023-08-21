@@ -6,6 +6,8 @@ class TopicsController < ApplicationController
     @topic = Topic.find_by_id(params[:id])
 
     render_404 unless @topic
+
+    @posts = Post.where(topic_id: @topic)
   end
 
   def new

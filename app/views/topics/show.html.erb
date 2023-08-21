@@ -1,2 +1,9 @@
 <h1>Topics#show</h1>
 <p>Find me in app/views/topics/show.html.erb</p>
+
+<% @posts.each do |post| %>
+  <div class="post">
+    <p class="post_title"><%= post.name %></p>
+    <p class="post_text"><%= post.text %></p>
+  </div>
+<% end %>
