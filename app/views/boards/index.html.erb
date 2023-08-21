@@ -3,7 +3,7 @@
 
 <h2>Here are boards:</h2>
 <li>
-  <% @boards.each do |thread| %>
-    <ul><%= link_to thread.name, thread.name %></ul>
+  <% @boards.each do |board| %>
+    <ul><%= link_to board.name, board.name %></ul>
   <% end %>
 </li>

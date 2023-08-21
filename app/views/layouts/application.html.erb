@@ -11,6 +11,11 @@
   </head>
 
   <body>
+  <header>
+    <% Board.all.each do |board| %>
+      <%= link_to board.name, board.name %>
+    <% end.sort %>
+  </header>
     <%= yield %>
   </body>
 </html>
