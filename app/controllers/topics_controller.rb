@@ -15,13 +15,19 @@ class TopicsController < ApplicationController
   end
 
   def create
-    @topic = Topic.new(board_id: Board.find_by(name: params[:board_id]).id)
-    @first_post = Post.new(name: params[:name], text: params[:text], pic_link: params[:pic_link])
-    if @topic.valid? && @first_post.valid?
+    @board = Board.find_by(name: params[:board_id])
+    @topic = Topic.new(board_id: @board.id)
+    @first_post = Post.new(name: params[:topic][:post][:name], text: params[:topic][:post][:text], pic_link: params[:topic][:post][:pic_link])
+    if @topic.valid?
       @topic.save
       @first_post.topic_id = @topic.id
-      @first_post.save
-      redirect_to @topic
+      if @first_post.valid?
+        @first_post.save
+        redirect_to board_topic_path(@board.name, @topic.id)
+      else
+        @topic.delete
+        render :new, status: :unprocessable_entity
+      end
     else
       render :new, status: :unprocessable_entity
     end

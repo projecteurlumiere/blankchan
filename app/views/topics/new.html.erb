@@ -1,7 +1,7 @@
 <h1>Topics#new</h1>
 <p>Find me in app/views/topics/new.html.erb</p>
 
-<%= form_with model: @topic, url: board_topics_path do |form| %>
+<%= form_with model: @topic, url: board_topics_url do |form| %>
   <%= form.fields_for :post do |form| %>
     <%= form.label :name %><br>
     <%= form.text_area :name %>
