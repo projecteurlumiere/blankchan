@@ -8,6 +8,8 @@ class TopicsController < ApplicationController
     render_404 unless @topic
 
     @posts = Post.where(topic_id: @topic)
+
+    @post = Post.new
   end
 
   def new 
