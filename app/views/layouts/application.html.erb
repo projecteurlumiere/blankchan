@@ -14,7 +14,7 @@
   <header>
     <%= link_to "this is root", root_path %>
     <% Board.all.each do |board| %>
-      <%= link_to board.name, board.name %>
+      <%= link_to board.name, board_path(board.name) %>
     <% end.sort %>
   </header>
     <%= yield %>
