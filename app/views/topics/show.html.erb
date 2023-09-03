@@ -2,7 +2,7 @@
 <p>Find me in app/views/topics/show.html.erb</p>
 
 <% @posts.each do |post| %>
-  <div class="post">
+  <div class="post" id="post_id_<%="#{post.id}"%>">
     <p class="post_title"><%= post.name %></p>
     <p class="post_text"><%= post.text %></p>
   </div>
