@@ -1,9 +1,5 @@
 <h1>hello</h1>
 
-<h2>here are threads:</h2>
-<li>
-  <% @topics.each do | topic | %>
-    <ul><%= link_to topic.id, board_topic_url(@board.name, topic) %></ul>
-  <% end %>
-</li>
+<%= render 'topics/index' %>
+
 <%= link_to "New Thread", new_board_topic_path(@board.name) %>

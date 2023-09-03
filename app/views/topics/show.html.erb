@@ -8,17 +8,4 @@
   </div>
 <% end %>
 
-<h2>New post:</h2>
-<%= form_with model: @post, url: board_topic_posts_url(topic_id: @topic.id) do |form| %>
-  <%= form.label :name %><br>
-  <%= form.text_area :name %>
-  <br>
-  <%= form.label :text %><br>
-  <%= form.text_area :text %>
-  <br>
-  <%= form.label :pic_link %><br>
-  <%= form.text_area :pic_link %>
-  <br>
-  <%= form.submit %>
-</div>
-<% end %>
+<%= render 'posts/new' %>
