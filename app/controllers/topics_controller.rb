@@ -4,7 +4,7 @@ class TopicsController < ApplicationController
 
     render_404 and return unless @topic
 
-    @posts = Post.where(topic_id: @topic)
+    @posts = Post.where(topic_id: @topic).order(:created_at)
 
     @post = Post.new
   end
