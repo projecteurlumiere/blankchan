@@ -6,7 +6,7 @@ class BoardsController < ApplicationController
   def show
     @board = Board.find_by(name: params[:id])
     if @board
-      @topics = Topic.where(board_id: @board.id)
+      @topics = Topic.where(board_id: @board.id).order(updated_at: :desc)
       render 'show'
     else
       render_404

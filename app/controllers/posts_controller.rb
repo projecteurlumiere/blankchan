@@ -3,6 +3,7 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.topic_id = params[:topic_id]
     if @post.save
+      Topic.where(id: params[:topic_id]).touch_all
       redirect_to board_topic_path(params[:board_id], params[:topic_id], anchor: "post_id_#{@post.id}" )
     else
       render_partial :new, status: :unprocessable_entity
