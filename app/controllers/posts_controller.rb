@@ -4,7 +4,7 @@ class PostsController < ApplicationController
     @post.topic_id = params[:topic_id]
     if @post.save
       Topic.find_by(id: params[:topic_id]).touch
-      redirect_to board_topic_path(params[:board_name], params[:topic_id], anchor: "post_id_#{@post.id}" )
+      redirect_to board_topic_path(params[:board_name], params[:topic_id], anchor: "post-id-#{@post.id}" )
     else
       render_partial :new, status: :unprocessable_entity
     end

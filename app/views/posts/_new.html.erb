@@ -1,5 +1,5 @@
 <h2>New post:</h2>
-<%= form_with model: @post, url: board_topic_posts_url(topic_id: @topic.id) do |form| %>
+<%= form_with model: @post, url: board_topic_posts_url(topic_id: @topic.id), data: {turbo: false}, target: "_top" do |form| %>
   <%= form.label :name %><br>
   <%= form.text_area :name %>
   <br>
