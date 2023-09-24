@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
@@ -15,7 +14,7 @@
     <%= link_to "this is root", root_path %>
     <% Board.all.order(:name).each do |board| %>
       <%= link_to board.name, board_path(board.name) %>
-    <% end.sort %>
+    <% end %>
   </header>
     <%= yield %>
   </body>
