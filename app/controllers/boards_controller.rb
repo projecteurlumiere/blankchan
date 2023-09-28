@@ -5,10 +5,8 @@ class BoardsController < ApplicationController
 
   def show
     @board = Board.find_by(name: params[:name])
-    if @board
-      @topics = Topic.where(board_id: @board.id).order(updated_at: :desc)
-    else
-      render_404
-    end
+    raise ActiveRecord::RecordNotFound if @board.nil?
+
+    @topics = @board.topics.order(updated_at: :desc)
   end
 end

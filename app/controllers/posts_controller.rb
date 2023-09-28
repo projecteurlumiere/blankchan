@@ -1,12 +1,17 @@
 class PostsController < ApplicationController
   def create
-    @post = Post.new(post_params)
-    @post.topic_id = params[:topic_id]
+    @topic = Topic.find(params[:topic_id])
+    @post = @topic.posts.build(post_params)
     if @post.save
-      Topic.find_by(id: params[:topic_id]).touch
-      redirect_to board_topic_path(params[:board_name], params[:topic_id], anchor: "post-id-#{@post.id}" )
+      redirect_to board_topic_path(params[:board_name],
+                                   @topic.id,
+                                   anchor: "post-id-#{@post.id}" # ? anchors still do not work...
+                                  )
     else
-      render_partial :new, status: :unprocessable_entity
+      # ? how about anchors here? or should client-side work with it
+
+      @posts = @topic.posts.all
+      render "topics/show", status: :unprocessable_entity
     end
   end
 

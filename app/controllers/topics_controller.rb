@@ -1,24 +1,19 @@
 class TopicsController < ApplicationController
   def show
-    @topic = Topic.find_by_id(params[:id])
+    @topic = Topic.find(params[:id])
 
-    render_404 and return unless @topic
-
-    @posts = Post.where(topic_id: @topic).order(:created_at)
-
-    @post = Post.new
+    @posts = @topic.posts.order(:created_at)
   end
 
   def new
-    @topic = Topic.new(board_id: board_by_name&.id)
+    @topic = Topic.new(board_id: board_by_name!.id)
   end
 
   def create
-    @board = board_by_name
-    @topic = Topic.new(board_id: @board.id)
-    @first_post = Post.new(topic_params[:post_attributes])
+    @board = board_by_name!
+    @topic = @board.topics.build
 
-    if @topic.save && save_first_post
+    if @topic.save && @topic.posts.build(topic_params[:post_attributes]).save
       redirect_to board_topic_path(@board.name, @topic.id)
     else
       @topic&.delete
@@ -28,17 +23,14 @@ class TopicsController < ApplicationController
 
   private
 
-  def board_by_name
+  def board_by_name!
     board = Board.find_by(name: params[:board_name])
-    render_404 and return unless board
-  end
+    raise ActiveRecord::RecordNotFound if board.nil?
 
-  def save_first_post
-    @first_post.topic_id = @topic.id
-    @first_post.save
+    board
   end
 
   def topic_params
-    params.require(:topic).permit(:board_id, post_attributes: [ :name, :text, :pic_link ])
+    params.require(:topic).permit(:board_id, post_attributes: %i[name text pic_link])
   end
 end

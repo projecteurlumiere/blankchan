@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   root 'boards#index'
 
+  # * to handle routing errors in the controller, use this line:
+  # match '*unmatched', to: 'application#render_not_found', via: :all
+
   resources :boards,
             path: '/',
             only: %i[show],

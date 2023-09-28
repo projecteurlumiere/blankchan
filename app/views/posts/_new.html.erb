@@ -1,5 +1,7 @@
 <h2>New post:</h2>
-<%= form_with model: @post, url: board_topic_posts_url(topic_id: @topic.id), data: {turbo: false}, target: "_top" do |form| %>
+<%# ! in order to make anchor links work, turbo had to be disabled for this form. %>
+<%# ! but disabling turbo broke refreshing the form after invalid submissions... %>
+<%= form_with model: Post.new, url: board_topic_posts_url(topic_id: @topic.id) do |form| %>
   <%= form.label :name %><br>
   <%= form.text_area :name %>
   <br>
@@ -10,5 +12,4 @@
   <%= form.text_area :pic_link %>
   <br>
   <%= form.submit %>
-</div>
 <% end %>
