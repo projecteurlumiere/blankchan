@@ -12,10 +12,21 @@
   <body>
   <header>
     <%= link_to "this is root", root_path %>
+    <%= link_to "validate passcode", new_session_path %>
+    <br>
     <% Board.all.order(:name).each do |board| %>
       <%= link_to board.name, board_path(board.name) %>
     <% end %>
   </header>
+
+  <% if session[:user_id] %>
+    <h2><%= "Hey your id in session is #{session[:user_id]}" %></h2>
+  <% end %>
+
+  <% if cookies[:remember_token] %>
+    <h2><%= "Hey you remember token is #{cookies[:remember_token]}" %></h2>
+  <% end %>
+
     <%= yield %>
   </body>
 </html>

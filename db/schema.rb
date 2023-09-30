@@ -10,26 +10,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_20_123157) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_30_091859) do
   create_table "boards", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "moderators", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "board"
+    t.string "rights"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "posts", force: :cascade do |t|
-    t.integer "topic_id"
+    t.integer "topic_id", null: false
     t.string "name"
-    t.string "text"
+    t.string "text", null: false
     t.string "pic_link"
+    t.string "author_ip"
+    t.string "author_status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "topics", force: :cascade do |t|
-    t.integer "board_id"
+    t.integer "board_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "passcode_digest", null: false
+    t.string "remember_token_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["passcode_digest"], name: "index_users_on_passcode_digest", unique: true
   end
 
 end

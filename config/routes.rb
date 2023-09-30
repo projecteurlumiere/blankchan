@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   # * to handle routing errors in the controller, use this line:
   # match '*unmatched', to: 'application#render_not_found', via: :all
 
+  resource :session, only: %i[new create destroy]
+
   resources :boards,
             path: '/',
             only: %i[show],
