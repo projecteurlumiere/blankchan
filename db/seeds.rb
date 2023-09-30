@@ -6,9 +6,6 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-require 'securerandom'
-require 'digest'
-
 10.times do
   board_name = Faker::NatoPhoneticAlphabet.code_word
   board_name = Faker::NatoPhoneticAlphabet.code_word while Board.find_by(name: board_name)
