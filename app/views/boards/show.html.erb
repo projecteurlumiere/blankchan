@@ -7,21 +7,13 @@
       <div class="thread-first-post">
         <% first_post = topic.posts.first.decorate %>
         <% first_post_id = first_post.id %>
-        <div class="post" id="post-id-<%="#{first_post.id}"%>">
-          <p class="post-metadata">Posted at: <%= first_post.created_at %></p>
-          <p class="post-title"><%= first_post.name %></p>
-          <p class="post-text"><%= first_post.text %></p>
-        </div>
+        <%= render "shared/post", post: first_post %>
       </div>
       <div class="thread-last-posts">
         <% topic.posts.last(3).reverse.each do |post| %>
           <% next if post.id == first_post_id %>
           <% post = post.decorate %>
-          <div class="post" id="post-id-<%="#{post.id}"%>">
-            <p class="post-metadata">Posted at: <%= post.created_at %></p>
-            <p class="post-title"><%= post.name %></p>
-            <p class="post-text"><%= post.text %></p>
-          </div>
+          <%= render "shared/post", post: post  %>
         <% end %>
       </div>
     </ul>

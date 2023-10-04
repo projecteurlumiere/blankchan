@@ -1,12 +1,6 @@
 <h1>Topics#show</h1>
 <p>Find me in app/views/topics/show.html.erb</p>
 
-<% @posts.each do |post| %>
-  <div class="post" id="post-id-<%="#{post.id}"%>">
-    <p class="post-metadata">Posted at: <%= post.created_at %></p>
-    <p class="post-title"><%= post.name %></p>
-    <p class="post-text"><%= post.text %></p>
-  </div>
-<% end %>
+<%= render partial: 'shared/post', collection: @posts %>
 
 <%= render 'posts/new' %>
