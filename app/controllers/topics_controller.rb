@@ -3,6 +3,7 @@ class TopicsController < ApplicationController
     @topic = Topic.find(params[:id])
 
     @posts = @topic.posts.order(:created_at)
+    @posts = PostsDecorator.decorate_collection(@posts.all)
   end
 
   def new

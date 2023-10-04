@@ -8,5 +8,6 @@ class BoardsController < ApplicationController
     raise ActiveRecord::RecordNotFound if @board.nil?
 
     @topics = @board.topics.order(updated_at: :desc)
+    TopicDecorator.decorate_collection(@topics.all)
   end
 end
