@@ -49,8 +49,9 @@ gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2"
 
 # ? Do I have to declare in-built gems? It didn't heart anyway.
-gem "securerandom"
-gem "digest"
+# * No, I don't because some of them (not all) have already been required in Rails themselves. Check Rails docs
+# gem "securerandom"
+# gem "digest"
 
 gem "pundit"
 gem "draper"
