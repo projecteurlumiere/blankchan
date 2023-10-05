@@ -1,12 +1,14 @@
 class SessionsController < ApplicationController
+  before_action :require_authentication, only: :destroy
+  before_action :require_no_authentication, only: %i[new create]
+
   def new
   end
 
   def create
-    user = find_user_by_passcode
-    if user
-      user.remember
-      cookies[:remember_token] = user.remember_token
+    if (user = find_user_by_passcode)
+      sign_in user
+      remember user
       redirect_to root_url
     else
       render :new, status: :unprocessable_entity
@@ -14,15 +16,13 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    sign_out
+    redirect_to root_url
   end
 
   private
 
-  def digest(code)
-    Digest::SHA256.hexdigest(code)
-  end
-
   def find_user_by_passcode
-    User.find_by(passcode_digest: digest(params[:passcode]))
+    User.find_by(passcode_digest: User.digest(params[:passcode])) # maybe just rewrite it as model's class method?
   end
 end

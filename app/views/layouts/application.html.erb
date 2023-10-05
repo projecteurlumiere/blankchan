@@ -11,17 +11,24 @@
   <body>
     <header>
       <%= link_to "this is root", root_path %>
-      <%= link_to "validate passcode", new_session_path %>
+      <% if user_signed_in? %>
+        <%= link_to "quit passcode", session_path, data: {turbo_method: :delete} %>
+        <%# button_to "quit passcode", session_path, method: :delete %>
+      <% else %>
+       <%= link_to "validate passcode", new_session_path %>
+      <% end %>
+
       <br>
       <% Board.all.order(:name).each do |board| %>
         <%= link_to board.name, board_path(board.name) %>
       <% end %>
     </header>
     <% if session[:user_id] %>
-      <h2><%= "Hey your id in session is #{session[:user_id]}" %></h2>
+      <h2><%= "Hey your id (or remember_token) in session is #{session[:user_id]}" %></h2>
     <% end %>
-    <% if cookies[:remember_token] %>
-      <h2><%= "Hey you remember token is #{cookies[:remember_token]}" %></h2>
+    <% if cookies.encrypted[:remember_token] %>
+      <h2><%= "Hey you remember token is #{cookies.encrypted[:remember_token]}" %></h2>
+      <h2><%= "Hey your id is #{cookies.encrypted[:user_id]}" %></h2>
     <% end %>
     <%= yield %>
   </body>
