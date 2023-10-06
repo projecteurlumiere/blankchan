@@ -10,7 +10,7 @@
         <%= render "shared/post", post: first_post %>
       </div>
       <div class="thread-last-posts">
-        <% topic.posts.last(3).reverse.each do |post| %>
+        <% topic.posts.last(3).each do |post| %>
           <% next if post.id == first_post_id %>
           <% post = post.decorate %>
           <%= render "shared/post", post: post  %>

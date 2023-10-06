@@ -9,8 +9,10 @@ class SessionsController < ApplicationController
     if (user = find_user_by_passcode)
       sign_in user
       remember user
+      flash.notice = "Successfully signed in"
       redirect_to root_url
     else
+      flash.now.alert = "Could not sign in"
       render :new, status: :unprocessable_entity
     end
   end

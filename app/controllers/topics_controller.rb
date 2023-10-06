@@ -14,10 +14,13 @@ class TopicsController < ApplicationController
     @board = board_by_name!
     @topic = @board.topics.build
 
-    if @topic.save && @topic.posts.build(topic_params[:post_attributes]).save
+    if @topic.save && build_first_post.save
+      flash.notice = "Thread created"
       redirect_to board_topic_path(@board.name, @topic.id)
     else
       @topic&.delete
+      @errors = @topic.errors.full_messages + @first_post.errors.full_messages
+      flash.now.alert = "Thread was not created"
       render :new, status: :unprocessable_entity
     end
   end
@@ -33,5 +36,9 @@ class TopicsController < ApplicationController
 
   def topic_params
     params.require(:topic).permit(:board_id, post_attributes: %i[name text pic_link])
+  end
+
+  def build_first_post
+    @first_post = @topic.posts.build(topic_params[:post_attributes])
   end
 end
