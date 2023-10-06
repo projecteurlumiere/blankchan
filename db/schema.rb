@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_30_091859) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_06_095200) do
+  create_table "administrators", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "board"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "boards", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -19,8 +26,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_30_091859) do
 
   create_table "moderators", force: :cascade do |t|
     t.integer "user_id"
-    t.string "board"
-    t.string "rights"
+    t.string "supervised_board"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

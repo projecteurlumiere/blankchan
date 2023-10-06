@@ -24,7 +24,7 @@ end
 
 passcodes = []
 
-2.times do
+3.times do
   passcode = SecureRandom.urlsafe_base64
   user = User.create(passcode: passcode)
   passcodes << "#{user.id} - #{passcode}"
@@ -32,7 +32,14 @@ end
 
 1.times do
   first_user_id = passcodes[0].split(' - ')[0].to_i
-  User.find(first_user_id).create_moderator
+  User.find(first_user_id).create_administrator
 end
 
-File.write("./db/passcode.txt", "first is always moderator's code\n" + passcodes.join("\n"))
+1.times do
+  second_user_id = passcodes[1].split(' - ')[0].to_i
+  moderator = User.find(second_user_id).create_moderator
+  moderator.supervised_board = Board.first.name
+  moderator.save
+end
+
+File.write("./db/passcode.txt", "first is always admin's code\n, second is moderator's" + passcodes.join("\n"))

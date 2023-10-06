@@ -2,6 +2,7 @@ class User < ApplicationRecord
   attr_accessor :passcode, :remember_token
 
   has_one :moderator
+  has_one :administrator
 
   before_validation :digest_passcode, if: :passcode
 
