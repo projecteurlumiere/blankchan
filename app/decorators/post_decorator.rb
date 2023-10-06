@@ -2,7 +2,7 @@ class PostDecorator < ApplicationDecorator
   delegate_all
 
   def created_at
-    model.created_at.strftime("%m/%d/%y %A %k:%l:%S")
+    model.created_at.strftime("%m/%d/%y %A %H:%M:%S")
   end
 
   # Define presentation-specific methods here. Helpers are accessed through

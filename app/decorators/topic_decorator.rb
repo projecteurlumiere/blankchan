@@ -1,6 +1,7 @@
 class TopicDecorator < ApplicationDecorator
   delegate_all
 
+  # * is not being used yet
   def created_at
     model.created_at.strftime("%a %m/%d/%y")
   end
