@@ -11,10 +11,10 @@ Rails.application.routes.draw do
             only: %i[show],
             param: :name do
     resources :threads,
-              only: %i[show new create],
+              only: %i[show new create destroy],
               as: :topics,
               controller: :topics do
-      resources :posts, only: %i[create]
+      resources :posts, only: %i[create update destroy]
     end
   end
 end

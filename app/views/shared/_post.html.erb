@@ -1,4 +1,5 @@
 <div class="post" id="post-id-<%="#{post.id}"%>">
+  <%= render partial: "shared/post_admin_panel", locals: {board: board, topic: topic, post: post } %>
   <p class="post-metadata">Posted at: <%= post.created_at %></p>
   <p class="post-title"><%= post.name %></p>
   <p class="post-text"><%= post.text %></p>

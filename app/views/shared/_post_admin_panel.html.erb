@@ -1,0 +1,5 @@
+<% div_class = %w[post-admin-panel] %>
+<%= tag.div class: div_class do %>
+  <%= button_to "Bless Post", board_topic_post_path(board.name, topic, post), method: :patch %>
+  <%= button_to "Delete Post", board_topic_post_path(board.name, topic, post), method: :delete %>
+<% end %>

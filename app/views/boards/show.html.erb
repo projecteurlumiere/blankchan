@@ -1,22 +1,6 @@
 <h1>hello</h1>
 <h2>here are threads:</h2>
-<li>
-  <% @topics.each do | topic | %>
-    <ul>
-      <div class="thread-meta"><%= link_to topic.id, board_topic_url(@board.name, topic) %></div>
-      <div class="thread-first-post">
-        <% first_post = topic.posts.first.decorate %>
-        <% first_post_id = first_post.id %>
-        <%= render "shared/post", post: first_post %>
-      </div>
-      <div class="thread-last-posts">
-        <% topic.posts.last(3).each do |post| %>
-          <% next if post.id == first_post_id %>
-          <% post = post.decorate %>
-          <%= render "shared/post", post: post  %>
-        <% end %>
-      </div>
-    </ul>
-  <% end %>
-</li>
+<ul>
+  <%= render partial: "preview_topic", collection: @topics, locals: {board: @board} %>
+</ul>
 <%= link_to "New Thread", new_board_topic_path(@board.name) %>

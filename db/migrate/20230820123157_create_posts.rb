@@ -7,6 +7,7 @@ class CreatePosts < ActiveRecord::Migration[7.0]
       t.string :pic_link
       t.string :author_ip
       t.string :author_status
+      t.boolean :blessed, default: false
 
       t.timestamps
     end

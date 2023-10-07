@@ -22,6 +22,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_06_095200) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_boards_on_name", unique: true
   end
 
   create_table "moderators", force: :cascade do |t|
@@ -38,6 +39,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_06_095200) do
     t.string "pic_link"
     t.string "author_ip"
     t.string "author_status"
+    t.boolean "blessed", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

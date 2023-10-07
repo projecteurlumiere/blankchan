@@ -1,0 +1,18 @@
+<li class="thread">
+  <div class="thread-meta"><%= link_to preview_topic.id, board_topic_url(@board.name, preview_topic) %></div>
+  <div class="thread-panel">
+    <%= button_to "Delete Topic", board_topic_path(board.name, preview_topic), method: :delete %>
+  </div>
+  <div class="thread-first-post">
+    <% first_post = preview_topic.posts.first.decorate %>
+    <% first_post_id = first_post.id %>
+    <%= render "shared/post", board: board, topic: preview_topic, post: first_post %>
+  </div>
+  <div class="thread-last-posts">
+    <% preview_topic.posts.last(3).each do |post| %>
+      <% next if post.id == first_post_id %>
+      <% post = post.decorate %>
+      <%= render "shared/post", board: board, topic: preview_topic, post: post  %>
+    <% end %>
+  </div>
+</li>

@@ -25,15 +25,15 @@ module Authentication
     def require_authentication
       return if user_signed_in?
 
-      flash.alert = "You have not signed in!"
-      redirect_to root_path
+      flash.alert = "You are not signed in!"
+      redirect_back fallback_location: root_path
     end
 
     def require_no_authentication
       return unless user_signed_in?
 
       flash.alert = "You have already signed in!"
-      redirect_to root_path
+      redirect_back fallback_location: root_path
     end
 
     def sign_in(user)

@@ -1,5 +1,8 @@
 class TopicsController < ApplicationController
+  before_action :require_authentication, only: %i[destroy]
+
   def show
+    @board = board_by_name!
     @topic = Topic.find(params[:id])
 
     @posts = @topic.posts.order(:created_at)
@@ -22,6 +25,17 @@ class TopicsController < ApplicationController
       @errors = @topic.errors.full_messages + @first_post.errors.full_messages
       flash.now.alert = "Thread was not created"
       render :new, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    if topic = Topic.find_by(id: params[:id])
+      topic.delete
+      flash.notice = "Topic deleted"
+      redirect_to board_path(params[:board_name])
+    else
+      flash.now.alert = "Topic not found"
+      render board_path(params[:board_name]), status: :unprocessable_entity
     end
   end
 
