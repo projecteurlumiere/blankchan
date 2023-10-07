@@ -1,5 +1,6 @@
 class TopicsController < ApplicationController
   before_action :require_authentication, only: %i[destroy]
+  before_action :authorize_topic!
 
   def show
     @board = board_by_name!
@@ -29,8 +30,8 @@ class TopicsController < ApplicationController
   end
 
   def destroy
-    if topic = Topic.find_by(id: params[:id])
-      topic.delete
+    if @topic = Topic.find_by(id: params[:id])
+      @topic.delete
       flash.notice = "Topic deleted"
       redirect_to board_path(params[:board_name])
     else
@@ -54,5 +55,9 @@ class TopicsController < ApplicationController
 
   def build_first_post
     @first_post = @topic.posts.build(topic_params[:post_attributes])
+  end
+
+  def authorize_topic!
+    authorize(@topic || Topic)
   end
 end

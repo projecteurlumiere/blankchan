@@ -1,8 +1,6 @@
 <li class="thread">
   <div class="thread-meta"><%= link_to preview_topic.id, board_topic_url(@board.name, preview_topic) %></div>
-  <div class="thread-panel">
-    <%= button_to "Delete Topic", board_topic_path(board.name, preview_topic), method: :delete %>
-  </div>
+  <%= render partial: "shared/topic_admin_panel", locals: { board: @board, topic: preview_topic } %>
   <div class="thread-first-post">
     <% first_post = preview_topic.posts.first.decorate %>
     <% first_post_id = first_post.id %>

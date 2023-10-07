@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
   before_action :require_authentication, only: %i[update destroy]
+  before_action :authorize_post!
+  after_action :verify_authorized
 
   def create
     @topic = Topic.find(params[:topic_id])
@@ -22,12 +24,12 @@ class PostsController < ApplicationController
   end
 
   def update
-    post = Post.find_by(id: params[:id])
+    @post = Post.find_by(id: params[:id])
 
-    unless post.blessed
-      post.text = post.text + "\n\nThis post has been blessed"
-      post.blessed = true
-      post.save!
+    unless @post.blessed
+      @post.text = @post.text + "\n\nThis post has been blessed"
+      @post.blessed = true
+      @post.save!
       flash.notice = "Post blessed"
     else
       flash.alert = "Post has already been blessed!"
@@ -37,12 +39,12 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    if post = Post.find_by(id: params[:id])
-      post.delete
-      topic = Topic.find_by(id: params[:topic_id])
+    if @post = Post.find_by(id: params[:id])
+      @post.delete
+      @topic = Topic.find_by(id: params[:topic_id])
       flash.notice = "Post deleted"
-      if topic.posts.empty?
-        topic.delete
+      if @topic.posts.empty?
+        @topic.delete
         flash.notice = "Topic deleted"
       end
     else
@@ -56,5 +58,9 @@ class PostsController < ApplicationController
 
   def post_params
     params.require(:post).permit(:topic_id, :name, :text, :pic_link)
+  end
+
+  def authorize_post!
+    authorize(@post || Post)
   end
 end

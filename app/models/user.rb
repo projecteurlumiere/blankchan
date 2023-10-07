@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   attr_accessor :passcode, :remember_token
 
+  enum role: {passcode_user: 0, moderator: 1, administrator: 2}, _suffix: :role
+
   has_one :moderator
   has_one :administrator
 
