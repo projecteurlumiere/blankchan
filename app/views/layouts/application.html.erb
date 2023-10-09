@@ -19,9 +19,10 @@
       <% end %>
 
       <br>
-      <% Board.all.order(:name).each do |board| %>
-        <%= link_to board.name, board_path(board.name) %>
+      <% Board.all_names.each do |name| %>
+        <%= link_to name, board_path(name) %>
       <% end %>
+
     </header>
 
     <% if flash.present? %>

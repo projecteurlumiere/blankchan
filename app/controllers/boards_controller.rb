@@ -8,6 +8,7 @@ class BoardsController < ApplicationController
     raise ActiveRecord::RecordNotFound if @board.nil?
 
     @topics = @board.topics.order(updated_at: :desc)
+    # ? How to include a couple (not all) of preview posts with #include(:posts)?
     # @topics = TopicDecorator.decorate_collection(@topics.all)
   end
 end

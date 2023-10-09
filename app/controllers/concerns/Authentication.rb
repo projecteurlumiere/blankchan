@@ -11,6 +11,8 @@ module Authentication
     end
 
     def user_by_token
+      return if cookies.encrypted[:user_id].nil?
+
       user = User.find_by(id: cookies.encrypted[:user_id])
       return if user.nil? || !user&.remember_token_authenticated?(cookies.encrypted[:remember_token])
 
