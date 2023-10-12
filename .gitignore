@@ -39,3 +39,5 @@ spec/examples.txt
 
 # seed
 db/passcode.txt
+
+lib/tasks/local_ip.txt
