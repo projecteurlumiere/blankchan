@@ -1,6 +1,14 @@
 <div class="post" id="post-id-<%="#{post.id}"%>">
   <%= render partial: "shared/post_admin_panel", locals: {board: board, topic: topic, post: post } %>
   <p class="post-metadata">Posted at: <%= post.created_at %></p>
+  <div class="images-showcase">
+    <% if post.images.attached? %>
+      <% post.images.each do |image| %>
+        <% next if image.nil? || !image.variable? %>
+        <%= link_to image_tag(post.image_as_thumb(image)), image %>
+      <% end %>
+    <% end %>
+  </div>
   <p class="post-title"><%= post.name %></p>
   <p class="post-text"><%= post.text %></p>
 </div>

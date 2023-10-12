@@ -6,7 +6,7 @@ class PostsController < ApplicationController
   def create
     @topic = Topic.find(params[:topic_id])
     @post = @topic.posts.build(post_params)
-    if @post.save
+    if @post.save && @post.images.attach(params[:images])
       flash.notice = "Post created successfully"
       redirect_to board_topic_path(params[:board_name],
                                    @topic.id,
@@ -14,6 +14,7 @@ class PostsController < ApplicationController
                                   )
     else
       # ? how about anchors here? or should client-side work with it?
+      @post&.delete
 
       flash.now.alert = "Could not create post"
       @errors = @post.errors.full_messages
@@ -57,7 +58,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:topic_id, :name, :text, :pic_link)
+    params.require(:post).permit(:topic_id, :name, :text, images: [])
   end
 
   def authorize_post!

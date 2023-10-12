@@ -46,7 +46,7 @@ gem "bootsnap", require: false
 # gem "sassc-rails"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+gem "image_processing", "~> 1.2"
 
 # ? Do I have to declare in-built gems? It didn't heart anyway.
 # * No, I don't because some of them (not all) have already been required in Rails themselves. Check Rails docs

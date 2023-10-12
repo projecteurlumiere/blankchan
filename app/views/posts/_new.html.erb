@@ -8,8 +8,8 @@
   <%= form.label :text %><br>
   <%= form.text_area :text %>
   <br>
-  <%= form.label :pic_link %><br>
-  <%= form.text_area :pic_link %>
+  <%= form.label :images %><br>
+  <%= form.file_field :images, multiple: true %>
   <br>
   <%= form.submit %>
 <% end %>
