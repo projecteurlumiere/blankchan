@@ -6,17 +6,14 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-sh "rm -rf #{File.path(__FILE__)}/../storage}"
+# clear storage:
 
-N_THREADS = 2
+sh "cd ..; rm -rf #{Rails.root.to_s + "/storage"}"
 
 n_boards = 10
 n_topics = 5
 n_posts = 10
 n_pics = 1..3
-
-errors_files_not_found = 0
-errors_busy_exceptions = 0
 
 # Boards:
 
@@ -84,8 +81,12 @@ puts "done with images"
 
 puts "starting processing thumbs"
 
-Post.all.each do |post|
+posts = Post.all
+posts_count = posts.count
+
+Post.all.each_with_index do |post, i|
   return if post.images.nil?
+  puts "processing #{i} out of #{posts_count}"
   post.images.each do |image|
     post.image_as_thumb(image)
   end
@@ -93,48 +94,7 @@ end
 
 puts "thumbs have been processed"
 
-#   5.times do
-
-#     new_topic.save
-#     puts "topic created"
-
-#     posts_to_process = []
-#     10.times do
-#       post = Post.create(topic_id: new_topic.id, name: Faker::ChuckNorris.fact, text: Faker::Lorem.paragraph(sentence_count: 15))
-#       files = []
-      # [1,2,3].sample.times do
-      #   files << {io: FFaker::Image.file("1000x1000"),
-      #             filename: "#{Faker::Alphanumeric.alpha(number: 15)}.png"}
-      # end
-
-#       puts "I am about to attach"
-#       Thread.new do
-#         post.images.attach(files)
-#       end.join
-
-
-#       posts_to_process << post
-#       puts "post created"
-#     end
-
-#     posts_to_process.each do |post|
-#       puts "I am about to process"
-#       post.images.each do |image|
-#         begin
-#           post.image_as_thumb(image)
-#         rescue ActiveRecord::StatementInvalid
-#           puts "busy!"
-#           errors_busy_exceptions += 1
-#           next
-#         rescue ActiveStorage::FileNotFoundError
-#           puts "File not found!"
-#           errors_files_not_found += 1
-#           next
-#         end
-#       end
-#     end
-#   end
-# end
+# Users
 
 puts "creating users"
 
@@ -158,7 +118,7 @@ end
   moderator.save
 end
 
-File.write("./db/passcode.txt", "first is always admin\'s code, \nsecond is moderator\'s" + passcodes.join("\n") + "\n\nErrors not_found found: #{errors_files_not_found}" + "\n\nErrors busy exceptions: #{errors_busy_exceptions}")
+File.write("./db/passcode.txt", "first is always admin\'s code, \nsecond is moderator\'s" + passcodes.join("\n"))
 
 puts "done with users"
 
