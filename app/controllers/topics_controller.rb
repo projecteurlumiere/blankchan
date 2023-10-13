@@ -17,8 +17,6 @@ class TopicsController < ApplicationController
   def create
     @board = board_by_name!
     @topic = @board.topics.build
-    render plain: params
-    return
 
     if @topic.save && build_first_post.save # ? why does it attach picture without explicit first_post.images.attach?
       flash.notice = "Thread created"
