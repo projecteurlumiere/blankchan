@@ -5,4 +5,6 @@ namespace :s do
     local_ip = File.read("#{File.dirname(__FILE__)}/local_ip.txt")
     sh "rails s -b #{local_ip}"
   end
+
+  task l: :local
 end
