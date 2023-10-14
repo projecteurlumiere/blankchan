@@ -6,7 +6,7 @@ class TopicsController < ApplicationController
     @board = board_by_name!
     @topic = Topic.find(params[:id])
 
-    @posts = @topic.posts.order(:created_at)
+    @posts = @topic.posts.with_attached_images.order(:created_at)
     @posts = PostDecorator.decorate_collection(@posts.all)
   end
 

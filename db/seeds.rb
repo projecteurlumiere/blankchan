@@ -8,7 +8,7 @@
 
 # clear storage:
 
-sh "cd ..; rm -rf #{Rails.root.to_s + "/storage"}"
+sh "cd ..; rm -rf #{Rails.root.join("/storage").to_s}"
 
 n_boards = 10
 n_topics = 5
