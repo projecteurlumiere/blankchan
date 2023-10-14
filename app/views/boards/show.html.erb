@@ -1,5 +1,6 @@
 <h1>hello</h1>
 <h2>here are threads:</h2>
+<%= paginate @topics %>
 <ul>
   <%= render partial: "preview_topic", collection: @topics, locals: {board: @board} %>
 </ul>

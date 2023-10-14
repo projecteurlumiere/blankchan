@@ -56,6 +56,7 @@ gem "activerecord-import", "~> 1.5"
 
 gem "pundit", "~> 2.3"
 gem "draper", "~> 4.0"
+gem "kaminari", "~> 1.2"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
