@@ -270,28 +270,28 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  activerecord-import
-  bootsnap
+  activerecord-import (~> 1.5)
+  bootsnap (~> 1.16)
   capybara
   debug
-  draper
+  draper (~> 4.0)
   factory_bot_rails
-  faker
-  ffaker
+  faker (~> 3.2)
+  ffaker (~> 2.23)
   image_processing (~> 1.2)
-  importmap-rails
-  jbuilder
+  importmap-rails (~> 1.2)
+  jbuilder (~> 2.11)
   pry
   puma (~> 5.0)
-  pundit
+  pundit (~> 2.3)
   rails (~> 7.0.7)
-  rails-controller-testing
+  rails-controller-testing (~> 1.0)
   rspec-rails (~> 6.0.0)
   selenium-webdriver
-  sprockets-rails
+  sprockets-rails (~> 3.4)
   sqlite3 (~> 1.4)
-  stimulus-rails
-  turbo-rails
+  stimulus-rails (~> 1.2)
+  turbo-rails (~> 1.4)
   tzinfo-data
   web-console
   webdrivers
