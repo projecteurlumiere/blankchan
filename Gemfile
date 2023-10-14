@@ -69,6 +69,8 @@ end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
+  gem "bullet", "~> 7.1"
+
   gem "web-console"
 
   gem "pry"
