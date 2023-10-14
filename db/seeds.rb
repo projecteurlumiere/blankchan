@@ -8,10 +8,10 @@
 
 # clear storage:
 
-sh "cd ..; rm -rf #{Rails.root.join("/storage").to_s}"
+sh "cd ..; rm -rf #{Rails.root}/storage"
 
 n_boards = 10
-n_topics = 5
+n_topics = 30
 n_posts = 10
 n_pics = 1..3
 
@@ -84,11 +84,20 @@ puts "starting processing thumbs"
 posts = Post.all
 posts_count = posts.count
 
-Post.all.each_with_index do |post, i|
+posts.each_with_index do |post, i|
   return if post.images.nil?
+
   puts "processing #{i} out of #{posts_count}"
   post.images.each do |image|
-    post.image_as_thumb(image)
+    begin
+      post.image_as_thumb(image)
+    rescue SQLite3::BusyException, ActiveRecord::StatementInvalid
+      puts "Database got locked!"
+      sleep 1
+      post.image_as_thumb(image)
+    ensure
+      next
+    end
   end
 end
 
