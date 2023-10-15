@@ -1,9 +1,10 @@
 <h1>Boards#index</h1>
 <p>Find me in app/views/boards/index.html.erb</p>
-
 <h2>Here are boards:</h2>
 <li>
-  <% @boards.each do |board| %>
-    <ul><%= link_to board.name, board.name %></ul>
+  <% cache(@boards) do  %>
+    <% @boards.each do |board| %>
+      <ul><%= link_to board.name, board.name %></ul>
+    <% end %>
   <% end %>
 </li>
