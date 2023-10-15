@@ -10,7 +10,6 @@ class BoardsController < ApplicationController
 
     @topics = @board.topics
                     .includes(posts_its_images_and_their_variants)
-                    .where
                     .order(updated_at: :desc).page(params[:page])
 
     # ? How to include a couple (not all) of preview posts with #include(:posts)?
