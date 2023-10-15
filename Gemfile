@@ -76,6 +76,8 @@ group :development do
 
   gem "pry"
 
+  gem "silencer"
+
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 
