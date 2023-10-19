@@ -8,14 +8,17 @@
 
 # clear storage:
 
-sh "cd ..; rm -rf #{Rails.root}/storage"
+sh "rm -rf #{Rails.root}/storage"
 
 n_boards = 10
 n_topics = 30
-n_posts = 10
+n_posts = 250
 n_pics = 1..3
+n_total_pics = 25
 
 # Boards:
+
+puts "creating boards"
 
 boards = []
 
@@ -24,11 +27,11 @@ n_boards.times do
   boards << Board.new(name: board_name)
 end
 
-boards.each { |b| puts b.name }
-
 Board.import boards
 
 # Topics:
+
+puts "creating topics"
 
 all_topics = Board.all.each_with_object([]) do |board, all_topics|
   topics = []
@@ -43,6 +46,8 @@ end.flatten
 Topic.import all_topics
 
 # Posts
+
+puts "creating posts"
 
 all_posts = Topic.all.each_with_object([]) do |topic, all_posts|
   posts = []
@@ -67,37 +72,53 @@ end
 
 total = posts_for_images.count
 
+pics = []
+n_total_pics.times { pics << FFaker::Image.file(size: "1000x1000") }
+
+puts "starting appending pictures"
+
+ar_configuration_hash = ActiveRecord::Base.connection_db_config.configuration_hash
+if Rails.env.development? && ar_configuration_hash[:adapter] == "sqlite3" && ar_configuration_hash[:pool] != 1
+  ActiveRecord::Base.remove_connection
+  temp_db_connection = ActiveRecord::Base.establish_connection(adapter: "sqlite3", database: "db/development.sqlite3", pool: 1, timeout: 5000)
+end
+
 posts_for_images.each_with_index do |post, i|
   puts "processing post #{post.id}. #{i} out of #{total}"
   files = []
   rand(1..3).times do
-    files << {io: FFaker::Image.file(size: "1000x1000"),
+    pic_io = pics.sample until pic_io && files.none? { |f| f[:io] == pic_io}
+    pic_io.rewind
+    files << {io: pic_io,
               filename: "#{Faker::Alphanumeric.alpha(number: 15)}.png"}
   end
-  post.images.attach(files)
+    post.images.attach(files)
 end
 
 puts "done with images"
 
 puts "starting processing thumbs"
 
-posts = Post.all
+posts_ids = posts_for_images.each_with_object([]) {|p, array| array << p.id}
+posts = Post.where(id: (posts_ids.first..posts_ids.last)).with_attached_images
 posts_count = posts.count
 
 posts.each_with_index do |post, i|
-  return if post.images.nil?
+  next if post.images.empty?
 
-  puts "processing #{i} out of #{posts_count}"
+  puts "processing #{i} out of #{total}"
   post.images.each do |image|
-    begin
-      post.image_as_thumb(image)
-    rescue SQLite3::BusyException, ActiveRecord::StatementInvalid
-      puts "Database got locked!"
-      sleep 1
-      post.image_as_thumb(image)
-    ensure
-      next
-    end
+    post.image_as_thumb(image)
+  end
+
+end
+
+if temp_db_connection
+  # apparently, it always raises when all connections are removed
+  begin
+    ActiveRecord::Base.remove_connection
+  rescue ActiveRecord::ConnectionNotEstablished
+    ActiveRecord::Base.establish_connection(:development)
   end
 end
 
@@ -127,7 +148,7 @@ end
   moderator.save
 end
 
-File.write("./db/passcode.txt", "first is always admin\'s code, \nsecond is moderator\'s" + passcodes.join("\n"))
+File.write("./db/passcode.txt", "first is always admin\'s code, \nsecond is moderator\'s\n" + passcodes.join("\n"))
 
 puts "done with users"
 

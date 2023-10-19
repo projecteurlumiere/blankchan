@@ -6,8 +6,17 @@
 #
 default: &default
   adapter: sqlite3
+
+  # to use for bulk upload with active storage use 1, else 5 or whatever
+  # pool: 1
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  timeout: 10000
+
+  timeout: 5000
+
+  # for pragmas and retires check this:
+  # https://gist.github.com/fractaledmind/3565e12db7e59ab46f839025d26b5715/645f2d2dde3a275c270eabc00ce3067583b1b530
+  # or
+  # https://gist.github.com/datenimperator/7602535
 
 development:
   <<: *default

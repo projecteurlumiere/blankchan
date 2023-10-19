@@ -47,7 +47,6 @@ gem "bootsnap", "~> 1.16", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.2"
-gem "activerecord-import", "~> 1.5"
 
 # ? Do I have to declare in-built gems? It didn't heart anyway.
 # * No, I don't because some of them (not all) have already been required in Rails themselves. Check Rails docs
@@ -78,6 +77,9 @@ group :development do
 
   gem "silencer"
 
+  gem "rmagick", "~> 5.3"
+
+  gem "activerecord-import", "~> 1.5"
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 
