@@ -1,6 +1,8 @@
 <h1>Topics#show</h1>
 <p>Find me in app/views/topics/show.html.erb</p>
 <%= render partial: "shared/topic_admin_panel", locals: { board: @board, topic: @topic }, cached: true %>
-<%= render partial: 'shared/post', collection: @posts, locals: { board: @board, topic: @topic }, cached: true %>
-
+<%= render partial: 'shared/post', collection: @topic.posts.with_attached_images, locals: { board: @board, topic: @topic }, cached: true %>
+<%# using @topic.posts.with_attached_images here (instead of defining @posts separately) allows this view to use cache without asking for every image and variant %>
+<%# previously, it would ask db for all images instead of just verifying whether @topic has been changed %>
+<%# however, it would break the decorator in the controller... %>
 <%= render 'posts/new' %>

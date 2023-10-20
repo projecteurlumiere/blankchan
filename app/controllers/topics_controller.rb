@@ -6,8 +6,8 @@ class TopicsController < ApplicationController
     @board = board_by_name!
     @topic = Topic.find(params[:id])
 
-    @posts = @topic.posts.with_attached_images.order(:created_at)
-    @posts = PostDecorator.decorate_collection(@posts.all)
+    # @posts = @topic.posts.with_attached_images
+    # @posts = PostDecorator.decorate_collection(@posts.all)
   end
 
   def new
@@ -59,5 +59,9 @@ class TopicsController < ApplicationController
 
   def authorize_topic!
     authorize(@topic || Topic)
+  end
+
+  def posts_its_images_and_their_variants
+    { posts: [:images_attachments, { images_blobs: { variant_records: { image_attachment: :blob } } }] }
   end
 end
