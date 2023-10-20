@@ -8,9 +8,15 @@ class BoardsController < ApplicationController
 
     raise ActiveRecord::RecordNotFound if @board.nil?
 
-    @topics = @board.topics
-                    .includes(posts_its_images_and_their_variants)
-                    .order(updated_at: :desc).page(params[:page])
+    @topics = @board.topics.order(updated_at: :desc).page(params[:page])
+
+    # * somehow code below doesn't work, and partials keep prompting the db about image variants
+    # * the best solution so far is asking for all attachments within the preview topic partial (see _preview_topic)
+    # * it reduces n+1 but does not eliminate it completely :(
+    # @topics = @board.topics
+    #                 .includes(posts_its_images_and_their_variants)
+    #                 .where(posts: {for_preview: true})
+    #                 .order(updated_at: :desc).page(params[:page])
 
     # ? How to include a couple (not all) of preview posts with #include(:posts)?
   end

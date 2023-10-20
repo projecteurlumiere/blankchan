@@ -6,7 +6,7 @@ task populate_preview_posts: :environment do
   @topics.each_with_index do |topic, i|
     puts "processing #{i + 1} out of #{total}"
     posts = topic.posts
-    posts.first.update!(for_preview: true)
+    posts.first.update(for_preview: true)
 
     count = posts.count
     case count
