@@ -8,8 +8,8 @@ default: &default
   adapter: sqlite3
 
   # to use for bulk upload with active storage use 1, else 5 or whatever
-  # pool: 1
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  pool: 1
+  # pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
   timeout: 5000
 
