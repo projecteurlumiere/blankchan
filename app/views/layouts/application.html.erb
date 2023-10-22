@@ -17,6 +17,9 @@
       <% else %>
        <%= link_to "validate passcode", new_session_path %>
       <% end %>
+      <% if current_user&.admin_role? %>
+        <%= link_to "users", admin_users_path %>
+      <% end %>
 
       <br>
       <% Board.all_names.each do |name| %>

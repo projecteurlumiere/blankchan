@@ -1,7 +1,7 @@
-<% if current_user&.moderator_role? || current_user&.administrator_role? %>
+<% if current_user&.moderator_role? || current_user&.admin_role? %>
   <% div_class = %w[post-admin-panel] %>
   <%= tag.div class: div_class do %>
-    <% if current_user&.administrator_role? %>
+    <% if current_user&.admin_role? %>
       <%= button_to "Bless Post", board_topic_post_path(board.name, topic, post), method: :patch %>
     <% end %>
     <%= button_to "Delete Post", board_topic_post_path(board.name, topic, post), method: :delete %>

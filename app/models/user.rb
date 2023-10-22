@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   attr_accessor :passcode, :remember_token
 
-  enum role: {passcode_user: 0, moderator: 1, administrator: 2}, _suffix: :role
+  enum role: {passcode_user: 0, moderator: 1, admin: 2}, _suffix: :role
 
   has_one :moderator
   has_one :administrator
@@ -47,6 +47,8 @@ class User < ApplicationRecord
   end
 
   def passcode_is_unique
+    return true if passcode_digest.present?
+
     if User.find_by(passcode_digest: Digest::SHA256.hexdigest(passcode))
       errors.add :passcode, 'must be unique'
     end

@@ -11,11 +11,11 @@ class PostPolicy < ApplicationPolicy
 
 
   def update?
-    user.administrator_role?
+    user.admin_role?
   end
 
 
   def destroy?
-    user.moderator_role? || user.administrator_role?
+    user.moderator_role? || user.admin_role?
   end
 end

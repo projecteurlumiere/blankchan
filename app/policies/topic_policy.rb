@@ -14,6 +14,6 @@ class TopicPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.administrator_role? || user.moderator_role?
+    user.admin_role? || user.moderator_role?
   end
 end

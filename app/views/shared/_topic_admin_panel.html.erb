@@ -1,4 +1,4 @@
-<% if current_user&.moderator_role? || current_user&.administrator_role? %>
+<% if current_user&.moderator_role? || current_user&.admin_role? %>
   <% div_class = %w[topic-admin-panel] unless div_class %>
   <%= tag.div class: div_class do %>
     <div class="thread-panel">
