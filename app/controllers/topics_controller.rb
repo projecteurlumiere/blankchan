@@ -1,6 +1,7 @@
 class TopicsController < ApplicationController
   before_action :require_authentication, only: %i[destroy]
   before_action :authorize_topic!
+  after_action :verify_authorized
 
   def show
     @board = board_by_name!
