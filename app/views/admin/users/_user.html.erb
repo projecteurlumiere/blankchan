@@ -1,9 +1,9 @@
-<%= tag.div class: "user-id-#{user.id}" do %>
+<%= tag.div class: "user-management-panel", id: "user-id-#{user.id}" do %>
   <%= user.id %>
   <% if user.moderator_role? %>
-    <%= button_to "dismiss moderator", admin_user_path(user.id), method: "patch", params: {directive: "dismiss moderator"}%>
+    <%= button_to "dismiss", admin_user_path(user.id), method: "patch", params: {directive: "dismiss moderator"}%>
   <% elsif user.passcode_user_role? %>
-    <%= button_to "promote to moderator", admin_user_path(user.id), method: "patch", params: {directive: "promote to moderator"} %>
+    <%= button_to "promote", admin_user_path(user.id), method: "patch", params: {directive: "promote to moderator"} %>
   <% end %>
   <%= user.role %>
   <% unless user.admin_role? %>
