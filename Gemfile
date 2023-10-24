@@ -65,6 +65,7 @@ group :development, :test do
   gem "faker", "~> 3.2"
   gem "ffaker", "~> 2.23"
   gem "rails-controller-testing", "~> 1.0"
+  gem "pry"
 end
 
 group :development do
@@ -72,8 +73,6 @@ group :development do
   gem "bullet", "~> 7.1"
 
   gem "web-console"
-
-  gem "pry"
 
   gem "silencer"
 
