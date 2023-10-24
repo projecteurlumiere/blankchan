@@ -52,13 +52,13 @@ RSpec.shared_examples "admin dashboard access denied" do
 end
 
 RSpec.describe "Admin dashboard", type: :system do
-  let(:admin) { create(:admin) }
-  let(:moderator) { create(:moderator)}
+  let(:admin) { create(:administrator).user }
+  let(:moderator) { create(:moderator).user }
   let(:user) { create(:user) }
   let(:several_users) { create_list(:user, 5) }
 
   context "when user is admin" do
-    let(:current_user) { create(:admin) }
+    let(:current_user) { create(:administrator).user }
 
     before do
       visit root_path
@@ -82,7 +82,7 @@ RSpec.describe "Admin dashboard", type: :system do
       end
 
       it "shows no delete button for another admin" do
-        another_admin = create(:admin)
+        another_admin = create(:administrator).user
 
         click_on "users"
 
@@ -94,12 +94,12 @@ RSpec.describe "Admin dashboard", type: :system do
 
   xcontext "for moderator" do
     # Moderator doesn't have access to admin's dashboard basic functions
-    let(:current_user) { create(:moderator) }
+    let(:current_user) { create(:moderator).user }
     include_examples "admin dashboard's basic functions"
   end
 
   context "when user has passcode rights" do
-    let (:current_user) { create(:moderator) }
+    let (:current_user) { create(:user) }
 
     before do
       visit root_path
