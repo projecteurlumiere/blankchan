@@ -3,8 +3,8 @@ class User < ApplicationRecord
 
   enum role: {passcode_user: 0, moderator: 1, admin: 2}, _suffix: :role
 
-  has_one :moderator
-  has_one :administrator
+  has_one :moderator, dependent: :destroy
+  has_one :administrator, dependent: :destroy
 
   before_validation :digest_passcode, if: :passcode
 

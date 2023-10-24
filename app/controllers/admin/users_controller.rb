@@ -19,7 +19,6 @@ module Admin
       redirect_to admin_users_path
     end
 
-
     def update
       @user = User.find(params[:id])
 
@@ -35,19 +34,19 @@ module Admin
 
     def destroy
       @user = User.find(params[:id])
-      if !@user.admin_role? && @object.destroy
+      if !@user.admin_role? && @user.destroy
         flash[:success] = "User was successfully deleted."
         redirect_to admin_users_path
       else
         flash[:error] = "Something went wrong"
-        redirect_to admin_users_path(anchor: "user-id-#{@user.id}")
+        redirect_to admin_users_path(anchor: "user-id-#{@user.id}"), status: :unprocessable_entity
       end
     end
 
     private
 
     def promote_to_moderator
-      if @user.passcode_user_role? && @user.moderator_role!
+      if @user.passcode_user_role? && @user.create_moderator
         flash.notice = "#{@user.id} has been promoted to moderator!"
       else
         flash.alert = "Couldn't promote #{@user.id} to moderator"
@@ -55,7 +54,7 @@ module Admin
     end
 
     def dismiss_moderator
-      if @user.moderator_role? && @user.passcode_user_role!
+      if @user.moderator_role? && @user.moderator.destroy
         flash.notice = "#{@user.id} moderator dismissed from duties, sir!"
       else
         flash.alert = "Couldn't dismiss moderator #{@user.id}"
