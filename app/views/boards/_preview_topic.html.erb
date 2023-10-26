@@ -1,14 +1,12 @@
 <% posts = preview_topic.posts.with_attached_images.where(for_preview: true).sort %>
-
 <li class="thread">
   <div class="thread-meta"><%= link_to preview_topic.id, board_topic_url(@board.name, preview_topic) %></div>
-  <%= render partial: "shared/topic_admin_panel", locals: { board: @board, topic: preview_topic } %>
   <div class="thread-first-post">
     <% if posts.first %>
       <% first_post = posts.first.decorate %>
       <% first_post_id = first_post.id %>
       <%= render "shared/post", board: board, topic: preview_topic, post: first_post %>
-      <% end %>
+    <% end %>
   </div>
   <div class="thread-last-posts">
     <% posts.last(3).each do |post| %>
