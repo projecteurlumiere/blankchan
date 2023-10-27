@@ -1,7 +1,11 @@
 class Post < ApplicationRecord
-  belongs_to :topic, touch: true
+  MAX_POSTS = 220
+
+  belongs_to :topic
   has_many_attached :images
+
   after_save :set_preview_posts
+  after_save :touch_topic
 
   validates :topic_id, presence: true
   validates :name, length: { maximum: 100 }
@@ -13,6 +17,14 @@ class Post < ApplicationRecord
   end
 
   private
+
+  def touch_topic
+    if topic.posts.count > MAX_POSTS
+      topic.touch(time: topic.updated_at + 1.second)
+    else
+      topic.touch
+    end
+  end
 
   def set_preview_posts
     first_post = topic.posts.first
