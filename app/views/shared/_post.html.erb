@@ -9,6 +9,6 @@
       <% end %>
     <% end %>
   </div>
-  <p class="post-title"><%= post.name %></p>
-  <p class="post-text"><%= post.text %></p>
+  <h4 class="post-title"><%= post.name %></h4>
+  <div class="post-text"><%= simple_format(post.text) %></div>
 </div>
