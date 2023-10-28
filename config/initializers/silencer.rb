@@ -1,6 +1,4 @@
-require 'silencer/rails/logger'
-
-require 'silencer/rails/logger'
+require "silencer/rails/logger"
 
 Rails.application.configure do
   config.middleware.swap(
