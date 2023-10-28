@@ -23,5 +23,6 @@ module Blankchan
 
     config.action_view.sanitized_allowed_tags = ['b', 'em', 's']
     config.action_view.sanitized_allowed_attributes = []
+    config.active_storage.variant_processor = :vips
   end
 end
