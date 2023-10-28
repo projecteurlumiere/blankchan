@@ -77,12 +77,6 @@ n_total_pics.times { pics << FFaker::Image.file(size: "1000x1000") }
 
 puts "starting appending pictures"
 
-ar_configuration_hash = ActiveRecord::Base.connection_db_config.configuration_hash
-if Rails.env.development? && ar_configuration_hash[:adapter] == "sqlite3" && ar_configuration_hash[:pool] != 1
-  ActiveRecord::Base.remove_connection
-  temp_db_connection = ActiveRecord::Base.establish_connection(adapter: "sqlite3", database: "db/development.sqlite3", pool: 1, timeout: 5000)
-end
-
 posts_for_images.each_with_index do |post, i|
   puts "processing post #{post.id}. #{i} out of #{total}"
   files = []
@@ -111,15 +105,6 @@ posts.each_with_index do |post, i|
     post.image_as_thumb(image)
   end
 
-end
-
-if temp_db_connection
-  # apparently, it always raises when all connections are removed
-  begin
-    ActiveRecord::Base.remove_connection
-  rescue ActiveRecord::ConnectionNotEstablished
-    ActiveRecord::Base.establish_connection(:development)
-  end
 end
 
 puts "thumbs have been processed"
