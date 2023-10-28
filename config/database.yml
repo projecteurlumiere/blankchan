@@ -1,34 +1,24 @@
-# SQLite. Versions 3.8.0 and up are supported.
-#   gem install sqlite3
-#
-#   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem "sqlite3"
-#
 default: &default
-  adapter: sqlite3
-
-  # to use for bulk upload with active storage use 1, else 5 or whatever
-  pool: 1
-  # pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-
-  timeout: 5000
-
-  # for pragmas and retires check this:
-  # https://gist.github.com/fractaledmind/3565e12db7e59ab46f839025d26b5715/645f2d2dde3a275c270eabc00ce3067583b1b530
-  # or
-  # https://gist.github.com/datenimperator/7602535
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see Rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: projector # role previously added
+  password: <%= ENV['DATABASE_PASSWORD'] %> # variable previously added
+# You must remove the '+' signs to be able to migrate your database
 
 development:
   <<: *default
-  database: db/development.sqlite3
+  database: blankchan_development
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: db/test.sqlite3
+  database: blankchan_test
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  database: blankchan_production
