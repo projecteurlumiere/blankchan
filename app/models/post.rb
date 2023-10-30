@@ -20,7 +20,7 @@ class Post < ApplicationRecord
 
   def touch_topic
     if topic.posts.count > MAX_POSTS
-      topic.touch(time: topic.updated_at + 1.second)
+      topic.touch(time: topic.updated_at + 0.1.seconds)
     else
       topic.touch
     end
