@@ -9,9 +9,11 @@ module Admin
     end
 
     def create
-      @user = User.new(params[:object])
+      @user = build_user
       if @user.save
-        flash.notice = "Object successfully created"
+        flash.notice = "User successfully created"
+        flash.notice += " in case you didn't recieve (and this is dev env) an email here is your passcode: #{@user.passcode}" if Rails.env.development?
+        PasscodeMailer.with(email: params[:user][:email], passcode: @user.passcode).issue_passcode_email.deliver_later
       else
         flash.now.alert = "Something went wrong"
       end
@@ -59,6 +61,17 @@ module Admin
       else
         flash.alert = "Couldn't dismiss moderator #{@user.id}"
       end
+    end
+
+    def build_user
+      user = User.new(email: params[:email])
+
+      until user.valid?
+        passcode = SecureRandom.urlsafe_base64
+        user.passcode = passcode
+      end
+
+      user
     end
 
     def authorize_user!
