@@ -1,6 +1,6 @@
 class TopicsController < ApplicationController
   before_action :require_authentication, only: %i[destroy]
-  before_action :authorize_topic!
+  before_action :authorize_topic!, except: %i[destroy]
   after_action :verify_authorized
 
   def show
@@ -32,6 +32,7 @@ class TopicsController < ApplicationController
 
   def destroy
     if @topic = Topic.find_by(id: params[:id])
+      authorize_topic!
       @topic.delete
       flash.notice = "Topic deleted"
       redirect_to board_path(params[:board_name])

@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :require_authentication, only: %i[update destroy]
-  before_action :authorize_post!
+  before_action :authorize_post!, except: %i[destroy]
   after_action :verify_authorized
 
   def create
@@ -43,6 +43,7 @@ class PostsController < ApplicationController
 
   def destroy
     if @post = Post.find_by(id: params[:id])
+      authorize_post!
       @post.destroy
       @topic = Topic.find_by(id: params[:topic_id])
       flash.notice = "Post deleted"
