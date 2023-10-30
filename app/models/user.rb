@@ -8,7 +8,8 @@ class User < ApplicationRecord
 
   before_validation :digest_passcode, if: :passcode
 
-  validate :passcode_is_unique
+  validate :passcode_is_unique # validate for custom
+  validates :passcode_digest, presence: true # validates for default
 
   def authenticate(passcode)
     user = find_user_by_passcode(passcode)
@@ -49,7 +50,7 @@ class User < ApplicationRecord
   def passcode_is_unique
     return true if passcode_digest.present?
 
-    if User.find_by(passcode_digest: Digest::SHA256.hexdigest(passcode))
+    if find_user_by_passcode(passcode)
       errors.add :passcode, 'must be unique'
     end
   end

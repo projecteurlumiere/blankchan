@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   # match '*unmatched', to: 'application#render_not_found', via: :all
 
   resource :session, only: %i[new create destroy]
+  resource :passcode, only: %i[new create]
 
   resources :boards,
             path: '/',
