@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_20_130514) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_30_091154) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -65,7 +68,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_20_130514) do
     t.string "text", null: false
     t.string "pic_link"
     t.string "author_ip"
-    t.string "author_status"
+    t.string "author_id"
     t.boolean "blessed", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

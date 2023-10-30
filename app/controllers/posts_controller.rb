@@ -6,6 +6,8 @@ class PostsController < ApplicationController
   def create
     @topic = Topic.find(params[:topic_id])
     @post = @topic.posts.build(post_params)
+    @post.author_ip = request.remote_ip
+    @post.author_status = current_user&.id || nil
     if @post.save && @post.images.attach(params[:images])
       flash.notice = "Post created successfully"
       redirect_to board_topic_path(params[:board_name],
