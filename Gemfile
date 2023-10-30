@@ -82,6 +82,9 @@ group :development do
   gem "rmagick", "~> 5.3"
 
   gem "activerecord-import", "~> 1.5"
+
+  gem "letter_opener", "~> 1.4"
+
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 
