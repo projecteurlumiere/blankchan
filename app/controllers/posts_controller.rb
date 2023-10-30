@@ -16,7 +16,7 @@ class PostsController < ApplicationController
                                   )
     else
       # ? how about anchors here? or should client-side work with it?
-      @post&.delete
+      @post&.destroy
 
       flash.now.alert = "Could not create post"
       @errors = @post.errors.full_messages
@@ -43,11 +43,11 @@ class PostsController < ApplicationController
 
   def destroy
     if @post = Post.find_by(id: params[:id])
-      @post.delete
+      @post.destroy
       @topic = Topic.find_by(id: params[:topic_id])
       flash.notice = "Post deleted"
       if @topic.posts.empty?
-        @topic.delete
+        @topic.destroy
         flash.notice = "Topic deleted"
       end
     else
