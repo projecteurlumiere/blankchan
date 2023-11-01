@@ -58,7 +58,7 @@ class TopicsController < ApplicationController
   def build_first_post
     @first_post = @topic.posts.build(topic_params[:post_attributes])
     @first_post.author_ip = request.remote_ip
-    @first_post.author_status = current_user&.id || nil
+    @first_post.author_id = current_user&.id
 
     @first_post
   end
