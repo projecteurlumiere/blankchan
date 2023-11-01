@@ -1,6 +1,7 @@
 <h1>hello</h1>
 <h2>here are threads:</h2>
 <%= paginate @topics %>
+<%= link_to "New Thread", new_board_topic_path(@board.name) %>
 <ul>
   <%= render partial: "preview_topic", collection: @topics, locals: {board: @board}, cached: true %>
 </ul>

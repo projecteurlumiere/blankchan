@@ -10,23 +10,29 @@
   </head>
   <body>
     <header>
-      <%= link_to "this is root", root_path %>
-      <%= link_to "get passcode", new_passcode_path %>
-      <% if current_user&.admin_role? %>
-        <%= link_to "users", admin_users_path %>
-      <% end %>
-      <% if user_signed_in? %>
-        <%= link_to "quit passcode", session_path, data: {turbo_method: :delete} %>
-        <%# button_to "quit passcode", session_path, method: :delete %>
-      <% else %>
-       <%= link_to "validate passcode", new_session_path %>
-      <% end %>
-
-      <br>
-      <% Board.all_names.each do |name| %>
-        <%= link_to name, board_path(name) %>
-      <% end %>
-
+      <nav>
+        <div class="menu-user">
+          <%= link_to "this is root", root_path %>
+          <%= link_to "get passcode", new_passcode_path %>
+          <% if user_signed_in? %>
+            <%= link_to "quit passcode", session_path, data: {turbo_method: :delete} %>
+            <%# button_to "quit passcode", session_path, method: :delete %>
+          <% else %>
+           <%= link_to "validate passcode", new_session_path %>
+          <% end %>
+        </div>
+        <% if current_user&.admin_role? %>
+          <div class="menu-admin">
+            <%= link_to "users", admin_users_path %>
+          </div>
+        <% end %>
+        <br>
+        <div class="board-list">
+          <% Board.all_names.each do |name| %>
+            <%= link_to name, board_path(name) %>
+          <% end %>
+        </div>
+      </nav>
     </header>
 
     <% if flash.present? %>
@@ -42,16 +48,11 @@
           <li><%= error %></li>
         <% end %>
       </ul>
-
     <% end %>
 
 
     <% if session[:user_id] %>
-      <h2><%= "Hey your id (or remember_token) in session is #{session[:user_id]}" %></h2>
-    <% end %>
-    <% if cookies.encrypted[:remember_token] %>
-      <h2><%= "Hey you remember token is #{cookies.encrypted[:remember_token]}" %></h2>
-      <h2><%= "Hey your id is #{cookies.encrypted[:user_id]}" %></h2>
+      <h2><%= "Welcome, #{current_user.role}" %></h2>
     <% end %>
     <%= yield %>
   </body>
