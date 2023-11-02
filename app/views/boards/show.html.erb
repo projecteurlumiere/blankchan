@@ -1,8 +1,9 @@
 <h1>hello</h1>
 <h2>here are threads:</h2>
 <%= paginate @topics %>
+<%= render "shared/lightbox" %>
 <%= link_to "New Thread", new_board_topic_path(@board.name) %>
-<ul>
+<ul data-controller="lightbox">
   <%= render partial: "preview_topic", collection: @topics, locals: {board: @board}, cached: true %>
 </ul>
 <%= link_to "New Thread", new_board_topic_path(@board.name) %>
