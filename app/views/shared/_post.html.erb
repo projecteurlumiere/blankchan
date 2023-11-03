@@ -2,7 +2,7 @@
 
 <div class="post" id="post-id-<%="#{post.id}"%>">
   <div class="post-first-line">
-    <h4 class="post-title"><%= post.name %></h4>
+    <h4 class="post-title"><%= sanitize(post.name, tags: [], attributes: []) %></h4>
     <div class="post-metadata">
       <div class="post-metadata post-id">№<%="#{post.id}"%></div>
       <div class="post-metadata-time">Posted at: <%= post.created_at %></div>
@@ -16,5 +16,5 @@
       <% end %>
     <% end %>
   </div>
-  <div class="post-text"><%= simple_format(post.text) %></div>
+  <div class="post-text"><%= simple_format(auto_link(post.text, sanitize: false)) %></div>
 </div>

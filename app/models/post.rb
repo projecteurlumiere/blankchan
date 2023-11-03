@@ -4,6 +4,8 @@ class Post < ApplicationRecord
   belongs_to :topic
   has_many_attached :images
 
+  # before_create :format_text_links
+
   after_save :set_preview_posts
   after_save :touch_topic
 
@@ -42,5 +44,16 @@ class Post < ApplicationRecord
     return if last_posts.include?(first_post)
 
     last_posts.first.update_columns(for_preview: false)
+  end
+
+
+  def format_text_links
+    # links = URI.extract(text)
+    # links.each do |link|
+    #   text.sub!(link, "<a href='#{link}'>#{link}</a>") # and what about if it's already in <a> ?
+    # end
+    binding.pry
+
+    self.text = auto_link(self.text, sanitize: false)
   end
 end

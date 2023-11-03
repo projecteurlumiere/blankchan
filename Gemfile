@@ -56,6 +56,8 @@ gem "image_processing", "~> 1.2"
 # gem "securerandom"
 # gem "digest"
 
+gem 'rails_autolink'
+
 gem "pundit", "~> 2.3"
 gem "draper", "~> 4.0"
 gem "kaminari", "~> 1.2"

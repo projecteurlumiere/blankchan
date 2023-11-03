@@ -21,8 +21,8 @@ module Blankchan
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    config.action_view.sanitized_allowed_tags = ['b', 'em', 's']
-    config.action_view.sanitized_allowed_attributes = []
+    config.action_view.sanitized_allowed_tags = ["b", "em", "s", "a"]
+    config.action_view.sanitized_allowed_attributes = ["href"]
     config.active_storage.variant_processor = :vips
   end
 end
