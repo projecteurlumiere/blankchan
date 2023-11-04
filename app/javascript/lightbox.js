@@ -1,16 +1,28 @@
 //* primitive image preview (like lightbox)
 //* functionality: open on click, fits all screens, scrolling to zoom, close on click anywhere
+//* creates event listeners if constructor supplied with picsNodelist,
+//* otherwise works with stimulus (it will track img tags in the tag attached to stimulus controller - simply call selectOnePicByEvent(e) in the controller)
 // * Zoom step (-0.2 ~ 20% by default)
 // requires an empty div to function (html id #lightbox by default)
-// requires a nodelist with img elements in it (they will be available for lightboxing)
 // requires img's width and height. by default it looks for attributes in the img (data-img-width & data-img-height) to calculate initial size
+//! does not calculate img's dimensions on its own
 // TODO calculate position depending on cursor's position (zoom to cursor, etc)
 
 class Lightbox {
-  constructor(picsNodelist, lightboxTag = document.body.querySelector("#lightbox"), zoomStep = -0.2) {
-    this.lightbox = lightboxTag
+  constructor({
+    picsNodelist,
+    lightboxTag = document.body.querySelector("#lightbox"),
+    zoomStep = -0.2
+  } = {} ) {
+    this.lightbox = lightboxTag;
     this.#configureLightbox(zoomStep);
-    this.#selectPics(picsNodelist);
+    if (picsNodelist) this.#selectPics(picsNodelist);
+  }
+
+  selectOnePicByEvent(e) {
+    if (e.target.tagName.toLowerCase() != "img") return
+
+    this.#openLightbox(e);
   }
 
   #configureLightbox(zoomStep) {
@@ -47,13 +59,10 @@ class Lightbox {
     },{ passive: false })
   }
 
-
   #selectPics(picsNodelist){
     picsNodelist.forEach(e => {
       e.addEventListener("click", (e) => {
-        if (e.target.tagName.toLowerCase() != "img") return
-
-        this.#openLightbox(e);
+        this.selectOnePicByEvent(e)
       })
     });
   }
@@ -95,7 +104,10 @@ class Lightbox {
   #openLightbox(e) {
     let link = e.target.getAttribute("data-full-link");
 
-    this.lightbox.innerHTML = `<img src=${link}></img>`
+    if (this.lightbox.innerHTML.includes(link)) { this.#resetLightbox(); return }
+
+    this.#resetLightbox();
+    this.lightbox.innerHTML = `<img src="${link}">`
     this.lightbox.classList.add("lightbox-active")
     this.#adjustInitialSize(e);
     this.lightboxDisplay = 0
@@ -107,7 +119,6 @@ class Lightbox {
     this.lightboxDisplay = 0;
     this.scale = 1;
     this.lightbox.style.transform = "";
-
   }
 }
 

@@ -3,7 +3,7 @@
 <%= paginate @topics %>
 <%= render "shared/lightbox" %>
 <%= link_to "New Thread", new_board_topic_path(@board.name) %>
-<ul data-controller="lightbox">
+<ul data-controller="lightbox", data-action="click->lightbox#showPic">
   <%= render partial: "preview_topic", collection: @topics, locals: {board: @board}, cached: true %>
 </ul>
 <%= link_to "New Thread", new_board_topic_path(@board.name) %>
