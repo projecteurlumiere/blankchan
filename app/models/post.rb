@@ -13,6 +13,8 @@ class Post < ApplicationRecord
 
   has_many_attached :images
 
+  before_create :parse_for_replying
+
   after_save :set_preview_posts
   after_save :touch_topic
 
@@ -51,5 +53,16 @@ class Post < ApplicationRecord
     return if last_posts.include?(first_post)
 
     last_posts.first.update_columns(for_preview: false)
+  end
+
+  def parse_for_replying
+    reply_regexp = />>\d+/
+    text.scan(reply_regexp).each do |match|
+      id = match.delete_prefix(">>")
+      if (reply = Post.find_by(id: id)) && reply.topic_id == self.topic_id
+        self.posts << reply
+        self.text = text.sub(match, "<a href='#{Rails.application.routes.url_helpers.board_topic_path(self.topic.board.name, topic_id)}#post-id-#{id}'>#{match}</a>")
+      end
+    end
   end
 end
