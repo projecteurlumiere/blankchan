@@ -1,7 +1,16 @@
 class Post < ApplicationRecord
   MAX_POSTS = 220
 
+  # Post may address as many posts as it wants, and we use reply_id to represent it
+  has_many :addressing_posts, foreign_key: :reply_id, class_name: "Reply"
+  has_many :posts, through: :addressing_posts
+
+  # Post may be addressed to by as many posts (it may or may not want), and we use post_id to represent it
+  has_many :replying_posts, foreign_key: :post_id, class_name: "Reply"
+  has_many :replies, through: :replying_posts
+
   belongs_to :topic
+
   has_many_attached :images
 
   after_save :set_preview_posts
