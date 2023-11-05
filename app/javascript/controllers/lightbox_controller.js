@@ -7,6 +7,6 @@ export default class extends Controller {
   }
 
   showPic(e) {
-    this.lightbox.selectOnePicByEvent(e);
+    this.lightbox.openLightbox(e);
   }
 }

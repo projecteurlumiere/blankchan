@@ -1,7 +1,7 @@
 //* primitive image preview (like lightbox)
 //* functionality: open on click, fits all screens, scrolling to zoom, close on click anywhere
 //* creates event listeners if constructor supplied with picsNodelist,
-//* otherwise works with stimulus (it will track img tags in the tag attached to stimulus controller - simply call selectOnePicByEvent(e) in the controller)
+//* otherwise works with stimulus (it will track img tags in the tag attached to stimulus controller - simply call openLightbox(e) in the controller)
 // * Zoom step (-0.2 ~ 20% by default)
 // requires an empty div to function (html id #lightbox by default)
 // requires img's width and height. by default it looks for attributes in the img (data-img-width & data-img-height) to calculate initial size
@@ -19,10 +19,17 @@ class Lightbox {
     if (picsNodelist) this.#selectPics(picsNodelist);
   }
 
-  selectOnePicByEvent(e) {
+  openLightbox(e) {
     if (e.target.tagName.toLowerCase() != "img") return
 
-    this.#openLightbox(e);
+    let link = e.target.getAttribute("data-full-link");
+    if (this.lightbox.innerHTML.includes(link)) { this.#resetLightbox(); return }
+
+    this.#resetLightbox();
+    this.lightbox.innerHTML = `<img src="${link}">`
+    this.lightbox.classList.add("lightbox-active")
+    this.#adjustInitialSize(e);
+    this.lightboxDisplay = 0
   }
 
   #configureLightbox(zoomStep) {
@@ -62,7 +69,7 @@ class Lightbox {
   #selectPics(picsNodelist){
     picsNodelist.forEach(e => {
       e.addEventListener("click", (e) => {
-        this.selectOnePicByEvent(e)
+        this.openLightbox(e);
       })
     });
   }
@@ -99,18 +106,6 @@ class Lightbox {
     // AI generated piece over
 
     return [desiredWidth, desiredHeight]
-  }
-
-  #openLightbox(e) {
-    let link = e.target.getAttribute("data-full-link");
-
-    if (this.lightbox.innerHTML.includes(link)) { this.#resetLightbox(); return }
-
-    this.#resetLightbox();
-    this.lightbox.innerHTML = `<img src="${link}">`
-    this.lightbox.classList.add("lightbox-active")
-    this.#adjustInitialSize(e);
-    this.lightboxDisplay = 0
   }
 
   #resetLightbox() {
