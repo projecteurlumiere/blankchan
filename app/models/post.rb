@@ -62,7 +62,7 @@ class Post < ApplicationRecord
     reply_posts = Post.includes(topic: :board).where(id: reply_ids)
 
     reply_posts.each do |match|
-      return unless match
+      next unless match
 
       if match.topic.board == self.topic.board
         self.posts << match
