@@ -19,7 +19,7 @@
   <div class="post-text"><%= simple_format(auto_link(post.text, sanitize: false)) %></div>
   <div class="post-replies">
     <% post.replies.each do |reply| %>
-      <span class="reply-link"><%= link_to ">>#{reply.id}", board_topic_path(params[:board_name], post.topic, anchor: "post-id-#{reply.id}") %></span>
+      <span class="reply-link"><%= link_to ">>#{reply.id}", board_topic_path(post.topic.board.name, post.topic, anchor: "post-id-#{reply.id}") %></span>
     <% end %>
   </div>
 </div>
