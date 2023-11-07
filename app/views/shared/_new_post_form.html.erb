@@ -7,7 +7,7 @@
   <div class="new-post-form-body">
     <%# ! in order to make anchor links work, turbo had to be disabled for this form. %>
     <%# ! but disabling turbo broke refreshing the form after invalid submissions... %>
-    <%= form_with model: Post.new, url: board_topic_posts_url(topic_id: @topic.id), id: "new-post-form" do |form| %>
+    <%= form_with model: Post.new, url: board_topic_posts_url(topic_id: @topic.id), id: "new-post-form", data: {turbo: false} do |form| %>
       <%= form.label :name %><br>
       <%= form.text_area :name %>
       <br>
