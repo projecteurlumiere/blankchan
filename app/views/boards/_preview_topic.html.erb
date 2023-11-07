@@ -1,4 +1,4 @@
-<% posts = preview_topic.posts.with_attached_images.where(for_preview: true).sort %>
+<% posts = preview_topic.posts.includes(:images_attachments, { images_blobs: { variant_records: { image_attachment: :blob } } }, replies: { posts: {topic: :board}}).order(:created_at).where(for_preview: true) %>
 <li class="thread">
   <div class="thread-meta"><%= link_to preview_topic.id, board_topic_url(@board.name, preview_topic) %></div>
   <div class="thread-first-post">

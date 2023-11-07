@@ -55,6 +55,8 @@ class Post < ApplicationRecord
     last_posts.first.update_columns(for_preview: false)
   end
 
+  #? Still, is it a good idea to put formatted <a> tag in the db and not format it on the fly in the view?
+
   def parse_for_replying
     reply_regexp = />>\d+/
     reply_ids = text.scan(reply_regexp).map { |match| match.delete_prefix(">>") }
