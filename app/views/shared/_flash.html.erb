@@ -1,0 +1,17 @@
+<% if flash.present? %>
+  <% flash.each do |flash_type, text| %>
+    <%= "<h2 class=\"#{flash_type}\">#{text}</h2>".html_safe %>
+  <% end %>
+<% end %>
+
+<% if @errors %>
+  <ul>
+    <% @errors.each do |error| %>
+      <li><%= error %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<% if session[:user_id] %>
+  <h2><%= "Welcome, #{current_user.role}" %></h2>
+<% end %>

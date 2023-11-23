@@ -1,6 +1,6 @@
 class BoardsController < ApplicationController
   def index
-    @boards = Board.all.order(:name)
+    @boards_name_and_full_name = Board.order(:name).pluck(:name, :full_name)
   end
 
   def show

@@ -1,0 +1,28 @@
+<header>
+  <nav>
+
+    <div class="links">
+      <%= link_to "main page", root_path %>
+      <div class="board-list">
+        <%= cache(Board) do %>
+          <% board_links.each do |board| %>
+            <%= board %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="user-links">
+      <% if current_user&.admin_role? %>
+        <%= link_to "Admin dashboard", admin_users_path %> |
+      <% end %>
+      <%= link_to "get passcode", new_passcode_path %>
+      <% if user_signed_in? %>
+        | <%= link_to "quit passcode", session_path, data: { turbo_method: :delete } %>
+      <% else %>
+        | <%= link_to "validate passcode", new_session_path %>
+      <% end %>
+    </div>
+
+  </nav>
+</header>
