@@ -6,11 +6,11 @@
     <%= link_to "New post", "" %>
   </div>
 
-  <%= tag.div class: "topic-header" do  %>
+  <%= tag.div id: "topic-header" do  %>
     <span>Topic №<%= @topic.id %></span>
   <% end %>
 
-  <%= tag.div class: "topic-body" do %>
+  <%= tag.div id: "topic-body" do %>
     <%= render "shared/lightbox" %>
 
     <% if current_user&.moderator_role? || current_user&.admin_role? %>
@@ -27,11 +27,11 @@
   <% end %>
 
   <nav class="inner-links" aria-label="thread navigation">
-    <a href="/">Back to top</a>
+    <%= link_to "Back to top", "#topic-body"%>
     |
-    <a href="/">Refresh</a>
+    <a href="">Refresh</a>
     |
-    <%= link_to "New Post", new_board_topic_path(@board.name) %>
+    <%= link_to "New Post", ""%>
   </nav>
 
   <%= render "shared/new_post_form" %>

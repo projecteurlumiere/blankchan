@@ -1,30 +1,51 @@
-<div id="new-post-form-container">
-  <div class="new-post-form-header">
-    <h2>New post:</h2>
-    <%= tag.span "X", class: "form-close-button", data: { action: "click->reply#closeForm"} %>
+<%= turbo_frame_tag "new-post-form-turbo" do %>
+  <div id="new-post-form-container">
+    <div class="new-post-form-header">
+      <h2>New post:</h2>
+      <%= tag.span "X", class: "form-close-button", data: { action: "click->reply#closeForm"} %>
+    </div>
+
+    <div class="new-post-form-body">
+      <%# ! in order to make anchor links work, turbo had to be disabled for this form. %>
+      <%# ! but disabling turbo broke refreshing the form after invalid submissions... %>
+      <%= form_with model: Post.new, url: board_topic_posts_url(topic_id: @topic.id), id: "new-post-form", data: {turbo: false} do |form| %>
+        <%= form.label :pseudonim %><br>
+        <%= form.text_area :pseudonim, value: "Anonymous", disabled: true %>
+        <br>
+
+        <%= form.label :name %><br>
+        <%= form.text_area :name %>
+        <br>
+        <%= form.label :text %><br>
+        <%= form.text_area :text, data: { reply_target: "formTextField" } %>
+        <br>
+        <div class="format-panel">
+          <ul>
+            <li>Bold</li>
+            |
+            <li>Italic</li>
+            |
+            <li>Underline</li>
+            |
+            <li>Strikenthrough</li>
+          </ul>
+        </div>
+        <%= form.label :images %><br>
+        <%= form.file_field :images, multiple: true %>
+        <br>
+
+        <%# form.label :captcha %><br>
+        <%# form.text_area :captcha %>
+        <br>
+        <%= form.submit %>
+      <% end %>
+    </div>
   </div>
 
-  <div class="new-post-form-body">
-    <%# ! in order to make anchor links work, turbo had to be disabled for this form. %>
-    <%# ! but disabling turbo broke refreshing the form after invalid submissions... %>
-    <%= form_with model: Post.new, url: board_topic_posts_url(topic_id: @topic.id), id: "new-post-form", data: {turbo: false} do |form| %>
-      <%= form.label :name %><br>
-      <%= form.text_area :name %>
-      <br>
-      <%= form.label :text %><br>
-      <%= form.text_area :text, data: { reply_target: "formTextField" } %>
-      <br>
-      <%= form.label :images %><br>
-      <%= form.file_field :images, multiple: true %>
-      <br>
-      <%= form.submit %>
-    <% end %>
-  </div>
-</div>
-
-<style>
-  .new-post-form-container-active {
-    position: sticky;
-    bottom: 0;
-  }
-</style>
+  <style>
+    .new-post-form-container-active {
+      position: sticky;
+      bottom: 0;
+    }
+  </style>
+<% end %>
