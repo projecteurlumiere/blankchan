@@ -1,3 +1,7 @@
+<% content_for :head_styles do %>
+  <%= stylesheet_link_tag "root_page", "data-turbo-track": "reload" %>
+<% end %>
+
 <h1>Blankchan</h1>
 <li class="board-list">
   <% cache(@boards) do  %>
@@ -8,10 +12,11 @@
       </tr>
       <% @boards_name_and_full_name.each do |board| %>
         <tr>
-          <td><%= board[0] %></td>
-          <td><%= board[1] %></td>
+          <td><%= link_to board[0], board_path(board[0]) %></td>
+          <td><%= link_to board[1], board_path(board[0]) %></td>
         </tr>
       <% end %>
     </table>
   <% end %>
 </li>
+<%= image_tag("kirby-and-stars-sticker.png", class: "kirby-root") %>

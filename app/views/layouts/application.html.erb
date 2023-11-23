@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <% if content_for?(:head_styles) %>
+      <%= yield(:head_styles) %>
+    <% else %>
+      <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <% end %>
     <%= javascript_importmap_tags %>
+
   </head>
   <body>
     <%= render partial: "shared/header" %>

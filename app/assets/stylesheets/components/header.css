@@ -1,0 +1,23 @@
+header {
+  background-color: var(--color-primary);
+  padding: 1.5ch 2ch 1.5ch 1ch;
+}
+
+header > nav {
+  display: grid;
+  grid-template-rows: 1fr;
+  align-items: center;
+}
+
+.links {
+  justify-self: start;
+  grid-row: 1;
+
+  display: flex;
+  gap: 1ch;
+}
+
+.user-links {
+  justify-self: end;
+  grid-row: 1;
+}
