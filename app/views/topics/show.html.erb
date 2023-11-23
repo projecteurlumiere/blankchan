@@ -1,20 +1,39 @@
-<h1>Topics#show</h1>
-<p>Find me in app/views/topics/show.html.erb</p>
-<%= tag.div class: "topic-header" do  %>
-  <span>Topic №<%= @topic.id %></span>
-<% end %>
-<%= tag.div class: "topic-body", data: { controller: "reply" } do %>
-  <%= render "shared/lightbox" %>
+<div class="controller-container" data-controller="reply">
 
-  <% if current_user&.moderator_role? || current_user&.admin_role? %>
-    <%= render partial: "shared/topic_admin_panel", locals: { board: @board, topic: @topic } %>
+  <div class="heading">
+    <h2>/<%= @board.name %>/</h2>
+    <h1><%= @board.full_name %></h1>
+    <%= link_to "New post", "" %>
+  </div>
+
+  <%= tag.div class: "topic-header" do  %>
+    <span>Topic №<%= @topic.id %></span>
   <% end %>
-  <%= tag.div class: "post-list", data: { controller: "lightbox", action: "click->lightbox#showPic" } do %>
-    <%= render partial: "shared/post", collection: @topic.posts.includes(:images_attachments, { images_blobs: { variant_records: { image_attachment: :blob } } }, replies: { posts: {topic: :board}}).order(:created_at), locals: { board: @board, topic: @topic }, cached: true %>
+
+  <%= tag.div class: "topic-body" do %>
+    <%= render "shared/lightbox" %>
+
+    <% if current_user&.moderator_role? || current_user&.admin_role? %>
+      <%= render partial: "shared/topic_admin_panel", locals: { board: @board, topic: @topic } %>
+    <% end %>
+
+    <%= tag.div class: "post-list", data: { controller: "lightbox", action: "click->lightbox#showPic" } do %>
+      <%= render partial: "shared/post", collection: @topic.posts.includes(:images_attachments, { images_blobs: { variant_records: { image_attachment: :blob } } }, replies: { posts: {topic: :board}}).order(:created_at), locals: { board: @board, topic: @topic }, cached: true %>
+    <% end %>
+    <%# using @topic.posts.with_attached_images here (instead of defining @posts separately) allows this view to use cache without asking for every image and variant %>
+    <%# previously, it would ask db for all images instead of just verifying whether @topic has been changed %>
+    <%# however, it would break the decorator in the controller... %>
+
   <% end %>
-  <%# using @topic.posts.with_attached_images here (instead of defining @posts separately) allows this view to use cache without asking for every image and variant %>
-  <%# previously, it would ask db for all images instead of just verifying whether @topic has been changed %>
-  <%# however, it would break the decorator in the controller... %>
+
+  <nav class="inner-links" aria-label="thread navigation">
+    <a href="/">Back to top</a>
+    |
+    <a href="/">Refresh</a>
+    |
+    <%= link_to "New Post", new_board_topic_path(@board.name) %>
+  </nav>
 
   <%= render "shared/new_post_form" %>
-<% end %>
+</div>
+

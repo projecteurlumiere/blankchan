@@ -1,10 +1,17 @@
-<h1>hello</h1>
-<h2>here are threads:</h2>
+<div class="heading">
+  <h2>/<%= @board.name %>/</h2>
+  <h1><%= @board.full_name %></h1>
+  <%= link_to "New Thread", new_board_topic_path(@board.name) %>
+</div>
+
 <%= paginate @topics %>
 <%= render "shared/lightbox" %>
-<%= link_to "New Thread", new_board_topic_path(@board.name) %>
 <ul data-controller="lightbox", data-action="click->lightbox#showPic">
   <%= render partial: "preview_topic", collection: @topics, locals: {board: @board}, cached: true %>
 </ul>
-<%= link_to "New Thread", new_board_topic_path(@board.name) %>
+<nav class="inner-links" aria-label="board navigation">
+  <a href="/">Back to top</a>
+  |
+  <%= link_to "New Thread", new_board_topic_path(@board.name) %>
+</nav>
 
