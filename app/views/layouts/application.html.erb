@@ -12,7 +12,10 @@
     <%= render partial: "shared/header" %>
 
     <%= render partial: "shared/flash" %>
+    <main>
+      <%= yield %>
+    </main>
 
-    <%= yield %>
+    <%= render partial: "shared/footer" unless current_page?(root_path)%>
   </body>
 </html>

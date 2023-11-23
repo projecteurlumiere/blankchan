@@ -1,0 +1,13 @@
+<footer>
+  <nav>
+    <div class="board-list">
+      <%= cache(Board) do %>
+        <% board_links.each do |board| %>
+          <%= board %>
+        <% end %>
+      <% end %>
+    </div>
+  </nav>
+  <div class="disclaimer">Administration does not take any responsibility for users' content. All materials including images, texts and opinions are pubilshed by their respective authors </div>
+  <div class="year">2024</div>
+</footer>
