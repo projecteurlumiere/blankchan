@@ -3,7 +3,8 @@
 /*  */
 
 html,
-body {
+body,
+ul {
   margin: 0;
   padding: 0;
 }
@@ -23,6 +24,7 @@ li {
 
 body {
   background-color: var(--color-background);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 
 }
 
@@ -45,8 +47,8 @@ body {
   /** S I Z E S **/
   /*  */
 
-  /*  --space-0: 8px;
-    --space-1:  10px; */
+    --space-0:   8px;
+    --space-1:  10px;
     --space-2:  12px;
     --space-3:  14px;
     --space-4:  16px;

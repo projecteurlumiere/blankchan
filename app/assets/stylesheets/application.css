@@ -12,66 +12,33 @@
  *
  *= require_tree ./components
  *= require_self
- */
+ *
 
 /*  */
-/** N O R M A L I Z E R  */
+/** L A Y O U T  */
 /*  */
 
-html,
-body {
-  margin: 0;
-  padding: 0;
+html body {
+  min-height: 100svh;
 }
-
-a {
-  text-decoration: none;
-  color: var(--color-text-primary);
-}
-
-li {
-  list-style: none;
-}
-
-/*  */
-/** D E F A U L T  S T Y L E S */
-/*  */
 
 body {
-  background-color: var(--color-background);
+  display: flex;
+  flex-direction: column;
 }
 
-:root {
-  /*  */
-  /** C O L O R S  **/
-  /*  */
+header {
+  flex-shrink: 0;
+}
 
-  --color-primary: #F44336;
-  --color-dark-primary: #D32F2F;
-  --color-light-primary: #FFCDD2;
-  --color-accent: #448AFF;
-  --color-background: #E6F0FF;
-  --color-text-primary: #000000;
-  --color-text-secondary: #757575;
-  --color-divider: #BDBDBD;
+main {
+  flex: 1 0 auto;
+}
 
+footer {
+  flex-shrink: 0;
+}
 
-  /*  */
-  /** S I Z E S **/
-  /*  */
-
-  /*  --space-0: 8px;
-    --space-1:  10px; */
-    --space-2:  12px;
-    --space-3:  14px;
-    --space-4:  16px;
-    --space-5:  18px;
-    --space-6:  20px;
-    --space-7:  24px;
-    --space-8:  30px;
-    --space-9:  36px;
-    --space-10: 48px;
-    --space-11: 60px;
-    --space-12: 72px;
-
+main, footer {
+  margin: 0 var(--space-7);
 }

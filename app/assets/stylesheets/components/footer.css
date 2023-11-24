@@ -1,0 +1,20 @@
+footer {
+  display: grid;
+}
+
+footer > nav {
+  border-bottom: 1px solid var(--color-divider);
+  padding-bottom: var(--space-1);
+  margin-bottom: var(--space-4);
+}
+
+footer > div {
+  justify-self: center;
+  text-align: center;
+}
+
+.year {
+  margin-top: var(--space-4);
+  margin-bottom: var(--space-4);
+  color: var(--color-text-secondary);
+}
