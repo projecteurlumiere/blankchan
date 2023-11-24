@@ -1,6 +1,6 @@
 <div class="heading">
-  <h2>/<%= @board.name %>/</h2>
-  <h1><%= @board.full_name %></h1>
+  <h2><%= link_to "/#{@board.name}/", board_path(@board.name) %></h2>
+  <h1><%= link_to "#{@board.full_name}", board_path(@board.name) %></h1>
   <%= link_to "New Thread", new_board_topic_path(@board.name), data: {turbo_frame: "new-topic-form"} %>
   <%= turbo_frame_tag "new-topic-form" do %>
   <% end %>

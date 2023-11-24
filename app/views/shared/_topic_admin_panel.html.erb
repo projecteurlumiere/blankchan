@@ -1,7 +1,7 @@
 <%# Condition must be put outside (if used) %>
 <% div_class = %w[topic-admin-panel] unless div_class %>
 <%= tag.div class: div_class do %>
-  <div class="thread-panel">
+  <div class="topic-panel">
     <%= button_to "Delete Topic", board_topic_path(board.name, topic), method: :delete %>
   </div>
 <% end %>

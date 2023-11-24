@@ -1,0 +1,44 @@
+.post {
+  max-width: 950px;
+  width: fit-content;
+  background-color: var(--color-light-primary);
+
+  padding: var(--space-4) var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.post-metadata {
+  color: var(--color-text-secondary);
+}
+
+.topic-first-post > .post,
+.topic > .post:nth-child(1) {
+  background-color: unset;
+  max-width: 1250px;
+}
+
+.topic {
+  display: flex;
+  flex-direction: column;
+}
+
+.post h4 {
+  margin: 0.5ch 0;
+}
+
+.post-replies {
+  margin-top: var(--space-4);
+  font-size: var(--space-2);
+}
+
+.images-showcase {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+
+.image-metadata {
+  font-size: var(--space-1);
+}

@@ -1,0 +1,10 @@
+#boards-body > .topic {
+  border-bottom: solid 1px var(--color-divider);
+
+  padding-bottom: var(--space-8);
+  margin-bottom: var(--space-8);
+}
+
+#boards-body > .topic:last-child {
+  border-bottom: none;
+}

@@ -1,5 +1,7 @@
 footer {
   display: grid;
+
+  margin-top: var(--space-8);
 }
 
 footer > nav {
@@ -11,6 +13,8 @@ footer > nav {
 footer > div {
   justify-self: center;
   text-align: center;
+
+  font-size: var(--space-3);
 }
 
 .year {

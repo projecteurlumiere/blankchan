@@ -40,5 +40,6 @@ footer {
 }
 
 main, footer {
-  margin: 0 var(--space-7);
+  margin-left: var(--space-7);
+  margin-right: var(--space-7);
 }
