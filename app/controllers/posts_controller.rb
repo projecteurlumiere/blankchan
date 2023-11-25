@@ -4,13 +4,14 @@ class PostsController < ApplicationController
   after_action :verify_authorized
 
   def create
+    @board = Board.find_by(name: params[:board_name])
     @topic = Topic.find(params[:topic_id])
     @post = @topic.posts.build(post_params)
     @post.author_ip = request.remote_ip
     @post.author_id = current_user&.id
     if @post.save && @post.images.attach(params[:images])
       flash.notice = "Post created successfully"
-      redirect_to board_topic_path(params[:board_name],
+      redirect_to board_topic_path(@board.name,
                                    @topic.id,
                                    anchor: "post-id-#{@post.id}" # ? anchors still do not work...
                                   )
