@@ -1,11 +1,15 @@
-<h2>Get a passcode now!</h2>
+<div class="heading">
+  <h1>Get a passcode now!</h1>
+</div>
 
-<%= form_with url: passcode_path, method: "post" do |form| %>
-  <%= form.label :email %>
-  <%= form.email_field :email %>
-  <br>
-  <%= form.label :i_paid, "I have paid for a passcode (no)" %>
-  <%= form.check_box :i_paid, {}, "true", "false" %>
-  <br>
-  <%= form.submit %>
-<% end %>
+<div class="form-container">
+  <%= form_with url: passcode_path, method: "post", class: "passcode-form" do |form| %>
+    <%= form.label :email %>
+    <%= form.email_field :email %>
+    <div class="checkbox-container">
+      <%= form.label :i_paid, "I have paid for a passcode (no)" %>
+      <%= form.check_box :i_paid, {}, "true", "false" %>
+    </div>
+    <%= form.submit "Give me my passcode" %>
+  <% end %>
+</div>

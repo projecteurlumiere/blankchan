@@ -1,7 +1,10 @@
-<h1>Hello!</h1>
-
-<%= form_with url: session_path, method: "post" do |form| %>
-  <%= form.label :passcode %><br>
-  <%= form.text_area :passcode %>
-  <%= form.submit %>
-<% end %>
+<div class="heading">
+  <h1>Submit your passcode</h1>
+</div>
+<div class="form-container">
+  <%= form_with url: session_path, method: "post", class: "passcode-form" do |form| %>
+    <%= form.label :passcode %>
+    <%= form.text_field :passcode %>
+    <%= form.submit %>
+  <% end %>
+</div>
