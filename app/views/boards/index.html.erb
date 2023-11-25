@@ -3,20 +3,19 @@
 <% end %>
 
 <h1>Blankchan</h1>
-<li class="board-list">
-  <% cache(@boards) do  %>
-    <table>
+<% cache(@boards) do  %>
+  <table>
+    <tr>
+      <th>Link</th>
+      <th>Name</th>
+    </tr>
+    <% @boards_name_and_full_name.each do |board| %>
       <tr>
-        <th>Link</th>
-        <th>Name</th>
+        <td><%= link_to board[0], board_path(board[0]) %></td>
+        <td><%= link_to board[1], board_path(board[0]) %></td>
       </tr>
-      <% @boards_name_and_full_name.each do |board| %>
-        <tr>
-          <td><%= link_to board[0], board_path(board[0]) %></td>
-          <td><%= link_to board[1], board_path(board[0]) %></td>
-        </tr>
-      <% end %>
-    </table>
-  <% end %>
-</li>
+    <% end %>
+  </table>
+<% end %>
+
 <%= image_tag("kirby-and-stars-sticker.png", class: "kirby-root") %>

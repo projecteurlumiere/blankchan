@@ -12,14 +12,23 @@ form > label {
   color: var(--color-text-secondary);
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="email"],
+textarea {
   background-color: #F4F7FB;
   border: 1px solid #bdbdbd;
   box-shadow: inset 0px 1px 4px rgba(100, 100, 100, 0.5);
   border-radius: 2px;
-  width: 240px;
+  max-width: 325px;
 
   font-size: var(--space-4);
+}
+
+textarea {
+  width: 425px;
+  height: 140px;
+
+  max-width: unset;
 }
 
 form > input[type="submit"] {

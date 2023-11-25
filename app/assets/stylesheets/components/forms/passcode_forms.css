@@ -1,7 +1,14 @@
+main {
+  position: relative;
+}
+
 .form-container {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+  display: grid;
+}
+
+.passcode-form {
+  display: grid;
+  justify-content: center;
 }
 
 .passcode-form > .checkbox-container {
@@ -9,4 +16,14 @@
   flex-direction: row-reverse;
   justify-content: start;
   gap: var(--space-0);
+}
+
+.kirby-passcode {
+  width: 240px;
+  transform: scaleX(-1);
+  bottom: 1px;
+
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
 }

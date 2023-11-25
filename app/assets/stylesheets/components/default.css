@@ -28,6 +28,22 @@ body {
 
 }
 
+.bold {
+  font-weight: 700;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.strikethrough {
+  text-decoration: line-through;
+}
+
 :root {
   /*  */
   /** C O L O R S  **/

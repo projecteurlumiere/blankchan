@@ -1,35 +1,36 @@
-<h1>Topics#new</h1>
-<p>Find me in app/views/topics/new.html.erb</p>
+<div class="heading">
+  <h1>New Topic</h1>
+</div>
 <%= turbo_frame_tag "new-topic-form" do %>
-  <%= form_with model: @topic, url: board_topics_url do |form| %>
+  <%#! turn on turbo later, please  %>
+  <%= form_with model: @topic, url: board_topics_url, data: { turbo: false } do |form| %>
     <%= form.fields_for :post_attributes do |form| %>
-      <%= form.label :pseudonim %><br>
-      <%= form.text_area :pseudonim, value: "Anonymous", disabled: true %>
-      <br>
-      <%= form.label :name %><br>
-      <%= form.text_area :name %>
-      <br>
-      <%= form.label :text %><br>
+      <%= form.label :pseudonim %>
+      <%= form.text_field :pseudonim, value: "Anonymous", disabled: true %>
+      <%= form.label :name %>
+      <%= form.text_field :name %>
+
+      <%= form.label :text %>
       <%= form.text_area :text %>
-      <br>
+
       <div class="format-panel">
         <ul>
-          <li>Bold</li>
+          <li class="bold">Bold</li>
           |
-          <li>Italic</li>
+          <li class="italic">Italic</li>
           |
-          <li>Underline</li>
+          <li class="underline">Underline</li>
           |
-          <li>Strikenthrough</li>
+          <li class="strikethrough">Strikenthrough</li>
         </ul>
       </div>
-      <%= form.label :images %><br>
+      <%= form.label :images %>
       <%= form.file_field :images, multiple: true %>
-      <br>
 
-      <%# form.label :captcha %><br>
+
+      <%# form.label :captcha %>
       <%# form.text_area :captcha %>
-      <br>
+
     <% end %>
     <%= form.submit %>
   <% end %>

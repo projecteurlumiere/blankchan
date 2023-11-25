@@ -6,10 +6,6 @@
     <%= link_to "New post", "" %>
   </div>
 
-  <%= tag.div id: "topic-header" do  %>
-    <span>Topic №<%= @topic.id %></span>
-  <% end %>
-
   <%= tag.div id: "topic-body" do %>
     <%= render "shared/lightbox" %>
 

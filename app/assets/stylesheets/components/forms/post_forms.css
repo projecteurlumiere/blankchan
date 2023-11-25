@@ -1,0 +1,23 @@
+#new-topic-form,
+#new-post-form {
+  display: grid;
+  justify-content: center;
+}
+
+#new-post-form label,
+#new-post-form .format-panel,
+#new-topic-form label,
+#new-topic-form .format-panel {
+  justify-self: start;
+}
+
+#new-post-form li,
+#new-topic-form li {
+  display: inline-block;
+  font-size: var(--space-3);
+}
+
+#new-post-form .format-panel,
+#new-topic-form .format-panel {
+  margin-top: calc(-1 * (var(--space-6) - 4px));
+}

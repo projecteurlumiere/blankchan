@@ -4,8 +4,18 @@
 *= require_self
 */
 
-main {
+body {
   display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+}
+
+main {
+  max-width: 1750px;
+  justify-self: center;
+
+  display: grid;
+  column-gap: var(--space-9);
   padding-top: var(--space-4);
   grid-template-rows: repeat(5, 1fr);
   grid-template-areas:
@@ -22,9 +32,12 @@ h1 {
   align-self: end;
 }
 
-li {
+table {
   grid-area: tbl;
   font-size: var(--space-7);
+
+  align-self: start;
+  z-index: 1;
 }
 
 th:nth-child(1),
@@ -45,6 +58,7 @@ h1, li {
 
 .kirby-root {
   grid-area: kirby;
+  z-index: 0;
 }
 
 @media(max-width: 1200px) {
