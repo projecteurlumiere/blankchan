@@ -3,6 +3,11 @@ class PostsController < ApplicationController
   before_action :authorize_post!, except: %i[destroy]
   after_action :verify_authorized
 
+  def new
+    @board = Board.find_by(name: params[:board_name])
+    @topic = Topic.find(params[:topic_id])
+  end
+
   def create
     @board = Board.find_by(name: params[:board_name])
     @topic = Topic.find(params[:topic_id])

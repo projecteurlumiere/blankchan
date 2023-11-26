@@ -1,0 +1,46 @@
+<div class="heading">
+  <h1>New Post</h1>
+</div>
+
+<%= turbo_frame_tag "new-post-form" do %>
+  <%# ! in order to make anchor links work, turbo had to be disabled for this form. %>
+  <%# ! but disabling turbo broke refreshing the form after invalid submissions... %>
+  <%= form_with model: Post.new, url: board_topic_posts_url(topic_id: @topic.id), data: { turbo: true } do |form| %>
+    <%= form.label :pseudonim %>
+    <%= form.text_field :pseudonim, value: "Anonymous", disabled: true %>
+
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+
+    <%= form.label :text %>
+    <%= form.text_area :text, data: { reply_target: "formTextField" } %>
+
+    <div class="format-panel">
+      <ul>
+        <li>Bold</li>
+        |
+        <li>Italic</li>
+        |
+        <li>Underline</li>
+        |
+        <li>Strikenthrough</li>
+      </ul>
+    </div>
+    <%= form.label :images %>
+    <%= form.file_field :images, multiple: true %>
+
+
+    <%# form.label :captcha %>
+    <%# form.text_area :captcha %>
+
+    <%= form.submit %>
+  <% end %>
+  </div>
+
+  <style>
+    .new-post-form-container-active {
+      position: sticky;
+      bottom: 0;
+    }
+  </style>
+<% end %>

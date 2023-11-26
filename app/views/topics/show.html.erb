@@ -3,7 +3,8 @@
   <div class="heading">
     <h2><%= link_to "/#{@board.name}/", board_path(@board.name) %></h2>
     <h1><%= link_to "#{@board.full_name}", board_path(@board.name) %></h1>
-    <%= link_to "New post", "" %>
+    <%= link_to "New post", new_board_topic_post_path(@board.name, @topic), data: {turbo_frame: "new-post-form"} %>
+    <%= turbo_frame_tag "new-post-form" %>
   </div>
 
   <%= tag.div id: "topic-body" do %>
@@ -29,7 +30,5 @@
     |
     <%= link_to "New Post", ""%>
   </nav>
-
-  <%= render "shared/new_post_form" %>
 </div>
 

@@ -15,7 +15,7 @@ Rails.application.routes.draw do
               only: %i[show new create destroy],
               as: :topics,
               controller: :topics do
-      resources :posts, only: %i[create update destroy]
+      resources :posts, only: %i[new create update destroy]
     end
   end
 
