@@ -1,4 +1,7 @@
 header {
+  /* for notifications: */
+  position: relative;
+
   background-color: var(--color-primary);
   padding: 1.5ch 2ch 1.5ch 1ch;
 }

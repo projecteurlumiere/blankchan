@@ -1,17 +1,24 @@
-<% if flash.present? %>
-  <% flash.each do |flash_type, text| %>
-    <%= "<h2 class=\"#{flash_type}\">#{text}</h2>".html_safe %>
+<div class="notifications">
+  <% if flash.present? %>
+    <ul class="flashes">
+
+      <% flash.each do |flash_type, text| %>
+        <%= "<li class=\"#{flash_type}\">#{text}</li>".html_safe %>
+      <% end %>
+    </ul>
   <% end %>
-<% end %>
 
-<% if @errors %>
-  <ul>
-    <% @errors.each do |error| %>
-      <li><%= error %></li>
-    <% end %>
-  </ul>
-<% end %>
+  <% if @errors %>
+    <ul class="errors">
+      <% @errors.each do |error| %>
+        <li><%= error %></li>
+      <% end %>
+    </ul>
+  <% end %>
 
-<% if session[:user_id] %>
-  <h2><%= "Welcome, #{current_user.role}" %></h2>
-<% end %>
+  <% if session[:user_id] %>
+    <ul class="misc-notifications">
+      <li><%= "Welcome, #{current_user.role}" %></li>
+    </ul>
+  <% end %>
+</div>

@@ -1,0 +1,54 @@
+.notifications {
+  position: absolute;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  right: 1px;
+  bottom: -100px;
+  z-index: 1;
+
+  background-color: var(--color-accent);
+  color: #ffffff;
+}
+
+.notifications > ul > * {
+  padding: 4px var(--space-4);
+}
+
+.notifications > ul:first-child {
+  padding-top: var(--space-0);
+}
+
+.notifications > ul:last-child {
+  padding-bottom: var(--space-0);
+}
+
+.notifications li {
+  margin-bottom: 4px;
+}
+
+/*  */
+/** Animations  */
+/*  */
+
+.notifications {
+  animation: 10s vanish 1 normal forwards;
+}
+
+@keyframes vanish {
+ from {
+    right: -500px;
+  }
+
+  5% {
+    right: 0px
+  }
+
+  95% {
+    right: 0px;
+  }
+
+  to {
+    right: -500px;
+    visibility: hidden;
+  }
+}
