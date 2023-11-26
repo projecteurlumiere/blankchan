@@ -16,10 +16,23 @@ class PostsController < ApplicationController
     @post.author_id = current_user&.id
     if @post.save && @post.images.attach(params[:images])
       flash.notice = "Post created successfully"
-      redirect_to board_topic_path(@board.name,
-                                   @topic.id,
-                                   anchor: "post-id-#{@post.id}" # ? anchors still do not work...
-                                  )
+      respond_to do |format|
+        format.html do
+          redirect_to board_topic_path(
+                                      @board.name,
+                                      @topic.id,
+                                      anchor: "post-id-#{@post.id}" # ? anchors still do not work...
+                                      )
+        end
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.action(:redirect, board_topic_path(
+                                                                              @board.name,
+                                                                              @topic.id,
+                                                                              anchor: "post-id-#{@post.id}" # ? anchors still do not work...
+                                                                              )), status: 302
+        end
+      end
+
     else
       # ? how about anchors here? or should client-side work with it?
       @post&.destroy
@@ -28,7 +41,13 @@ class PostsController < ApplicationController
       @errors = @post.errors.full_messages
 
       @posts = @topic.posts.all
-      render "topics/show", status: :unprocessable_entity
+      respond_to do |format|
+        format.html { render "topics/show", status: :unprocessable_entity }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("notifications", partial: "shared/notifications"), status: 422
+        end
+      end
+
     end
   end
 
