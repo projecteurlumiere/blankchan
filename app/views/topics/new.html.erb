@@ -4,7 +4,7 @@
 
 <%= turbo_frame_tag "new-post-form" do %>
   <%#! turn on turbo later, please  %>
-  <%= form_with model: @topic, url: board_topics_url, data: { turbo: false } do |form| %>
+  <%= form_with model: @topic, url: board_topics_url do |form| %>
     <%= form.fields_for :post_attributes do |form| %>
       <%= form.label :pseudonim %>
       <%= form.text_field :pseudonim, value: "Anonymous", disabled: true %>

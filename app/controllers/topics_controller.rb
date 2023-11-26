@@ -21,12 +21,23 @@ class TopicsController < ApplicationController
 
     if @topic.save && build_first_post.save # ? why does it attach picture without explicit first_post.images.attach?
       flash.notice = "Thread created"
-      redirect_to board_topic_path(@board.name, @topic.id)
+      respond_to do |format|
+        format.html { redirect_to board_topic_path(@board.name, @topic.id) }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.action(:redirect, board_topic_path(@board.name, @topic.id)), status: 302
+        end
+      end
+
     else
       @topic&.delete
       @errors = @topic.errors.full_messages + @first_post.errors.full_messages
       flash.now.alert = "Thread was not created"
-      render :new, status: :unprocessable_entity
+      respond_to do |format|
+        format.html { render :new, status: :unprocessable_entity }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("notifications", partial: "shared/notifications"), status: 422
+        end
+      end
     end
   end
 

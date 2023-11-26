@@ -5,7 +5,7 @@
 <%= turbo_frame_tag "new-post-form" do %>
   <%# ! in order to make anchor links work, turbo had to be disabled for this form. %>
   <%# ! but disabling turbo broke refreshing the form after invalid submissions... %>
-  <%= form_with model: Post.new, url: board_topic_posts_url(topic_id: @topic.id), data: { turbo: true } do |form| %>
+  <%= form_with model: Post.new, url: board_topic_posts_url(topic_id: @topic.id), data: { turbo: false } do |form| %>
     <%= form.label :pseudonim %>
     <%= form.text_field :pseudonim, value: "Anonymous", disabled: true %>
 

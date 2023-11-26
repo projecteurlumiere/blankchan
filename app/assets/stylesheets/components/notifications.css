@@ -1,4 +1,4 @@
-.notifications {
+#notifications {
   position: absolute;
   overflow-x: hidden;
   overflow-y: hidden;
@@ -10,19 +10,19 @@
   color: #ffffff;
 }
 
-.notifications > ul > * {
+#notifications > ul > * {
   padding: 4px var(--space-4);
 }
 
-.notifications > ul:first-child {
+#notifications > ul:first-child {
   padding-top: var(--space-0);
 }
 
-.notifications > ul:last-child {
+#notifications > ul:last-child {
   padding-bottom: var(--space-0);
 }
 
-.notifications li {
+#notifications li {
   margin-bottom: 4px;
 }
 
@@ -30,7 +30,7 @@
 /** Animations  */
 /*  */
 
-.notifications {
+#notifications {
   animation: 10s vanish 1 normal forwards;
 }
 
