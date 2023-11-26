@@ -1,8 +1,10 @@
 #notifications {
   position: absolute;
-  overflow-x: hidden;
-  overflow-y: hidden;
-  right: 1px;
+  overflow: hidden;
+
+  visibility: hidden;
+
+  right: 0px;
   bottom: -100px;
   z-index: 1;
 
@@ -31,24 +33,27 @@
 /*  */
 
 #notifications {
-  animation: 10s vanish 1 normal forwards;
+  animation: 10s appear-and-vanish 1 normal forwards;
 }
 
-@keyframes vanish {
+@keyframes appear-and-vanish {
  from {
-    right: -500px;
+    visibility: hidden;
+    width: 0px;
   }
 
-  5% {
-    right: 0px
+  10% {
+    visibility: visible;
+    width: unset;
   }
 
-  95% {
-    right: 0px;
+  90% {
+    visibility: visible;
+    width: unset;
   }
 
   to {
-    right: -500px;
+    width: 0px;
     visibility: hidden;
   }
 }
