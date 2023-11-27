@@ -1,8 +1,8 @@
 <%= turbo_stream.append("boards-body", partial: "preview_topic", collection: @topics, locals: { board: @board }, cached: true) %>
 <%= turbo_stream.replace("next-page") do %>
 
-  <% if link_to_next_page @topics, 'Next', id: "next-page", data: { turbo_stream: true } %>
-    <%= link_to_next_page @topics, 'Next', id: "next-page", data: { turbo_stream: true } %>
+  <% if link_to_next_page @topics, "" %>
+    <%= link_to_next_page @topics, 'Next', id: "next-page", data: { controller: "next-page", turbo_stream: true } %>
   <% else %>
     <div id="no-next-page">
       You have reached the end

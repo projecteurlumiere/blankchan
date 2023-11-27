@@ -12,7 +12,7 @@
   <%= render partial: "preview_topic", collection: @topics, locals: { board: @board }, cached: true %>
 </ul>
 
-<%= link_to_next_page @topics, "Next", id: "next-page", data: { turbo_stream: true } %>
+<%= link_to_next_page @topics, "Next", id: "next-page", data: { controller: "next-page", turbo_stream: true } %>
 
 <nav class="inner-links" aria-label="board navigation">
   <a href="#boards-body">Back to top</a>
