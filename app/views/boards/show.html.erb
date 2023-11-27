@@ -7,11 +7,13 @@
   <% end %>
 </div>
 
-<%= paginate @topics %>
 <%= render "shared/lightbox" %>
 <ul data-controller="lightbox", data-action="click->lightbox#showPic" id="boards-body">
-  <%= render partial: "preview_topic", collection: @topics, locals: {board: @board}, cached: true %>
+  <%= render partial: "preview_topic", collection: @topics, locals: { board: @board }, cached: true %>
 </ul>
+
+<%= link_to_next_page @topics, "Next", id: "next-page", data: { turbo_stream: true } %>
+
 <nav class="inner-links" aria-label="board navigation">
   <a href="#boards-body">Back to top</a>
   |

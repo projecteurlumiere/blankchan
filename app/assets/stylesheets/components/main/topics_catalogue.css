@@ -8,3 +8,19 @@
 #boards-body > .topic:last-child {
   border-bottom: none;
 }
+
+#next-page,
+#no-next-page {
+  display: block;
+  text-align: center;
+  font-size: var(--space-6);
+  text-decoration: underline;
+
+  margin-top: var(--space-4);
+  margin-bottom: var(--space-9);
+
+}
+
+#no-next-page {
+  text-decoration: none;
+}
