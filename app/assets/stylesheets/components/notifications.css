@@ -1,11 +1,11 @@
 #notifications {
-  position: absolute;
+  position: fixed;
   overflow: hidden;
 
   visibility: hidden;
 
   right: 0px;
-  bottom: -100px;
+  top: 100px;
   z-index: 1;
 
   background-color: var(--color-accent);
