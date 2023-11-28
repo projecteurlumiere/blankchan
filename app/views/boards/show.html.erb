@@ -6,7 +6,7 @@
                                                                                           action: "click->form#callToTop"
                                                                                           } %>
   <%# gets new topic form (which is almost the same as the new post form) %>
-  <%= turbo_frame_tag "new-post-form" do %>
+  <%= turbo_frame_tag "new-post-form", class: "topic-form" do %>
   <% end %>
 </div>
 

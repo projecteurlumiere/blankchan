@@ -6,7 +6,7 @@
                                                                           turbo_frame: "new-post-form",
                                                                           action: "click->form#callToTop"
                                                                           } %>
-  <%= turbo_frame_tag "new-post-form" %>
+  <%= turbo_frame_tag "new-post-form", class: "post-form" %>
 </div>
 
 <%= tag.div id: "topic-body" do %>

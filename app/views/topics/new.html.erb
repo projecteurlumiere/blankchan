@@ -2,7 +2,7 @@
   <h1>New Topic</h1>
 </div>
 
-<%= turbo_frame_tag "new-post-form" do %>
+<%= turbo_frame_tag "new-post-form", class: "topic-form" do %>
   <%#! turn on turbo later, please  %>
   <%= form_with model: @topic, url: board_topics_url do |form| %>
     <%= form.fields_for :post_attributes do |form| %>
@@ -15,17 +15,8 @@
       <%= form.label :text %>
       <%= form.text_area :text %>
 
-      <div class="format-panel">
-        <ul>
-          <li class="bold">Bold</li>
-          |
-          <li class="italic">Italic</li>
-          |
-          <li class="underline">Underline</li>
-          |
-          <li class="strikethrough">Strikenthrough</li>
-        </ul>
-      </div>
+      <%= render partial: "shared/format_panel" %>
+
       <%= form.label :images %>
       <%= form.file_field :images, multiple: true %>
 

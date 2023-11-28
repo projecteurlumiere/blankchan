@@ -86,6 +86,38 @@ export default class extends Controller {
     // if form - paste e-target-id or something into the form. cool!
   }
 
+  style(e) {
+    let tag = ""
+
+    switch (e.target.classList[0]) {
+      case "bold":
+        tag = "<b></b>"
+        break
+      case "italic":
+        tag = "<i></i>"
+        break
+      case "underline":
+        tag = "<u></u>"
+        break
+      case "strikethrough":
+        tag = "<s></s>"
+        break
+      default:
+        return
+    }
+
+    let modifier = 0
+
+    if (tag.length % 2 == 0) {
+      modifier = -1 * (tag.length / 2)
+    }
+    else {
+      modifier = -1 * ((tag.length + 1) / 2)
+    }
+
+    this.#pasteTextAtCaret(this.formTextFieldTarget, tag, modifier);
+  }
+
   callToFixed(e){
     console.log("call to fixxed!");
 
@@ -163,14 +195,14 @@ export default class extends Controller {
 
   // reply text pasting
 
-  #pasteTextAtCaret(textElement, text) {
+  #pasteTextAtCaret(textElement, text, modifier = 0) {
     const beforeCaret = textElement.value.substring(0, textElement.selectionStart);
     const afterCaret = textElement.value.substring(textElement.selectionEnd, textElement.value.length);
 
     textElement.value = beforeCaret + text + afterCaret;
 
     // Position the caret after the inserted text
-    this.#setCaretPosition(textElement, beforeCaret.length + text.length);
+    this.#setCaretPosition(textElement, beforeCaret.length + text.length + modifier);
   }
 
   #setCaretPosition(textElement, position) {

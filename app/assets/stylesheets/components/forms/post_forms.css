@@ -30,10 +30,15 @@
 
 #new-post-form.fixed > .window-heading {
   display: block;
+  position: relative;
 
-  text-align: right;
-  color: var(--color-accent);
+  text-align: center;
   font-weight: 700;
+}
+
+#new-post-form.fixed > .window-heading > span {
+  position: absolute;
+  right: 0px;
 }
 
 #new-post-form.fixed {

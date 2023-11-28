@@ -3,3 +3,9 @@
   padding-top: var(--space-1);
   font-size: var(--space-6);
 }
+
+.footing {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}

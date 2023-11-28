@@ -2,8 +2,8 @@
   <h1>New Post</h1>
 </div>
 
-<%= turbo_frame_tag "new-post-form" do %>
-  <div class="window-heading"><span data-action="click->form#hideForm">X</span></div>
+<%= turbo_frame_tag "new-post-form", class: "post-form" do %>
+  <div class="window-heading">New Post<span data-action="click->form#hideForm">X</span></div>
   <%# ! in order to make anchor links work, turbo had to be disabled for this form. %>
   <%# ! but disabling turbo broke refreshing the form after invalid submissions... %>
   <%= form_with model: Post.new, url: board_topic_posts_url(topic_id: @topic.id) do |form| %>
@@ -16,17 +16,8 @@
     <%= form.label :text %>
     <%= form.text_area :text, data: { form_target: "formTextField" } %>
 
-    <div class="format-panel">
-      <ul>
-        <li>Bold</li>
-        |
-        <li>Italic</li>
-        |
-        <li>Underline</li>
-        |
-        <li>Strikenthrough</li>
-      </ul>
-    </div>
+    <%= render partial: "shared/format_panel" %>
+
     <%= form.label :images %>
     <%= form.file_field :images, multiple: true %>
 
