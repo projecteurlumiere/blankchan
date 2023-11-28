@@ -21,3 +21,33 @@
 #new-topic-form .format-panel {
   margin-top: calc(-1 * (var(--space-6) - 4px));
 }
+
+/* Handling position fixed */
+
+#new-post-form > .window-heading {
+  display: none;
+}
+
+#new-post-form.fixed > .window-heading {
+  display: block;
+
+  text-align: right;
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+#new-post-form.fixed {
+  position: fixed;
+  right: var(--space-4);
+  bottom: 0px;
+
+  background-color: #ffcdd2;
+  padding: var(--space-7);
+
+  z-index: 1;
+
+  border: 5px solid var(--color-divider);
+
+}
+
+

@@ -1,42 +1,39 @@
-<div class="controller-container" data-controller="reply">
-
-  <div class="heading">
-    <h2><%= link_to "/#{@board.name}/", board_path(@board.name) %></h2>
-    <h1><%= link_to "#{@board.full_name}", board_path(@board.name) %></h1>
-    <%= link_to "New post", new_board_topic_post_path(@board.name, @topic), data: {
-                                                                            turbo_frame: "new-post-form",
-                                                                            action: "click->form#callToTop"
-                                                                            } %>
-    <%= turbo_frame_tag "new-post-form" %>
-  </div>
-
-  <%= tag.div id: "topic-body" do %>
-    <%= render "shared/lightbox" %>
-
-    <% if current_user&.moderator_role? || current_user&.admin_role? %>
-      <%= render partial: "shared/topic_admin_panel", locals: { board: @board, topic: @topic } %>
-    <% end %>
-
-    <%= tag.div class: "topic", data: { controller: "lightbox", action: "click->lightbox#showPic" } do %>
-      <%= render partial: "shared/post", collection: @topic.posts.includes(:images_attachments, { images_blobs: { variant_records: { image_attachment: :blob } } }, replies: { posts: {topic: :board}}).order(:created_at), locals: { board: @board, topic: @topic }, cached: true %>
-    <% end %>
-    <%# using @topic.posts.with_attached_images here (instead of defining @posts separately) allows this view to use cache without asking for every image and variant %>
-    <%# previously, it would ask db for all images instead of just verifying whether @topic has been changed %>
-    <%# however, it would break the decorator in the controller... %>
-
-  <% end %>
-
-  <div class="footing">
-    <nav class="inner-links" aria-label="thread navigation">
-      <%= link_to "Back to top", "#topic-body"%>
-      |
-      <a href="">Refresh</a>
-      |
-      <%= link_to "New post", new_board_topic_post_path(@board.name, @topic), data: {
-                                                                              turbo_frame: "new-post-form",
-                                                                              action: "click->form#callToBottom"
-                                                                              } %>
-    </nav>
-  </div>
+<div class="heading">
+  <h2><%= link_to "/#{@board.name}/", board_path(@board.name) %></h2>
+  <h1><%= link_to "#{@board.full_name}", board_path(@board.name) %></h1>
+  <%= link_to "New post", new_board_topic_post_path(@board.name, @topic), class: "new-post-link",
+                                                                          data: {
+                                                                          turbo_frame: "new-post-form",
+                                                                          action: "click->form#callToTop"
+                                                                          } %>
+  <%= turbo_frame_tag "new-post-form" %>
 </div>
 
+<%= tag.div id: "topic-body" do %>
+  <%= render "shared/lightbox" %>
+
+  <% if current_user&.moderator_role? || current_user&.admin_role? %>
+    <%= render partial: "shared/topic_admin_panel", locals: { board: @board, topic: @topic } %>
+  <% end %>
+
+  <%= tag.div class: "topic", data: { controller: "lightbox", action: "click->lightbox#showPic" } do %>
+    <%= render partial: "shared/post", collection: @topic.posts.includes(:images_attachments, { images_blobs: { variant_records: { image_attachment: :blob } } }, replies: { posts: {topic: :board}}).order(:created_at), locals: { board: @board, topic: @topic }, cached: true %>
+  <% end %>
+  <%# using @topic.posts.with_attached_images here (instead of defining @posts separately) allows this view to use cache without asking for every image and variant %>
+  <%# previously, it would ask db for all images instead of just verifying whether @topic has been changed %>
+  <%# however, it would break the decorator in the controller... %>
+
+<% end %>
+
+<div class="footing">
+  <nav class="inner-links" aria-label="thread navigation">
+    <%= link_to "Back to top", "#topic-body"%>
+    |
+    <a href="">Refresh</a>
+    |
+    <%= link_to "New post", new_board_topic_post_path(@board.name, @topic), data: {
+                                                                            turbo_frame: "new-post-form",
+                                                                            action: "click->form#callToBottom"
+                                                                            } %>
+  </nav>
+</div>

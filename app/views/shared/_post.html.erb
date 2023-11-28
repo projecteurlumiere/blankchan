@@ -9,7 +9,7 @@
       |
       <span class="post-metadata-time">Posted at: <%= post.created_at %></span>
       |
-      <%= tag.span "Reply", class: "reply-to-post-button", data:  { action: "click->reply#pastePostId", reply_id_param: post.id } %>
+      <%= tag.span "Reply", class: "reply-to-post-button", data:  { action: "click->form#callToFixed click->form#reply", form_id_param: post.id } %>
     </div>
     <h4 class="post-title"><%= sanitize(post.name, tags: [], attributes: []) %></h4>
   </div>

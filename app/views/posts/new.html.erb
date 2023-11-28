@@ -3,6 +3,7 @@
 </div>
 
 <%= turbo_frame_tag "new-post-form" do %>
+  <div class="window-heading"><span data-action="click->form#hideForm">X</span></div>
   <%# ! in order to make anchor links work, turbo had to be disabled for this form. %>
   <%# ! but disabling turbo broke refreshing the form after invalid submissions... %>
   <%= form_with model: Post.new, url: board_topic_posts_url(topic_id: @topic.id) do |form| %>
@@ -13,7 +14,7 @@
     <%= form.text_field :name %>
 
     <%= form.label :text %>
-    <%= form.text_area :text, data: { reply_target: "formTextField" } %>
+    <%= form.text_area :text, data: { form_target: "formTextField" } %>
 
     <div class="format-panel">
       <ul>
