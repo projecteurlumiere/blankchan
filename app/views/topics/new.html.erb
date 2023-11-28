@@ -13,7 +13,7 @@
       <%= form.text_field :name %>
 
       <%= form.label :text %>
-      <%= form.text_area :text %>
+      <%= form.text_area :text, data: { form_target: "formTextField" } %>
 
       <%= render partial: "shared/format_panel" %>
 

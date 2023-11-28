@@ -87,7 +87,26 @@ export default class extends Controller {
   }
 
   style(e) {
-    let tag = ""
+    e.preventDefault();
+
+    let tag = "";
+    let pieceToSave;
+
+    let start = this.formTextFieldTarget.selectionStart;
+    let finish = this.formTextFieldTarget.selectionEnd;
+
+    console.log(start);
+    console.log(finish);
+    if (start != finish) {
+      pieceToSave = this.formTextFieldTarget.value.substring(start, finish).trim();
+
+      if ((pieceToSave.length) != finish - start) {
+        finish = finish - (finish - pieceToSave.length)
+      }
+
+    }
+
+    console.log(pieceToSave);
 
     switch (e.target.classList[0]) {
       case "bold":
@@ -109,13 +128,19 @@ export default class extends Controller {
     let modifier = 0
 
     if (tag.length % 2 == 0) {
-      modifier = -1 * (tag.length / 2)
+      modifier = (tag.length / 2)
     }
     else {
-      modifier = -1 * ((tag.length + 1) / 2)
+      modifier = ((tag.length + 1) / 2)
     }
 
-    this.#pasteTextAtCaret(this.formTextFieldTarget, tag, modifier);
+    this.#pasteTextAtCaret(this.formTextFieldTarget, tag, -modifier);
+
+    if (pieceToSave != undefined) {
+      this.#pasteTextAtCaret(this.formTextFieldTarget, pieceToSave);
+      this.formTextFieldTarget.focus();
+      this.formTextFieldTarget.setSelectionRange(start + modifier - 1, finish + modifier - 1)
+    }
   }
 
   callToFixed(e){
@@ -205,8 +230,8 @@ export default class extends Controller {
     this.#setCaretPosition(textElement, beforeCaret.length + text.length + modifier);
   }
 
-  #setCaretPosition(textElement, position) {
-    textElement.selectionStart = position;
-    textElement.selectionEnd = position;
+  #setCaretPosition(textElement, start, end = start) {
+    textElement.selectionStart = start;
+    textElement.selectionEnd = end;
   }
 }

@@ -22,6 +22,10 @@
   margin-top: calc(-1 * (var(--space-6) - 4px));
 }
 
+.format-panel > ul > li {
+  cursor: default;
+}
+
 /* Handling position fixed */
 
 #new-post-form > .window-heading {
