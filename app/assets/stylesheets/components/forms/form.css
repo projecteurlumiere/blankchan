@@ -52,3 +52,9 @@ input[type="checkbox"] {
   width: 20px;
   border-radius: 5px;
 }
+
+@media(max-width: 495px) {
+  form * {
+    max-width: 85vw;
+  }
+}

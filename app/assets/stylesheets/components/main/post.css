@@ -71,3 +71,9 @@
 .topic-preview .reply-to-post {
   display: none;
 }
+
+@media(max-width: 495px) {
+  .content-container.one-image {
+    flex-direction: column;
+  }
+}

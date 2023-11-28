@@ -59,4 +59,9 @@
 
 }
 
-
+@media(max-width: 515px) {
+  #new-post-form.fixed {
+    left: var(--space-1);
+    right: var(--space-1);
+  }
+}
