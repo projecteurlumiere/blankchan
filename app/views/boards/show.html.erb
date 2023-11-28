@@ -1,13 +1,17 @@
 <div class="heading">
   <h2><%= link_to "/#{@board.name}/", board_path(@board.name) %></h2>
   <h1><%= link_to "#{@board.full_name}", board_path(@board.name) %></h1>
-  <%= link_to "New Thread", new_board_topic_path(@board.name), id: "new-post-form-link", data: {turbo_frame: "new-post-form", action: "click->new-topic-form#callToTop"} %>
+  <%= link_to "New Thread", new_board_topic_path(@board.name), id: "new-post-form-link",  data: {
+                                                                                          turbo_frame: "new-post-form",
+                                                                                          action: "click->form#callToTop"
+                                                                                          } %>
   <%# gets new topic form (which is almost the same as the new post form) %>
   <%= turbo_frame_tag "new-post-form" do %>
   <% end %>
 </div>
 
 <%= render "shared/lightbox" %>
+
 <ul data-controller="lightbox", data-action="click->lightbox#showPic" id="boards-body">
   <%= render partial: "preview_topic", collection: @topics, locals: { board: @board }, cached: true %>
 </ul>
@@ -20,8 +24,7 @@
     |
     <%= link_to "New Thread", new_board_topic_path(@board.name), data: {
                                                                         turbo_frame: "new-post-form",
-                                                                        controller: "new-topic-form",
-                                                                        action: "click->new-topic-form#scrollToTop"
+                                                                        action: "click->form#callToBottom"
                                                                         } %>
   </nav>
 <% end %>

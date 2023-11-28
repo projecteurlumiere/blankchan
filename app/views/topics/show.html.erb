@@ -3,7 +3,10 @@
   <div class="heading">
     <h2><%= link_to "/#{@board.name}/", board_path(@board.name) %></h2>
     <h1><%= link_to "#{@board.full_name}", board_path(@board.name) %></h1>
-    <%= link_to "New post", new_board_topic_post_path(@board.name, @topic), data: {turbo_frame: "new-post-form"} %>
+    <%= link_to "New post", new_board_topic_post_path(@board.name, @topic), data: {
+                                                                            turbo_frame: "new-post-form",
+                                                                            action: "click->form#callToTop"
+                                                                            } %>
     <%= turbo_frame_tag "new-post-form" %>
   </div>
 
@@ -23,12 +26,17 @@
 
   <% end %>
 
-  <nav class="inner-links" aria-label="thread navigation">
-    <%= link_to "Back to top", "#topic-body"%>
-    |
-    <a href="">Refresh</a>
-    |
-    <%= link_to "New Post", ""%>
-  </nav>
+  <div class="footing">
+    <nav class="inner-links" aria-label="thread navigation">
+      <%= link_to "Back to top", "#topic-body"%>
+      |
+      <a href="">Refresh</a>
+      |
+      <%= link_to "New post", new_board_topic_post_path(@board.name, @topic), data: {
+                                                                              turbo_frame: "new-post-form",
+                                                                              action: "click->form#callToBottom"
+                                                                              } %>
+    </nav>
+  </div>
 </div>
 
