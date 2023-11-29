@@ -75,7 +75,7 @@ class Lightbox {
   }
 
   #adjustInitialSize(e, imageWidth = e.target.getAttribute("data-img-width"), imageHeight = e.target.getAttribute("data-img-height")) {
-    let desiredHeight, desiredWidth
+    let desiredWidth, desiredHeight
 
     if (imageWidth > window.innerWidth && imageHeight > window.innerHeight) {
       [desiredWidth, desiredHeight] = this.#initialSizeForLargeImage(imageWidth, imageHeight);
@@ -92,13 +92,16 @@ class Lightbox {
   }
 
   #initialSizeForLargeImage(imageWidth, imageHeight) {
+    let desiredWidth, desiredHeight
+
     // AI generated piece starts
+
     let imageAspectRatio = imageWidth / imageHeight;
     let windowAspectRatio = window.innerWidth / window.innerHeight;
 
     if (imageAspectRatio > windowAspectRatio) {
       // Image is wider relative to its height than the window is, fit to window width
-      [desiredWidth, desiredHeight] = [`${window.innerWidth - 20}px`, auto];
+      [desiredWidth, desiredHeight] = [`${window.innerWidth - 20}px`, "auto"];
     } else {
       // Image is taller relative to its width than the window is, fit to window height
       [desiredWidth, desiredHeight] = ["auto", `${window.innerHeight - 20}px`]
