@@ -42,6 +42,7 @@ class Lightbox {
       // * clicking on pic fires a click event
       // * this event listener catches the same event later
       // * in order this event not to close the picture prematurely, lightboxDisplay is introduced in (openlightbox) to skip the first event
+      // TODO: actually, it is possible to stop events' propagation with stopProgapagation() or something.
       if (this.lightboxDisplay < 1) { this.lightboxDisplay++; return }
 
       this.#resetLightbox();
@@ -95,7 +96,6 @@ class Lightbox {
     let desiredWidth, desiredHeight
 
     // AI generated piece starts
-
     let imageAspectRatio = imageWidth / imageHeight;
     let windowAspectRatio = window.innerWidth / window.innerHeight;
 
