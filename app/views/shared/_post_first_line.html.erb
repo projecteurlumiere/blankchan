@@ -1,0 +1,21 @@
+<div class="post-first-line">
+  <div class="post-metadata">
+    <%= link_to "№#{post.id}", board_topic_path(board.name, topic, anchor: "post-id-#{post.id}"), class: "post-metadata-post-id" %>
+    in
+    <%= link_to "##{topic.id}", board_topic_path(board.name, topic), class: "post-metadata-topic-id" %>
+    |
+    <span class="post-metadata-time">Posted at: <%= post.created_at %></span>
+    |
+    <%= tag.span "Reply", class: "reply-to-post",
+                          data: {
+                          action: "click->form#callToFixed click->form#reply",
+                          form_id_param: post.id
+                          }  %>
+    <%= link_to "Go to", board_topic_path(board.name,
+                                          topic,
+                                          anchor: "post-id-#{post.id}"), class: "go-to-post"%>
+  </div>
+
+  <h4 class="post-title"><%= sanitize(post.name, tags: [], attributes: []) %></h4>
+
+</div>

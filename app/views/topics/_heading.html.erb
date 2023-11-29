@@ -1,0 +1,10 @@
+<div class="heading">
+  <h2><%= link_to "/#{@board.name}/", board_path(@board.name) %></h2>
+  <h1><%= link_to "#{@board.full_name}", board_path(@board.name) %></h1>
+  <%= link_to "New post", new_board_topic_post_path(@board.name, @topic), class: "new-post-link",
+                                                                          data: {
+                                                                          turbo_frame: "new-post-form",
+                                                                          action: "click->form#callToTop"
+                                                                          } %>
+  <%= turbo_frame_tag "new-post-form", class: "post-form" %>
+</div>

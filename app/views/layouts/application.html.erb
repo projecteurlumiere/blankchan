@@ -15,10 +15,9 @@
   <body>
     <%= render partial: "shared/header" %>
 
-    <%= tag.main data: { controller: "form" } do %>
+    <%= tag.main data: { controller: yield(:controllers_for_main) } do %>
       <%= yield %>
     <% end %>
-
 
     <%= render partial: "shared/footer" unless current_page?(root_path)%>
   </body>

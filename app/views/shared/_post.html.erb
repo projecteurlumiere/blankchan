@@ -1,49 +1,12 @@
 <% post = post.decorate %>
+<% locals_hash = { board: board, topic: topic, post: post } %>
 
 <div class="post" id="post-id-<%="#{post.id}"%>">
-  <div class="post-first-line">
-    <div class="post-metadata">
-      <%= link_to "№#{post.id}", board_topic_path(board.name, topic, anchor: "post-id-#{post.id}"), class: "post-metadata-post-id" %>
-      in
-      <%= link_to "##{topic.id}", board_topic_path(board.name, topic), class: "post-metadata-topic-id" %>
-      |
-      <span class="post-metadata-time">Posted at: <%= post.created_at %></span>
-      |
-      <%= tag.span "Reply", class: "reply-to-post",
-                            data: {
-                            action: "click->form#callToFixed click->form#reply",
-                            form_id_param: post.id
-                            }  %>
-      <%= link_to "Go to", board_topic_path(board.name,
-                                            topic,
-                                            anchor: "post-id-#{post.id}"), class: "go-to-post"%>
-    </div>
-    <h4 class="post-title"><%= sanitize(post.name, tags: [], attributes: []) %></h4>
-  </div>
-  <div class="content-container<%= post.images.length > 1 ? " many-images" : " one-image" %>">
+  <%= render partial: "shared/post_first_line", locals: locals_hash %>
+
   <% if post.images.attached? %>
-    <div class="<%= post.images.length > 1 ? "images-showcase" : "image-showcase" %>">
-        <% post.images.each do |image| %>
-          <% next if image.nil? || !image.variable? %>
-          <div class="image-container">
-            <div class="image-metadata">
-              <%= tag.span(class: "image-metadata-name") { truncate_image_name(image, 16, "[...]") }%>
-              <%= tag.span(class: "image-metadata-size") { number_to_human_size(image.byte_size) }%>
-              <div>
-                <%= tag.span(class: "image-metadata-height") { image.metadata["height"].to_s }%>x<%= tag.span(class: "image-metadata-width") { image.metadata["width"].to_s }%>
-              </div>
-              </div>
-            <%= image_tag(post.image_as_thumb(image), data: {full_link: url_for(image), img_height: image.metadata["height"], img_width: image.metadata["width"]}) %>
-          </div>
-        <% end %>
-    </div>
-    <% end %>
-    <div class="post-text"><%= simple_format(auto_link(post.text, sanitize: false)) %>
-      <div class="post-replies">
-        <% post.replies.each do |reply| %>
-          <span class="reply-link"><%= link_to ">>#{reply.id}", board_topic_path(reply.topic.board.name, reply.topic, anchor: "post-id-#{reply.id}") %></span>
-        <% end %>
-      </div>
-    </div>
-  </div>
+    <%= render partial: "shared/post_content", locals: locals_hash %>
+  <% end %>
+
+  <%= render partial: "shared/post_text", locals: locals_hash %>
 </div>

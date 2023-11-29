@@ -1,0 +1,10 @@
+<%= tag.div class: "footing" do %>
+  <nav class="inner-links" aria-label="board navigation">
+    <a href="#boards-body">Back to top</a>
+    |
+    <%= link_to "New Thread", new_board_topic_path(@board.name), data: {
+                                                                        turbo_frame: "new-post-form",
+                                                                        action: "click->form#callToBottom"
+                                                                        } %>
+  </nav>
+<% end %>

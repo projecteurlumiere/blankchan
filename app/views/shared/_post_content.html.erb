@@ -1,0 +1,19 @@
+<div class="content-container<%= post.images.length > 1 ? " many-images" : " one-image" %>">
+  <div class="<%= post.images.length > 1 ? "images-showcase" : "image-showcase" %>">
+    <% post.images.each do |image| %>
+      <% next if image.nil? || !image.variable? %>
+      <div class="image-container">
+        <div class="image-metadata">
+          <%= tag.span(class: "image-metadata-name") { truncate_image_name(image, 16, "[...]") }%>
+          <%= tag.span(class: "image-metadata-size") { number_to_human_size(image.byte_size) }%>
+          <div>
+            <%= tag.span(class: "image-metadata-height") { image.metadata["height"].to_s }%>
+            <span>x</span>
+            <%= tag.span(class: "image-metadata-width") { image.metadata["width"].to_s }%>
+          </div>
+        </div>
+        <%= image_tag(post.image_as_thumb(image), data: {full_link: url_for(image), img_height: image.metadata["height"], img_width: image.metadata["width"]}) %>
+      </div>
+    <% end %>
+  </div>
+</div>
