@@ -2,7 +2,7 @@
   <nav class="inner-links" aria-label="thread navigation">
     <%= link_to "Back to top", "#topic-body"%>
     |
-    <a href="">Refresh</a>
+    <%= link_to "Refrest", board_topic_path(@board.name, @topic), data: { turbo_frame: "topic-body" } %>
     |
     <%= link_to "New post", new_board_topic_post_path(@board.name, @topic), data: {
                                                                             turbo_frame: "new-post-form",

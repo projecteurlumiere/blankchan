@@ -2,29 +2,31 @@
   <h1>New Topic</h1>
 </div>
 
-<%= turbo_frame_tag "new-post-form", class: "topic-form" do %>
-  <%#! turn on turbo later, please  %>
-  <%= form_with model: @topic, url: board_topics_url do |form| %>
-    <%= form.fields_for :post_attributes do |form| %>
-      <%= form.label :pseudonim %>
-      <%= form.text_field :pseudonim, value: "Anonymous", disabled: true %>
+<div class="controller-container", data-controller="form">
+  <%= turbo_frame_tag "new-post-form", class: "topic-form" do %>
+    <%#! turn on turbo later, please  %>
+    <%= form_with model: @topic, url: board_topics_url do |form| %>
+      <%= form.fields_for :post_attributes do |form| %>
+        <%= form.label :pseudonim %>
+        <%= form.text_field :pseudonim, value: "Anonymous", disabled: true %>
 
-      <%= form.label :name %>
-      <%= form.text_field :name %>
+        <%= form.label :name %>
+        <%= form.text_field :name %>
 
-      <%= form.label :text %>
-      <%= form.text_area :text, data: { form_target: "formTextField" } %>
+        <%= form.label :text %>
+        <%= form.text_area :text, data: { form_target: "formTextField" } %>
 
-      <%= render partial: "shared/format_panel" %>
+        <%= render partial: "shared/format_panel" %>
 
-      <%= form.label :images %>
-      <%= form.file_field :images, multiple: true %>
+        <%= form.label :images %>
+        <%= form.file_field :images, multiple: true %>
 
 
-      <%# form.label :captcha %>
-      <%# form.text_area :captcha %>
+        <%# form.label :captcha %>
+        <%# form.text_area :captcha %>
 
+      <% end %>
+      <%= form.submit %>
     <% end %>
-    <%= form.submit %>
   <% end %>
-<% end %>
+</div>

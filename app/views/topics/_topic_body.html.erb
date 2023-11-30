@@ -1,4 +1,4 @@
-<%= tag.div id: "topic-body" do %>
+<%= turbo_frame_tag "topic-body" do %>
   <% if current_user&.moderator_role? || current_user&.admin_role? %>
     <%= render partial: "shared/topic_admin_panel", locals: { board: @board, topic: @topic } %>
   <% end %>
