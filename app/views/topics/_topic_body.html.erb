@@ -4,7 +4,7 @@
   <% end %>
 
   <%= tag.div class: "topic", data: { controller: "lightbox", action: "click->lightbox#showPic" } do %>
-    <%= render partial: "shared/post", collection: @topic.posts.includes(:images_attachments, { images_blobs: { variant_records: { image_attachment: :blob } } }, replies: { posts: {topic: :board}}).order(:created_at), locals: { board: @board, topic: @topic }, cached: true %>
+    <%= render partial: "shared/post", collection: @posts, locals: { board: @board, topic: @topic }, cached: true %>
   <% end %>
   <%# using @topic.posts.with_attached_images here (instead of defining @posts separately) allows this view to use cache without asking for every image and variant %>
   <%# previously, it would ask db for all images instead of just verifying whether @topic has been changed %>

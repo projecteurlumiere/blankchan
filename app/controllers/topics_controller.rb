@@ -7,6 +7,8 @@ class TopicsController < ApplicationController
     @board = board_by_name!
     @topic = Topic.find(params[:id])
 
+    @posts = @topic.posts.includes(:images_attachments, { images_blobs: { variant_records: { image_attachment: :blob } } }, replies: { posts: {topic: :board}}).order(:created_at)
+
     # @posts = @topic.posts.with_attached_images
     # @posts = PostDecorator.decorate_collection(@posts.all)
   end
