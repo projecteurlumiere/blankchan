@@ -65,3 +65,11 @@
     right: var(--space-1);
   }
 }
+
+@media(max-height: 785px) {
+  #new-post-form.fixed {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    max-height: 50svh;
+  }
+}
