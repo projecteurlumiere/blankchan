@@ -1,50 +1,37 @@
 class PostsController < ApplicationController
+  before_action :get_board_by_name!, only: %i[new create]
+
   before_action :require_authentication, only: %i[update destroy]
   before_action :authorize_post!, except: %i[destroy]
+
   after_action :verify_authorized
 
   def new
-    @board = Board.find_by(name: params[:board_name])
     @topic = Topic.find(params[:topic_id])
   end
 
   def create
-    @board = Board.find_by(name: params[:board_name])
     @topic = Topic.find(params[:topic_id])
+    params[:topic_id] = nil # so that post.save can save images without .attach method
+
     @post = @topic.posts.build(post_params)
-    @post.author_ip = request.remote_ip
-    @post.author_id = current_user&.id
-    if @post.save && @post.images.attach(params[:images])
+    record_ip
+
+    if @post.save
       flash.notice = "Post created successfully"
       respond_to do |format|
-        format.html do
-          redirect_to board_topic_path(
-                                      @board.name,
-                                      @topic.id,
-                                      anchor: "post-id-#{@post.id}" # ? anchors still do not work...
-                                      )
-        end
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.action(:redirect, board_topic_path(
-                                                                              @board.name,
-                                                                              @topic.id,
-                                                                              anchor: "post-id-#{@post.id}" # ? anchors still do not work...
-                                                                              )), status: 302
-        end
+        format.html { redirect_to post_with_anchor_path, status: :found }
+        format.turbo_stream { render turbo_stream: turbo_stream.action(:redirect, post_with_anchor_path), status: :found }
       end
-
     else
-      # ? how about anchors here? or should client-side work with it?
-      @post&.destroy
-
       flash.now.alert = "Could not create post"
       @errors = @post.errors.full_messages
 
       @posts = @topic.posts.all
       respond_to do |format|
-        format.html { render "topics/show", status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_entity }
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace("notifications", partial: "shared/notifications"), status: 422
+          render turbo_stream: turbo_stream.replace("notifications", partial: "shared/notifications"), status: :unprocessable_entity
         end
       end
 
@@ -87,6 +74,15 @@ class PostsController < ApplicationController
 
   def post_params
     params.require(:post).permit(:topic_id, :name, :text, images: [])
+  end
+
+  def record_ip
+    @post.author_ip = request.remote_ip
+    @post.author_id = current_user&.id
+  end
+
+  def post_with_anchor_path
+    board_topic_path(@board.name, @topic.id, anchor: "post-id-#{@post.id}")
   end
 
   def authorize_post!

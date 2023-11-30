@@ -5,7 +5,6 @@ class BoardsController < ApplicationController
 
   def show
     @board = Board.find_by(name: params[:name])
-
     raise ActiveRecord::RecordNotFound if @board.nil?
 
     @topics = @board.topics.order(updated_at: :desc).page(params[:page])
