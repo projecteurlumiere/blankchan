@@ -11,7 +11,7 @@
     </tr>
     <% @boards_name_and_full_name.each do |board| %>
       <tr>
-        <td><%= link_to board[0], board_path(board[0]) %></td>
+        <td><%= link_to "/#{board[0]}/", board_path(board[0]) %></td>
         <td><%= link_to board[1], board_path(board[0]) %></td>
       </tr>
     <% end %>

@@ -7,9 +7,9 @@ RSpec.describe BoardsController, type: :controller do
     end
 
     it "prepares list of all boards" do
-      all_boards = Board.all.order(:name)
+      all_boards = Board.order(:name).pluck(:name, :full_name)
 
-      expect(assigns[:boards]).to eq(all_boards)
+      expect(assigns[:boards_name_and_full_name]).to eq(all_boards)
     end
 
     it "renders boards/index" do

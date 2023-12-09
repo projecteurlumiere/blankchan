@@ -2,11 +2,11 @@ require "rails_helper"
 
 RSpec.shared_examples "admin dashboard's basic functions" do
   it "is visible" do
-    expect(page).to have_content("users")
+    expect(page).to have_content("Admin dashboard")
   end
 
   it "is enterable" do
-    click_on "users"
+    click_on "Admin dashboard"
 
     expect(page).to have_content("Admin dashboard")
   end
@@ -20,7 +20,7 @@ RSpec.shared_examples "admin dashboard's basic functions" do
         admin
       end
 
-      click_on "users"
+      click_on "Admin dashboard"
     end
 
     it "shows the list of users" do
@@ -28,7 +28,7 @@ RSpec.shared_examples "admin dashboard's basic functions" do
     end
 
     it "shows the list of users' corresponding roles" do
-      expect(page).to have_content("admin", count: 1)
+      expect(find("main")).to have_content("admin", count: 1)
       expect(page).to have_content("passcode_user", count: several_users.count)
 
       # one for role, one for dismiss buttons
@@ -75,7 +75,7 @@ RSpec.describe "Admin dashboard", type: :system do
       it "shows appropriate buttons for every role" do
         several_users; moderator; current_user
 
-        click_on "users"
+        click_on "Admin dashboard"
 
         expect(page).to have_button("promote", count: 5)
         expect(page).to have_button("dismiss", count: 1)
@@ -84,7 +84,7 @@ RSpec.describe "Admin dashboard", type: :system do
       it "shows no delete button for another admin" do
         another_admin = create(:administrator).user
 
-        click_on "users"
+        click_on "Admin dashboard"
 
         section = find("#user-id-#{another_admin.id}")
         expect(section).to have_no_button("delete_user")

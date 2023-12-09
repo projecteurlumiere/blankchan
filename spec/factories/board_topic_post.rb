@@ -1,7 +1,8 @@
 FactoryBot.define do
   factory :board do
     # may sometimes raise error about the name duplication
-    name { "#{Faker::NatoPhoneticAlphabet.code_word}-#{rand(1..1000)}" }
+    name { "#{Faker::NatoPhoneticAlphabet.code_word}-#{rand(1..1000)}".downcase }
+    full_name { name.capitalize }
 
     after :create do |board|
       create_list :topic, 3, board: board
