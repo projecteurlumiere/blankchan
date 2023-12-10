@@ -92,10 +92,11 @@ RSpec.describe "Admin dashboard", type: :system do
     end
   end
 
-  xcontext "for moderator" do
+  context "for moderator" do
     # Moderator doesn't have access to admin's dashboard basic functions
     let(:current_user) { create(:moderator).user }
-    include_examples "admin dashboard's basic functions"
+    # include_examples "admin dashboard's basic functions"
+    include_examples "admin dashboard access denied"
   end
 
   context "when user has passcode rights" do
