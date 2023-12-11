@@ -14,7 +14,7 @@
 
     <div class="user-links">
       <% if current_user&.admin_role? %>
-        <%= link_to "Admin dashboard", admin_users_path %> |
+        <%= link_to "manage users", admin_users_path %> |
       <% end %>
       <%= link_to "get passcode", new_passcode_path %>
       <% if user_signed_in? %>

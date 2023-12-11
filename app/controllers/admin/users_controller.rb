@@ -5,8 +5,12 @@ module Admin
     after_action :verify_authorized
 
     def index
+      undesired_column_names = ["passcode_digest", "remember_token_digest" ]
+      @user_columns = User.column_names.reject { |column| undesired_column_names.any?(column) }
       @users = User.all
     end
+
+    def new; end
 
     def create
       @user = build_user

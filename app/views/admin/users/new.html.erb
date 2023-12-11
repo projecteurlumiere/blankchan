@@ -1,0 +1,10 @@
+<div class="heading">
+  <h1>New User</h1>
+</div>
+<%= turbo_frame_tag "new-user-form" do %>
+  <%= form_with model: User.new, url: admin_users_path, class: "passcode-form admin-form" do |form| %>
+    <%= form.label :email %>
+    <%= form.email_field :email %>
+    <%= form.submit %>
+  <% end %>
+<% end %>

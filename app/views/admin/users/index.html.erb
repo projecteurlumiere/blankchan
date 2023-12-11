@@ -1,6 +1,16 @@
-<h1>Admin dashboard</h1>
-<h2>New User</h2>
-<%= render partial: "new_user_form" %>
+<div class="heading">
+  <h1><%= link_to "User managament", admin_users_path %></h1>
+  <h3><%= link_to "Create User", new_admin_user_path, data: {turbo_frame: "new-user-form"} %></h3>
+</div>
+<%= turbo_frame_tag "new-user-form" %>
 <br>
 <h2>Users</h2>
-<%= render partial: "user", collection: @users %>
+<table>
+  <tr>
+    <% @user_columns.each do |attribute| %>
+      <th><%= attribute %></th>
+    <% end %>
+    <th>Actions</th>
+  </tr>
+  <%= render partial: "user", collection: @users, locals: { user_columns: @user_columns}%>
+</table>
