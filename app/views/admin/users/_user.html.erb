@@ -1,19 +1,25 @@
-<tr>
-
+<%= tag.tr id: "user-id-#{user.id}" do %>
   <% user.attributes.each do |key, value| %>
     <% next if user_columns.none?(key) %>
-    <td><%= value %></td>
-    <% end %>
+    <%= tag.td value, class: key %>
+  <% end %>
+
+  <% if user.moderator_role? %>
+    <%= tag.td user.moderator.supervised_board %>
+  <% end %>
 
   <td class= "actions">
     <% if user.moderator_role? %>
-      <%= button_to "dismiss", admin_user_path(user.id), method: "patch", params: {directive: "dismiss moderator"}%>
+      <%= button_to "dismiss", admin_user_path(user.id),method: "patch",
+                                                        params: { directive: "dismiss moderator" },
+                                                        data: { turbo_stream: true } %>
     <% elsif user.passcode_user_role? %>
-      <%= button_to "promote", admin_user_path(user.id), method: "patch", params: {directive: "promote to moderator"} %>
+      <%= button_to "promote", admin_user_path(user.id), method: "patch",
+                                                         params: { directive: "promote to moderator" },
+                                                         data: { turbo_stream: true } %>
     <% end %>
     <% unless user.admin_role? %>
-      <%= button_to "delete user", admin_user_path(user.id), method: "delete" %>
+      <%= button_to "delete user", admin_user_path(user.id), method: "delete", data: { turbo_stream: true } %>
     <% end %>
   </td>
-
-</tr>
+<% end %>

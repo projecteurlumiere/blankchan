@@ -7,7 +7,8 @@ module Admin
     def index
       undesired_column_names = ["passcode_digest", "remember_token_digest" ]
       @user_columns = User.column_names.reject { |column| undesired_column_names.any?(column) }
-      @users = User.all
+
+      @users = users_by_role || (redirect_to admin_users_path(params: { by_role: "all" }))
     end
 
     def new; end
@@ -35,7 +36,10 @@ module Admin
         dismiss_moderator
       end
 
-      redirect_to admin_users_path(anchor: "user-id-#{@user.id}")
+      respond_to do |format|
+        format.html { redirect_to redirect_to admin_users_path_with_anchor, status: :found }
+        format.turbo_stream { render turbo_stream: turbo_stream.action(:redirect, admin_users_path_with_anchor), status: :found }
+      end
     end
 
     def destroy
@@ -51,6 +55,19 @@ module Admin
 
     private
 
+    def users_by_role
+      case params[:by_role]
+      when "all"
+        User.all.order(:id)
+      when "passcode_users"
+        User.all.where(role: "passcode_user").order(:id)
+      when "moderators"
+        User.all.includes(:moderator).where(role: "moderator").order(:id)
+      when "admins"
+        User.all.includes(:administrator).where(role: "admin").order(:id)
+      end
+    end
+
     def promote_to_moderator
       if @user.passcode_user_role? && @user.create_moderator
         flash.notice = "#{@user.id} has been promoted to moderator!"
@@ -65,6 +82,10 @@ module Admin
       else
         flash.alert = "Couldn't dismiss moderator #{@user.id}"
       end
+    end
+
+    def admin_users_path_with_anchor
+      admin_users_path(params: { by_role: "all" }, anchor: "user-id-#{@user.id}")
     end
 
     def build_user

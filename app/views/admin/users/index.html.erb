@@ -3,14 +3,26 @@
   <h3><%= link_to "Create User", new_admin_user_path, data: {turbo_frame: "new-user-form"} %></h3>
 </div>
 <%= turbo_frame_tag "new-user-form" %>
-<br>
-<h2>Users</h2>
-<table>
-  <tr>
-    <% @user_columns.each do |attribute| %>
-      <th><%= attribute %></th>
-    <% end %>
-    <th>Actions</th>
-  </tr>
-  <%= render partial: "user", collection: @users, locals: { user_columns: @user_columns}%>
-</table>
+
+<div id="admin-container">
+  <nav>
+    <ul>
+      <li><%= link_to_unless_current "All", admin_users_path(params: { by_role: "all" }) %></li>
+      <li><%= link_to_unless_current "Passcode Users", admin_users_path(params: {by_role: "passcode_users"}) %></li>
+      <li><%= link_to_unless_current "Moderators", admin_users_path(params: {by_role: "moderators"}) %></li>
+      <li><%= link_to_unless_current "Admins", admin_users_path(params: {by_role: "admins"}) %></li>
+    </ul>
+  </nav>
+  <div class="table-container">
+    <table id="users-list">
+      <tr>
+        <% @user_columns.each do |attribute| %>
+          <th><%= attribute %></th>
+        <% end %>
+        <%= tag.th "board" if @users.any? { |user| user.moderator_role? } %>
+        <th>actions</th>
+      </tr>
+      <%= render partial: "user", collection: @users, locals: { user_columns: @user_columns}%>
+    </table>
+  </div>
+</div>
