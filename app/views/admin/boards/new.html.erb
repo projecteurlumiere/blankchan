@@ -1,0 +1,10 @@
+<div class="heading">
+  <h1>New Board</h1>
+</div>
+<%= turbo_frame_tag "new-user-form" do %>
+  <%= form_with model: Board.new, url: admin_boards_path, class: "board-form admin-form" do |form| %>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+    <%= form.submit %>
+  <% end %>
+<% end %>

@@ -6,6 +6,8 @@
 
   <% if user.moderator_role? %>
     <%= tag.td user.moderator.supervised_board %>
+  <% elsif board_column %>
+    <%= tag.td %>
   <% end %>
 
   <td class= "actions">

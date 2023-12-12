@@ -14,15 +14,21 @@
     </ul>
   </nav>
   <div class="table-container">
-    <table id="users-list">
+    <table class="admin-table">
       <tr>
+
         <% @user_columns.each do |attribute| %>
           <th><%= attribute %></th>
         <% end %>
-        <%= tag.th "board" if @users.any? { |user| user.moderator_role? } %>
+        <% if @users.any? { |user| user.moderator_role? } %>
+          <% board_column = true %>
+          <%= tag.th "board" %>
+        <% end %>
+
         <th>actions</th>
+
       </tr>
-      <%= render partial: "user", collection: @users, locals: { user_columns: @user_columns}%>
+      <%= render partial: "user", collection: @users, locals: { user_columns: @user_columns,  board_column: board_column}%>
     </table>
   </div>
 </div>

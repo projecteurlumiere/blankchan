@@ -22,14 +22,18 @@
   min-width: 900px;
 }
 
-#users-list .id {
+.admin-table * {
+  margin: 0;
+}
+
+.admin-table .id {
   text-align: right;
 }
-#users-list td {
+.admin-table td {
   border: 10px solid transparent;
 }
 
-#users-list td.actions {
+.admin-table td.actions {
   display: flex;
   gap: var(--space-1);
 }

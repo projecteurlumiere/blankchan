@@ -1,0 +1,11 @@
+<%= tag.tr id: "board-id-#{board.id}" do %>
+  <% board.attributes.each do |key, value| %>
+    <% next if board_columns.none?(key) %>
+    <%= tag.td value, class: key %>
+  <% end %>
+
+  <td class= "actions">
+    <%= button_to "close board", admin_close_board_path(board.id) %>
+    <%= button_to "delete board", admin_board_path(board.id), method: "delete", data: { turbo_stream: true } %>
+  </td>
+<% end %>

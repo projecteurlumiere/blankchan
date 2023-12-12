@@ -1,0 +1,19 @@
+<div class="heading">
+  <h2>Board management</h2>
+  <h3><%= link_to "Create Board", new_admin_board_path, data: {turbo_frame: "new-user-form"} %></h3>
+  <%= turbo_frame_tag "new-user-form" %>
+</div>
+
+<div id="admin-container">
+  <div class="table-container">
+    <table class="admin-table">
+      <tr>
+        <% @board_columns.each do |attribute| %>
+          <th><%= attribute %></th>
+        <% end %>
+        <th>actions</th>
+      </tr>
+      <%= render partial: "board", collection: @boards, locals: { board_columns: @board_columns }%>
+    </table>
+  </div>
+</div>
