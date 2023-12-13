@@ -1,5 +1,5 @@
 <div class="heading">
-  <h2>Board management</h2>
+  <h2><%= link_to "Board management", admin_boards_path %></h2>
   <h3><%= link_to "Create Board", new_admin_board_path, data: {turbo_frame: "new-user-form"} %></h3>
   <%= turbo_frame_tag "new-user-form" %>
 </div>

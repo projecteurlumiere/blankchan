@@ -24,5 +24,6 @@ Rails.application.routes.draw do
     resources :boards, only: %i[index new create destroy], param: :name
 
     post "boards/close/:name", to: "boards#close", as: "close_board"
+    post "boards/open/:name", to: "boards#open", as: "open_board"
   end
 end

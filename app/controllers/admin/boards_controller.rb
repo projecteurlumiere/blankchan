@@ -30,6 +30,39 @@ module Admin
     end
 
     def close
+      @board = Board.find_by(name: params[:name])
+      @board.closed = true
+      if @board&.save
+        flash.notice = "Board closed"
+        respond_to do |format|
+          format.html { redirect_to admin_boards_path_with_anchor }
+          format.turbo_stream { render turbo_stream: turbo_stream.action(:redirect, admin_boards_path_with_anchor) }
+        end
+      else
+        flash.alert = "Board could not be closed"
+        respond_to do |format|
+          format.html { render :index }
+          format.turbo_stream { render turbo_stream: turbo_stream.replace("notifications", partial: "shared/notifications") }
+        end
+      end
+    end
+
+    def open
+      @board = Board.find_by(name: params[:name])
+      @board.closed = false
+      if @board&.save
+        flash.notice = "Board opened"
+        respond_to do |format|
+          format.html { redirect_to admin_boards_path_with_anchor }
+          format.turbo_stream { render turbo_stream: turbo_stream.action(:redirect, admin_boards_path_with_anchor) }
+        end
+      else
+        flash.alert = "Board could not be opened"
+        respond_to do |format|
+          format.html { render :index }
+          format.turbo_stream { render turbo_stream: turbo_stream.replace("notifications", partial: "shared/notifications") }
+        end
+      end
     end
 
     def destroy
@@ -51,6 +84,10 @@ module Admin
 
     def board_params
       params.require(:board).permit(:name, :full_name)
+    end
+
+    def admin_boards_path_with_anchor
+      admin_boards_path(params: { anchor: "board-id-#{@board.id}" })
     end
   end
 end

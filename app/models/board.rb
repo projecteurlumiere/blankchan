@@ -1,5 +1,6 @@
 class Board < ApplicationRecord
   has_many :topics, dependent: :destroy
+  has_many :posts, through: :topics
 
   validates :name, presence: true, uniqueness: true
   validates :full_name, presence: true, uniqueness: true

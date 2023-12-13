@@ -12,6 +12,7 @@ class Post < ApplicationRecord
   has_many :replies, through: :replying_posts
 
   belongs_to :topic
+  delegate :board, to: :topic, allow_nil: false
 
   has_many_attached :images
 
@@ -23,7 +24,9 @@ class Post < ApplicationRecord
   validates :topic_id, presence: true
   validates :name, length: { maximum: 100 }
   validates :text, length: { minimum: 5, maximum: 2000 }
-  # validates :text, presence: true
+  validates :board, presence: true
+  validate :board_is_open
+  # validate :topic_is_open
 
   def image_as_thumb(image)
     image.variant(resize_to_limit: [200, 200]).processed
@@ -73,5 +76,9 @@ class Post < ApplicationRecord
         self.text = text.sub(">>#{match.id}", "<a href='#{Rails.application.routes.url_helpers.board_topic_path(match.topic.board.name, match.topic_id)}#post-id-#{match.id}'>>>#{match.id}</a>")
       end
     end
+  end
+
+  def board_is_open
+    errors.add(:board, "must not be closed") if board.closed?
   end
 end
