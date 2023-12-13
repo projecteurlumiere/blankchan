@@ -19,11 +19,20 @@ module Admin
         flash.notice = "User successfully created"
         flash.notice += " in case you didn't recieve (and this is dev env) an email here is your passcode: #{@user.passcode}" if Rails.env.development?
         PasscodeMailer.with(email: params[:user][:email], passcode: @user.passcode).issue_passcode_email.deliver_later
+        response.status = :found
+        respond_to do |format|
+          format.html { redirect_to admin_users_path_with_anchor }
+          format.turbo_stream { render turbo_stream: turbo_stream.action(:redirect, admin_users_path_with_anchor) }
+        end
       else
         flash.now.alert = "Something went wrong"
+        response.status = :unprocessable_entity
+        respond_to do |format|
+          format.html { render :new, status: :unprocessable_entity }
+          format.turbo_stream { render turbo_stream: turbo_stream.replace("notifications", partial: "shared/notifications") }
+        end
       end
 
-      redirect_to admin_users_path
     end
 
     def update
