@@ -39,7 +39,7 @@ module Admin
           format.turbo_stream { render turbo_stream: turbo_stream.action(:redirect, admin_boards_path_with_anchor) }
         end
       else
-        flash.alert = "Board could not be closed"
+        flash.now.alert = "Board could not be closed"
         respond_to do |format|
           format.html { render :index }
           format.turbo_stream { render turbo_stream: turbo_stream.replace("notifications", partial: "shared/notifications") }
@@ -57,7 +57,7 @@ module Admin
           format.turbo_stream { render turbo_stream: turbo_stream.action(:redirect, admin_boards_path_with_anchor) }
         end
       else
-        flash.alert = "Board could not be opened"
+        flash.now.alert = "Board could not be opened"
         respond_to do |format|
           format.html { render :index }
           format.turbo_stream { render turbo_stream: turbo_stream.replace("notifications", partial: "shared/notifications") }

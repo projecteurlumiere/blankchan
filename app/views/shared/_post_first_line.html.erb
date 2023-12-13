@@ -15,7 +15,6 @@
                                           topic,
                                           anchor: "post-id-#{post.id}"), class: "go-to-post"%>
   </div>
-
+  <%# render partial: "shared/post_admin_panel", locals: { board: board, topic: topic, post: post } %>
   <h4 class="post-title"><%= sanitize(post.name, tags: [], attributes: []) %></h4>
-
 </div>

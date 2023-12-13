@@ -11,6 +11,8 @@ Rails.application.routes.draw do
             path: '/',
             only: %i[show],
             param: :name do
+    post "threads/close/:id", to: "topics#close", as: "close_topic"
+    post "threads/open/:id", to: "topics#open", as: "open_topic"
     resources :threads,
               only: %i[show new create destroy],
               as: :topics,

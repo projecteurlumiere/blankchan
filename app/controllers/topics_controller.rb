@@ -44,13 +44,49 @@ class TopicsController < ApplicationController
     end
   end
 
+  def close
+    @topic = Topic.find(params[:id])
+    @topic.closed = true
+    if @topic.save
+      flash.notice = "Topic closed"
+      respond_to do |format|
+        format.html { redirect_to board_topic_path(@board.name, @topic) }
+        format.turbo_stream { render turbo_stream: turbo_stream.action(:redirect, board_topic_path(@board.name, @topic)) }
+      end
+    else
+      flash.now.alert = "Topic could not be closed"
+      respond_to do |format|
+        format.html { render :show }
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("notifications", partial: "shared/notifications") }
+      end
+    end
+  end
+
+  def open
+    @topic = Topic.find(params[:id])
+    @topic.closed = false
+    if @topic.save
+      flash.notice = "Topic opened"
+      respond_to do |format|
+        format.html { redirect_to board_topic_path(@board.name, @topic) }
+        format.turbo_stream { render turbo_stream: turbo_stream.action(:redirect, board_topic_path(@board.name, @topic)) }
+      end
+    else
+      flash.now.alert = "Topic could not be opened"
+      respond_to do |format|
+        format.html { render :show }
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("notifications", partial: "shared/notifications") }
+      end
+    end
+  end
+
   def destroy
     if @topic = Topic.find_by(id: params[:id])
       authorize_topic!
       @topic.destroy
 
       flash.notice = "Topic deleted"
-      redirect_to board_path(params[:board_name])
+      redirect_to board_path(params[:board_name]), status: 303
     else
       flash.now.alert = "Topic not found"
       render board_path(params[:board_name]), status: :unprocessable_entity

@@ -41,3 +41,15 @@
 td.actions button {
   width: 100px;
 }
+
+/* Topic admin panel */
+.topic-admin-panel {
+  display: flex;
+  justify-content: center;
+  margin: 4px 0;
+  gap: var(--space-4);
+}
+
+.topic-admin-panel * {
+  margin: 0;
+}

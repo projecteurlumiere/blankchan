@@ -25,8 +25,9 @@ class Post < ApplicationRecord
   validates :name, length: { maximum: 100 }
   validates :text, length: { minimum: 5, maximum: 2000 }
   validates :board, presence: true
-  validate :board_is_open
-  # validate :topic_is_open
+
+  validate :board_open
+  validate :topic_open
 
   def image_as_thumb(image)
     image.variant(resize_to_limit: [200, 200]).processed
@@ -78,7 +79,11 @@ class Post < ApplicationRecord
     end
   end
 
-  def board_is_open
+  def board_open
     errors.add(:board, "must not be closed") if board.closed?
+  end
+
+  def topic_open
+    errors.add(:topic, "must not be closed") if topic.closed?
   end
 end

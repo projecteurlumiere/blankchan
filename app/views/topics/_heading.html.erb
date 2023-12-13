@@ -7,4 +7,7 @@
                                                                           action: "click->form#callToTop"
                                                                           } %>
   <%= turbo_frame_tag "new-post-form", class: "post-form" %>
+  <% if current_user&.moderator_role? || current_user&.admin_role? %>
+    <%= render partial: "shared/topic_admin_panel", locals: { board: @board, topic: @topic } %>
+  <% end %>
 </div>

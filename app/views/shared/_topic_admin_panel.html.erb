@@ -1,7 +1,13 @@
 <%# Condition must be put outside (if used) %>
 <% div_class = %w[topic-admin-panel] unless div_class %>
 <%= tag.div class: div_class do %>
-  <div class="topic-panel">
+    <%= link_to "Admin layout for posts", board_topic_path(board.name, topic, params: { admin: true }) %>
+
+    <% if topic.closed? %>
+      <%= button_to "Open Topic", board_open_topic_path(board.name, topic) %>
+    <% else %>
+      <%= button_to "Close Topic", board_close_topic_path(board.name, topic) %>
+
+    <% end %>
     <%= button_to "Delete Topic", board_topic_path(board.name, topic), method: :delete %>
-  </div>
 <% end %>
