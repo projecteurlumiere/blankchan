@@ -19,11 +19,13 @@ class BoardsController < ApplicationController
 
     # ? How to include a couple (not all) of preview posts with #include(:posts)?
 
-    render :show and return if params[:page].nil? || params[:page] == 1
-
-    respond_to do |format|
-      format.html { render :show }
-      format.turbo_stream { render :show }
+    if params[:page].nil? || params[:page] == 1
+      respond_to { |format| format.html { render :show } }
+    else
+      respond_to do |format|
+        format.html { render :show }
+        format.turbo_stream { render :show }
+      end
     end
   end
 
