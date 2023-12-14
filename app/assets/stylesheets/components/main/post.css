@@ -64,12 +64,23 @@
 
 /* Go To vs Reply button */
 
-.topic .go-to-post {
+.topic .go-to-post,
+.topic .go-to-topic {
   display: none;
 }
 
-.topic-preview .reply-to-post {
+.topic-preview .reply-to-post,
+.topic-preview .go-to-topic {
   display: none;
+}
+
+.topic-first-post .reply-to-post,
+.topic-first-post .go-to-post {
+  display: none;
+}
+
+.topic-first-post .go-to-topic {
+  display: inline;
 }
 
 @media(max-width: 495px) {

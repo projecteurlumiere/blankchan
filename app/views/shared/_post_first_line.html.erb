@@ -8,7 +8,8 @@
     |
     <span class="time">Posted at: <%= post.created_at %></span>
     |
-    <%= tag.button "Reply", class: "reply-to-post",
+    <%= tag.button "Reply",
+                          class: "reply-to-post",
                           data: {
                           action: "click->form#callToFixed click->form#reply",
                           form_id_param: post.id
@@ -16,6 +17,7 @@
     <%= link_to "Go to", board_topic_path(board.name,
                                           topic,
                                           anchor: "post-id-#{post.id}"), class: "go-to-post"%>
+    <%= link_to "Go to Topic", board_topic_path(board.name, topic), class: "go-to-topic" %>
   </div>
   <%# render partial: "shared/post_admin_panel", locals: { board: board, topic: topic, post: post } %>
   <h4 class="post-title"><%= sanitize(post.name, tags: [], attributes: []) %></h4>

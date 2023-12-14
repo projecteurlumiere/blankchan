@@ -15,7 +15,7 @@
 }
 
 .heading > h3 {
-  color: var(--color-primary);
+  color: var(--color-accent);
 }
 
 .heading > h2 {

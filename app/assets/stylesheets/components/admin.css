@@ -6,7 +6,22 @@
 }
 
 #admin-container button {
-  all: unset;
+  border: solid 2px var(--color-primary);
+  font-weight: 600;
+}
+
+#admin-container button.open,
+#admin-container button.promote {
+  background-color: var(--color-accent);
+}
+
+#admin-container button.close,
+#admin-container button.dismiss {
+  background-color: var(--color-light-primary);
+}
+
+#admin-container button.delete {
+  background-color: var(--color-dark-primary);
 }
 
 

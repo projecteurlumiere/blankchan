@@ -9,6 +9,10 @@ ul {
   padding: 0;
 }
 
+* {
+  line-height: 1.2;
+}
+
 a {
   text-decoration: none;
   color: inherit;
@@ -55,6 +59,8 @@ button {
 
   font-size: inherit;
   color: inherit;
+
+  line-height: 1.2;
 }
 
 :root {
