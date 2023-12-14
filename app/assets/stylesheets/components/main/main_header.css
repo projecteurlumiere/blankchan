@@ -44,3 +44,7 @@
   display: inline;
   margin: 0;
 }
+
+.inner-links.top button {
+  line-height: 1;
+}
