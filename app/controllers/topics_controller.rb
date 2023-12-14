@@ -9,7 +9,7 @@ class TopicsController < ApplicationController
   def show
     @topic = Topic.find(params[:id])
 
-    @posts = @topic.posts.includes(images_their_variants_and_replies).order(:created_at)
+    @posts = @topic.posts.includes(images_their_variants_and_replies).order(:id)
 
     # @posts = @topic.posts.with_attached_images
     # @posts = PostDecorator.decorate_collection(@posts.all)

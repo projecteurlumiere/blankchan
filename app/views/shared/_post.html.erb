@@ -1,5 +1,10 @@
 <% post = post.decorate %>
-<% locals_hash = { board: board, topic: topic, post: post } %>
+<% locals_hash = {
+                  board: board,
+                  topic: topic,
+                  post: post,
+                  iteration: defined?(iteration) ? iteration : post_iteration.index
+                 } %>
 
 <div class="post" id="post-id-<%="#{post.id}"%>">
   <%= render partial: "shared/post_first_line", locals: locals_hash %>

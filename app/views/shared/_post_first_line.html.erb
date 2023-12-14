@@ -4,7 +4,9 @@
     in
     <%= link_to "##{topic.id}", board_topic_path(board.name, topic), class: "post-metadata-topic-id" %>
     |
-    <span class="post-metadata-time">Posted at: <%= post.created_at %></span>
+    <span class="iteration"><%= "#{iteration + 1}" %></span>
+    |
+    <span class="time">Posted at: <%= post.created_at %></span>
     |
     <%= tag.button "Reply", class: "reply-to-post",
                           data: {

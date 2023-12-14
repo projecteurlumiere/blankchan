@@ -48,7 +48,7 @@ td.actions button {
 /* Post admin panel */
 
 .post-admin-panel {
-  display: block
+  display: block;
   gap: var(--space-4);
   margin: 4px 0;
 }

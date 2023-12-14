@@ -1,16 +1,16 @@
-<% posts = preview_topic.posts.includes(:images_attachments, { images_blobs: { variant_records: { image_attachment: :blob } } }, replies: { posts: {topic: :board}}).order(:created_at).where(for_preview: true) %>
+<% posts = preview_topic.posts.includes(:images_attachments, { images_blobs: { variant_records: { image_attachment: :blob } } }, replies: { posts: {topic: :board}}).order(:id).where(for_preview: true) %>
 <li class="topic-preview" id="<%= "topic-id-#{preview_topic.id}" %>">
   <div class="topic-first-post">
     <% if posts.first %>
       <% first_post = posts.first %>
       <% first_post_id = first_post.id %>
-      <%= render "shared/post", board: board, topic: preview_topic, post: first_post %>
+      <%= render "shared/post", board: board, topic: preview_topic, post: first_post, iteration: 1 %>
     <% end %>
   </div>
   <div class="topic-last-posts">
-    <% posts.last(3).each do |post| %>
+    <% posts.last(3).each_with_index do |post, i| %>
       <% next if post.id == first_post_id %>
-      <%= render "shared/post", board: board, topic: preview_topic, post: post  %>
+      <%= render "shared/post", board: board, topic: preview_topic, post: post, iteration: preview_topic.posts.count - 3 + i %>
     <% end %>
   </div>
 </li>
