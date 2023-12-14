@@ -11,7 +11,7 @@
   <%= turbo_frame_tag "new-post-form", class: "post-form" %>
   <nav class="inner-links top" aria-label="topic navigation">
     <a href="#footing">To bottom</a>
-    <% if current_user.admin_role? %>
+    <% if current_user&.admin_role? %>
       |
       <%= render partial: "shared/topic_admin_panel", locals: { board: board, topic: topic, posts: posts }  %>
     <% end %>
