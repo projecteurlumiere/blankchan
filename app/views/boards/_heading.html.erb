@@ -1,6 +1,7 @@
 <div class="heading">
   <h2><%= link_to "/#{@board.name}/", board_path(@board.name) %></h2>
   <h1><%= link_to "#{@board.full_name}", board_path(@board.name) %></h1>
+  <%= tag.h3 "Board is closed" if @board.closed? %>
   <%= link_to "New Thread", new_board_topic_path(@board.name), id: "new-post-form-link",  data: {
                                                                                           turbo_frame: "new-post-form",
                                                                                           action: "click->form#callToTop"
@@ -8,4 +9,7 @@
   <%# gets new topic form (which is almost the same as the new post form) %>
   <%= turbo_frame_tag "new-post-form", class: "topic-form" do %>
   <% end %>
+  <nav class="inner-links top" aria-label="board navigation">
+    <%# <a href="#footing">To bottom</a> %>
+  </nav>
 </div>

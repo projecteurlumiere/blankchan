@@ -1,0 +1,3 @@
+<% @post_ids.each do |post_id| %>
+  <%= turbo_stream.after_all("#post-id-#{post_id} .post-metadata", partial: "shared/post_admin_panel", locals: { board: @board, topic: @topic, post: post_id })  %>
+<% end %>

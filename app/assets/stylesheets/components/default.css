@@ -44,6 +44,19 @@ body {
   text-decoration: line-through;
 }
 
+button {
+  display: inline;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  background: none;
+
+  cursor: pointer;
+
+  font-size: inherit;
+  color: inherit;
+}
+
 :root {
   /*  */
   /** C O L O R S  **/

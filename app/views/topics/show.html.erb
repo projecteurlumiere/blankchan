@@ -1,6 +1,6 @@
 <% content_for(:controllers_for_main) { "form" } %>
 
-<%= render partial: "heading" %>
+<%= render partial: "heading", locals: { board: @board, topic: @topic, posts: @posts } %>
 
 <%= render "shared/lightbox" %>
 

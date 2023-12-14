@@ -4,7 +4,7 @@
 
 <div class="controller-container" data-controller="form">
   <%= turbo_frame_tag "new-post-form", class: "post-form" do %>
-    <div class="window-heading">New Post<span data-action="click->form#hideForm">X</span></div>
+    <div class="window-heading">New Post<button data-action="click->form#hideForm">X</button></div>
     <%# ! in order to make anchor links work, turbo had to be disabled for this form. %>
     <%# ! but disabling turbo broke refreshing the form after invalid submissions... %>
     <%= form_with model: Post.new, url: board_topic_posts_url(topic_id: @topic.id) do |form| %>

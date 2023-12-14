@@ -25,6 +25,10 @@ class TopicPolicy < ApplicationPolicy
     admin_or_supervisor?
   end
 
+  def show_admin?
+    admin_or_supervisor?
+  end
+
   private
 
   def admin_or_supervisor?

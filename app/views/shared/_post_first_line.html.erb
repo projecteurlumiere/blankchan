@@ -6,7 +6,7 @@
     |
     <span class="post-metadata-time">Posted at: <%= post.created_at %></span>
     |
-    <%= tag.span "Reply", class: "reply-to-post",
+    <%= tag.button "Reply", class: "reply-to-post",
                           data: {
                           action: "click->form#callToFixed click->form#reply",
                           form_id_param: post.id

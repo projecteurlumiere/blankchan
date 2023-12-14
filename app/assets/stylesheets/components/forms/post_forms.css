@@ -40,9 +40,10 @@
   font-weight: 700;
 }
 
-#new-post-form.fixed > .window-heading > span {
+#new-post-form.fixed > .window-heading > button {
   position: absolute;
   right: 0px;
+  font-weight: 700;
 }
 
 #new-post-form.fixed {

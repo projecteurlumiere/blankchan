@@ -44,6 +44,20 @@ class TopicsController < ApplicationController
     end
   end
 
+  def show_admin
+    @topic = Topic.find(params[:id])
+
+    @post_ids = params[:post_ids].flatten
+
+    respond_to do |format|
+      format.turbo_stream { render :show_admin }
+      format.html do
+        flash.alert = "Admin panels for posts require javascript to work"
+        redirect_to board_topic_path(@board.name, @topic)
+      end
+    end
+  end
+
   def close
     @topic = Topic.find(params[:id])
     @topic.closed = true

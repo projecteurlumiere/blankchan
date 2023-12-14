@@ -5,6 +5,10 @@
   row-gap: var(--space-4);
 }
 
+#admin-container button {
+  all: unset;
+}
+
 
 #admin-container nav ul {
   display: flex;
@@ -41,10 +45,23 @@
 td.actions button {
   width: 100px;
 }
+/* Post admin panel */
+
+.post-admin-panel {
+  display: block
+  gap: var(--space-4);
+  margin: 4px 0;
+}
+
+.post-admin-panel * {
+  display: inline;
+  margin: 0;
+}
 
 /* Topic admin panel */
+
 .topic-admin-panel {
-  display: flex;
+  display: flex-inline;
   justify-content: center;
   margin: 4px 0;
   gap: var(--space-4);

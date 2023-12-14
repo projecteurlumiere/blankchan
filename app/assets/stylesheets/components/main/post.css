@@ -22,16 +22,6 @@
   color: var(--color-text-secondary);
 }
 
-.post-admin-panel {
-  display: flex;
-  gap: var(--space-4);
-  margin: 4px 0;
-}
-
-.post-admin-panel * {
-  margin: 0;
-}
-
 .post h4 {
   margin: 0.5ch 0;
 }

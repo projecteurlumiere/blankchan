@@ -1,13 +1,19 @@
 <div class="heading">
-  <h2><%= link_to "/#{@board.name}/", board_path(@board.name) %></h2>
-  <h1><%= link_to "#{@board.full_name}", board_path(@board.name) %></h1>
-  <%= link_to "New post", new_board_topic_post_path(@board.name, @topic), class: "new-post-link",
+  <h2><%= link_to "/#{board.name}/", board_path(board.name) %></h2>
+  <h1><%= link_to "#{board.full_name}", board_path(board.name) %></h1>
+  <%= tag.h3 "Board is closed" if board.closed? %>
+  <%= tag.h3 "Topic is closed" if topic.closed? %>
+  <%= link_to "New post", new_board_topic_post_path(board.name, topic), class: "new-post-link",
                                                                           data: {
                                                                           turbo_frame: "new-post-form",
                                                                           action: "click->form#callToTop"
                                                                           } %>
   <%= turbo_frame_tag "new-post-form", class: "post-form" %>
-  <% if current_user&.moderator_role? || current_user&.admin_role? %>
-    <%= render partial: "shared/topic_admin_panel", locals: { board: @board, topic: @topic } %>
-  <% end %>
+  <nav class="inner-links top" aria-label="topic navigation">
+    <a href="#footing">To bottom</a>
+    <% if current_user.admin_role? %>
+      |
+      <%= render partial: "shared/topic_admin_panel", locals: { board: board, topic: topic, posts: posts }  %>
+    <% end %>
+  </nav>
 </div>

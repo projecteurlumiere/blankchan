@@ -3,6 +3,7 @@
 <%= tag.div class: div_class do %>
   <% if current_user&.admin_role? %>
     <%= button_to "Bless Post", board_topic_post_path(board.name, topic, post), method: :patch %>
+    /
   <% end %>
   <%= button_to "Delete Post", board_topic_post_path(board.name, topic, post), method: :delete %>
 <% end %>
