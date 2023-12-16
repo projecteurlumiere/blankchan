@@ -1,4 +1,4 @@
-<%= turbo_frame_tag "topic-body" do %>
+<%= turbo_frame_tag "topic-body", target: "_top" do %>
   <%= tag.div class: "topic", data: { controller: "lightbox", action: "click->lightbox#showPic" } do %>
     <%= render partial: "shared/post", collection: @posts, locals: { board: @board, topic: @topic }, cached: true %>
   <% end %>

@@ -1,0 +1,10 @@
+<div class="post-replies">
+  <% post.replies.each do |reply| %>
+    <span class="reply-link">
+      <%= link_to ">>#{reply.id}",  board_topic_path(
+                                    reply.topic.board.name,
+                                    reply.topic,
+                                    anchor: "post-id-#{reply.id}") %>
+    </span>
+  <% end %>
+</div>
