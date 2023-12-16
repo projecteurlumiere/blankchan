@@ -10,6 +10,7 @@ form > label {
   font-size: var(--space-4);
   margin-bottom: 4px;
   color: var(--color-text-secondary);
+  text-align: left;
 }
 
 input[type="text"],

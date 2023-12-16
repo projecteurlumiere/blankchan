@@ -1,5 +1,10 @@
 module Admin
   class TopicsController < ApplicationController
+    before_action :require_authentication
+    before_action :authorize_topic!
+
+    after_action :verify_authorized
+
     def show
       @topic = Topic.find(params[:id])
       @board = @topic.board
@@ -13,6 +18,12 @@ module Admin
           redirect_to board_topic_path(@board.name, @topic)
         end
       end
+    end
+
+    private
+
+    def authorize_topic!
+      authorize([:admin, @topic || Topic])
     end
   end
 end

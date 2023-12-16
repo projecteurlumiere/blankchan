@@ -1,10 +1,6 @@
 class PostPolicy < ApplicationPolicy
   attr_reader :user, :record
 
-  def show?
-    false
-  end
-
   def create?
     true
   end

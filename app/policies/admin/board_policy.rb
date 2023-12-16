@@ -1,8 +1,12 @@
 module Admin
-  class UserPolicy < ApplicationPolicy
+  class BoardPolicy < ApplicationPolicy
     attr_reader :user, :record
 
     def index?
+      user.admin_role?
+    end
+
+    def new?
       user.admin_role?
     end
 

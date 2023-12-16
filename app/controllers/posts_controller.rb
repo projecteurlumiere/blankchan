@@ -34,7 +34,6 @@ class PostsController < ApplicationController
           render turbo_stream: turbo_stream.replace("notifications", partial: "shared/notifications"), status: :unprocessable_entity
         end
       end
-
     end
   end
 

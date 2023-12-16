@@ -1,5 +1,10 @@
 module Admin
   class BoardsController < ApplicationController
+    before_action :require_authentication
+    before_action :authorize_board!
+
+    after_action :verify_authorized
+
     def index
       undesired_column_names = []
       @board_columns = Board.column_names.reject { |column| undesired_column_names.any?(column) }
@@ -69,6 +74,10 @@ module Admin
 
     def board_update_params
       params.require(:board).permit(:closed)
+    end
+
+    def authorize_board!
+      authorize([:admin, @board || Board])
     end
 
     def admin_boards_path_with_anchor

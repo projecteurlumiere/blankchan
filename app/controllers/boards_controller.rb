@@ -1,4 +1,8 @@
 class BoardsController < ApplicationController
+  before_action :authorize_board!
+
+  after_action :verify_authorized
+
   def index
     @boards_name_and_full_name = Board.order(:name).pluck(:name, :full_name)
   end
@@ -30,5 +34,9 @@ class BoardsController < ApplicationController
 
   def posts_its_images_and_their_variants
     { posts: [:images_attachments, { images_blobs: { variant_records: { image_attachment: :blob } } }] }
+  end
+
+  def authorize_board!
+    authorize(@board || Board)
   end
 end
