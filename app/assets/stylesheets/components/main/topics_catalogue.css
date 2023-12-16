@@ -1,11 +1,11 @@
-#boards-body > .topic {
+#boards-body > .topic-preview {
   border-bottom: solid 1px var(--color-divider);
 
   padding-bottom: var(--space-8);
   margin-bottom: var(--space-8);
 }
 
-#boards-body > .topic:last-child {
+#boards-body > .topic-preview:last-child {
   border-bottom: none;
 }
 

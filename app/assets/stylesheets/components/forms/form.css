@@ -19,7 +19,7 @@ textarea {
   border: 1px solid #bdbdbd;
   box-shadow: inset 0px 1px 4px rgba(100, 100, 100, 0.5);
   border-radius: 2px;
-  max-width: 325px;
+  min-width: Min(320px, 80vw);
 
   font-size: var(--space-4);
 }

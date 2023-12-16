@@ -60,6 +60,11 @@
 
 .post-text > p {
   margin: 0;
+  margin-bottom: var(--space-4);
+}
+
+.post-text > p:last-of-type {
+  margin-bottom: 0;
 }
 
 /* Go To vs Reply button */
