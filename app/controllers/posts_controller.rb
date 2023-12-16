@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :get_board_by_name!, only: %i[new create]
+  before_action :get_board_by_name!, only: %i[new create destroy]
 
   before_action :require_authentication, only: %i[update destroy]
   before_action :authorize_post!, except: %i[destroy]
@@ -39,7 +39,7 @@ class PostsController < ApplicationController
 
   # reserved for blessing only
   def update
-    @post = Post.find_by(id: params[:id])
+    @post = Post.find(params[:id])
 
     unless @post.blessed
       @post.text = @post.text + "\n\nThis post has been blessed"
@@ -54,21 +54,34 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    if @post = Post.find_by(id: params[:id])
-      authorize_post!
-      @post.destroy
-      @topic = Topic.find_by(id: params[:topic_id])
-      flash.notice = "Post deleted"
-      if @topic.posts.empty?
-        @topic.destroy
+    @post = Post.find(params[:id])
+    authorize_post!
+    @topic = Topic.find(params[:topic_id])
+
+    if @post.destroy
+      unless Topic.exists?(@topic.id)
         flash.notice = "Topic deleted"
         redirect_to board_path(@board.name) and return
       end
+      respond_to do |format|
+        format.html do
+          flash.notice = "Post deleted"
+          redirect_to board_topic_path(@board.name, @topic)
+        end
+        format.turbo_stream { flash.now.notice = "Post deleted" }
+      end
     else
-      flash.alert = "Post not found"
+      respond_to do |format|
+        format.html do
+          flash.alert = "Post not found"
+          redirect_to board_topic_path(params[:board_name], params[:topic_id])
+        end
+        format.turbo_stream do
+          flash.now.alert = "Post not found"
+          render turbo_stream: turbo_stream.replace("notifications", partial: "shared/notifications"), status: :unprocessable_entity
+        end
+      end
     end
-
-    redirect_to board_topic_path(params[:board_name], params[:topic_id])
   end
 
   private

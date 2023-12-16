@@ -73,6 +73,12 @@ td.actions button {
   margin: 0;
 }
 
+/* deleted post filler */
+
+.deleted {
+  margin-bottom: var(--space-4);
+}
+
 /* Topic admin panel */
 
 .topic-admin-panel {

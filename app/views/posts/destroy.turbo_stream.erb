@@ -1,0 +1,5 @@
+<%= turbo_stream.replace "post-id-#{@post.id}" do %>
+  <div class="deleted"><%= "Post #{@post.id} deleted" %></div>
+<% end %>
+
+<%= turbo_stream.replace("notifications", partial: "shared/notifications") %>

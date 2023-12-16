@@ -21,6 +21,8 @@ class Post < ApplicationRecord
   after_save :set_preview_posts
   after_save :touch_topic
 
+  after_destroy proc { topic.destroy }, if: proc { topic.posts.none? }
+
   validates :topic_id, presence: true
   validates :name, length: { maximum: 100 }
   validates :text, length: { minimum: 5, maximum: 2000 }
