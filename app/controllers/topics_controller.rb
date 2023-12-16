@@ -24,21 +24,23 @@ class TopicsController < ApplicationController
 
     if create_topic!
       flash.notice = "Thread created"
+      response.status = :see_other
 
       respond_to do |format|
         format.html { redirect_to board_topic_path(@board.name, @topic.id) }
         format.turbo_stream do
-          render turbo_stream: turbo_stream.action(:redirect, board_topic_path(@board.name, @topic.id)), status: :found
+          render turbo_stream: turbo_stream.action(:redirect, board_topic_path(@board.name, @topic.id))
         end
       end
     else
       flash.now.alert = "Thread was not created"
       @errors = @topic.errors.full_messages + @first_post.errors.full_messages
+      response.status = :unprocessable_entity
 
       respond_to do |format|
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :new }
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace("notifications", partial: "shared/notifications"), status: :unprocessable_entity
+          render turbo_stream: turbo_stream.replace("notifications", partial: "shared/notifications")
         end
       end
     end
@@ -47,13 +49,16 @@ class TopicsController < ApplicationController
   def update
     @topic = Topic.find(params[:id])
     if @topic.update(topic_update_params)
-      flash.notice = "Topic changes were made"
+      flash.now.notice = "Topic changes were made"
+      response.status = :see_other
+
       respond_to do |format|
         format.html { redirect_to board_topic_path(@board.name, @topic) }
         format.turbo_stream { render turbo_stream: turbo_stream.action(:redirect, board_topic_path(@board.name, @topic)) }
       end
     else
       flash.now.alert = "Something went wrong"
+      response.status = :unprocessable_entity
 
       respond_to do |format|
         format.html { render :show }

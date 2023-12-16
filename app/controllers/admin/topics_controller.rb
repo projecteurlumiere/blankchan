@@ -13,7 +13,7 @@ module Admin
       @post_ids = params[:post_ids].flatten
 
       respond_to do |format|
-        format.turbo_stream { render :show }
+        format.turbo_stream
         format.html do
           flash.alert = "Admin panels for posts require javascript to work"
           redirect_to board_topic_path(@board.name, @topic)
