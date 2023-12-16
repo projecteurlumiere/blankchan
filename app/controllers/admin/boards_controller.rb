@@ -29,35 +29,16 @@ module Admin
       end
     end
 
-    def close
+    def update
       @board = Board.find_by(name: params[:name])
-      @board.closed = true
-      if @board&.save
-        flash.notice = "Board closed"
+      if @board.update(board_update_params)
+        flash.notice = "Board changes were made"
         respond_to do |format|
           format.html { redirect_to admin_boards_path_with_anchor }
           format.turbo_stream { render turbo_stream: turbo_stream.action(:redirect, admin_boards_path_with_anchor) }
         end
       else
-        flash.now.alert = "Board could not be closed"
-        respond_to do |format|
-          format.html { render :index }
-          format.turbo_stream { render turbo_stream: turbo_stream.replace("notifications", partial: "shared/notifications") }
-        end
-      end
-    end
-
-    def open
-      @board = Board.find_by(name: params[:name])
-      @board.closed = false
-      if @board&.save
-        flash.notice = "Board opened"
-        respond_to do |format|
-          format.html { redirect_to admin_boards_path_with_anchor }
-          format.turbo_stream { render turbo_stream: turbo_stream.action(:redirect, admin_boards_path_with_anchor) }
-        end
-      else
-        flash.now.alert = "Board could not be opened"
+        flash.alert = "Something went wrong"
         respond_to do |format|
           format.html { render :index }
           format.turbo_stream { render turbo_stream: turbo_stream.replace("notifications", partial: "shared/notifications") }
@@ -84,6 +65,10 @@ module Admin
 
     def board_params
       params.require(:board).permit(:name, :full_name)
+    end
+
+    def board_update_params
+      params.require(:board).permit(:closed)
     end
 
     def admin_boards_path_with_anchor

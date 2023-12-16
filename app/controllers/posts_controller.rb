@@ -38,6 +38,7 @@ class PostsController < ApplicationController
     end
   end
 
+  # reserved for blessing only
   def update
     @post = Post.find_by(id: params[:id])
 

@@ -24,9 +24,6 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :users, only: %i[index new create update destroy]
-    resources :boards, only: %i[index new create destroy], param: :name
-
-    post "boards/close/:name", to: "boards#close", as: "close_board"
-    post "boards/open/:name", to: "boards#open", as: "open_board"
+    resources :boards, only: %i[index new create update destroy], param: :name
   end
 end
