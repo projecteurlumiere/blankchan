@@ -2,7 +2,7 @@
 <% div_class = %w[topic-admin-panel] unless div_class %>
 <% post_ids = posts.each_with_object([]) { |p, arr| arr << p.id } %>
 
-  <%= link_to "Manage posts", board_admin_show_topic_path(board.name, topic, params: { admin: true, "post_ids[]": post_ids }), data: {turbo_stream: true} %>
+  <%= link_to "Manage posts", admin_topic_path(topic, params: { "post_ids[]": post_ids }), data: { turbo_stream: true } %>
   |
   <% if topic.closed? %>
     <%= button_to "Open Topic", board_topic_path(board.name, topic), method: :patch, params: { topic: { closed: false } } %>

@@ -17,14 +17,6 @@ class TopicPolicy < ApplicationPolicy
     admin_or_supervisor?
   end
 
-  def open?
-    admin_or_supervisor?
-  end
-
-  def close?
-    admin_or_supervisor?
-  end
-
   def show_admin?
     admin_or_supervisor?
   end

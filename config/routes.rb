@@ -7,6 +7,12 @@ Rails.application.routes.draw do
   resource :session, only: %i[new create destroy]
   resource :passcode, only: %i[new create]
 
+  namespace :admin do
+    resources :users, only: %i[index new create update destroy]
+    resources :boards, only: %i[index new create update destroy], param: :name
+    resources :threads, only: %i[show], as: :topics, controller: :topics
+  end
+
   resources :boards,
             path: '/',
             only: %i[show],
@@ -20,8 +26,5 @@ Rails.application.routes.draw do
     end
   end
 
-  namespace :admin do
-    resources :users, only: %i[index new create update destroy]
-    resources :boards, only: %i[index new create update destroy], param: :name
-  end
+
 end
