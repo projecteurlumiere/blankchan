@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :get_board_by_name!, only: %i[new create destroy]
+  before_action :get_board_by_name!, only: %i[new create update destroy]
 
   before_action :require_authentication, only: %i[update destroy]
   before_action :authorize_post!, except: %i[destroy]
@@ -27,7 +27,7 @@ class PostsController < ApplicationController
       flash.now.alert = "Could not create post"
       @errors = @post.errors.full_messages
 
-      @posts = @topic.posts.all
+      # @posts = @topic.posts.all
       respond_to do |format|
         format.html { render :new, status: :unprocessable_entity }
         format.turbo_stream do
@@ -40,17 +40,33 @@ class PostsController < ApplicationController
   # reserved for blessing only
   def update
     @post = Post.find(params[:id])
+    @topic = Topic.find(params[:topic_id])
 
-    unless @post.blessed
+    unless @post.blessed?
       @post.text = @post.text + "\n\nThis post has been blessed"
       @post.blessed = true
       @post.save!
       flash.notice = "Post blessed"
+      respond_to do |format|
+        format.html do
+          redirect_to board_topic_path(@board.name, @topic)
+        end
+        format.turbo_stream
+      end
     else
-      flash.alert = "Post has already been blessed!"
-    end
 
-    redirect_back fallback_location: board_topic_path(params[:board_name], params[:topic_id])
+      respond_to do |format|
+        format.html do
+          flash.alert = "Post has already been blessed!"
+          redirect_to board_topic_path(@board.name, @topic), status: :see_other
+        end
+
+        format.turbo_stream do
+          flash.now.alert = "Post has already been blessed!"
+          render turbo_stream: turbo_stream.replace("notifications", partial: "shared/notifications"), status: :unprocessable_entity
+        end
+      end
+    end
   end
 
   def destroy
@@ -66,15 +82,16 @@ class PostsController < ApplicationController
       respond_to do |format|
         format.html do
           flash.notice = "Post deleted"
-          redirect_to board_topic_path(@board.name, @topic)
+          redirect_to board_topic_path(@board.name, @topic), status: :see_other
         end
         format.turbo_stream { flash.now.notice = "Post deleted" }
       end
     else
+
       respond_to do |format|
         format.html do
           flash.alert = "Post not found"
-          redirect_to board_topic_path(params[:board_name], params[:topic_id])
+          redirect_to board_topic_path(params[:board_name], params[:topic_id]), status: :see_other
         end
         format.turbo_stream do
           flash.now.alert = "Post not found"

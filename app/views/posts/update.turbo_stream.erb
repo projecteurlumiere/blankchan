@@ -1,0 +1,8 @@
+<%= turbo_stream.replace "post-id-#{@post.id}" do %>
+  <%= render partial: "shared/post", locals: { board: @board, topic: @topic, post: @post, iteration: @topic.posts.order(:id).pluck(:id).index(@post.id) } %>
+<% end %>
+
+<%# for some reason this bit doesn't work: it wouldn't update streamed dom element %>
+<%= turbo_stream.after_all("post-id-#{@post.id} .post-metadata", partial: "shared/post_admin_panel", locals: { board: @board, topic: @topic, post: @post.id })  %>
+
+<%= turbo_stream.replace("notifications", partial: "shared/notifications") %>

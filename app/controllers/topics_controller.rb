@@ -54,6 +54,7 @@ class TopicsController < ApplicationController
       end
     else
       flash.now.alert = "Something went wrong"
+
       respond_to do |format|
         format.html { render :show }
         format.turbo_stream { render turbo_stream: turbo_stream.replace("notifications", partial: "shared/notifications") }
@@ -62,14 +63,14 @@ class TopicsController < ApplicationController
   end
 
   def destroy
-    if @topic = Topic.find_by(id: params[:id])
-      authorize_topic!
-      @topic.destroy
+    @topic = Topic.find(params[:id])
+    authorize_topic!
 
+    if @topic.destroy
       flash.notice = "Topic deleted"
-      redirect_to board_path(params[:board_name]), status: 303
+      redirect_to board_path(params[:board_name]), status: :see_other
     else
-      flash.now.alert = "Topic not found"
+      flash.now.alert = "Something went wrong"
       render board_path(params[:board_name]), status: :unprocessable_entity
     end
   end

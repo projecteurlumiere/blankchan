@@ -22,6 +22,7 @@ class Post < ApplicationRecord
   after_save :touch_topic
 
   after_destroy proc { topic.destroy }, if: proc { topic.posts.none? }
+  after_destroy :touch_siblings, if: proc { topic.posts.any? }
 
   validates :topic_id, presence: true
   validates :name, length: { maximum: 100 }
@@ -87,5 +88,9 @@ class Post < ApplicationRecord
 
   def topic_open
     errors.add(:topic, "must not be closed") if topic.closed?
+  end
+
+  def touch_siblings
+    topic.posts.touch_all
   end
 end
