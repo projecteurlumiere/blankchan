@@ -1,5 +1,6 @@
 <%# Condition must be put outside (if used) %>
 <% div_class = %w[topic-admin-panel] unless div_class %>
+
 <% post_ids = posts.each_with_object([]) { |p, arr| arr << p.id } %>
 
   <%= link_to "Manage posts", admin_topic_path(topic, params: { "post_ids[]": post_ids }), data: { turbo_stream: true } %>

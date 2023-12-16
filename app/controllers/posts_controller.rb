@@ -62,12 +62,13 @@ class PostsController < ApplicationController
       if @topic.posts.empty?
         @topic.destroy
         flash.notice = "Topic deleted"
+        redirect_to board_path(@board.name) and return
       end
     else
       flash.alert = "Post not found"
     end
 
-    redirect_back fallback_location: board_topic_path(params[:board_name], params[:topic_id])
+    redirect_to board_topic_path(params[:board_name], params[:topic_id])
   end
 
   private
