@@ -10,7 +10,7 @@ class TopicPolicy < ApplicationPolicy
   end
 
   def update?
-    false
+    admin_or_supervisor?
   end
 
   def destroy?

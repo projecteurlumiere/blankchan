@@ -5,9 +5,9 @@
   <%= link_to "Manage posts", board_admin_show_topic_path(board.name, topic, params: { admin: true, "post_ids[]": post_ids }), data: {turbo_stream: true} %>
   |
   <% if topic.closed? %>
-    <%= button_to "Open Topic", board_open_topic_path(board.name, topic) %>
+    <%= button_to "Open Topic", board_topic_path(board.name, topic), method: :patch, params: { topic: { closed: false } } %>
   <% else %>
-    <%= button_to "Close Topic", board_close_topic_path(board.name, topic) %>
+    <%= button_to "Close Topic", board_topic_path(board.name, topic), method: :patch, params: { topic: { closed: true } } %>
   <% end %>
   |
   <%= button_to "Delete Topic", board_topic_path(board.name, topic), method: :delete, data: { turbo_confirm: "Are you sure you want to delete this topic?"} %>

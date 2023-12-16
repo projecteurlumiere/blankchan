@@ -44,6 +44,23 @@ class TopicsController < ApplicationController
     end
   end
 
+  def update
+    @topic = Topic.find(params[:id])
+    if @topic.update(topic_update_params)
+      flash.notice = "Topic changes were made"
+      respond_to do |format|
+        format.html { redirect_to board_topic_path(@board.name, @topic) }
+        format.turbo_stream { render turbo_stream: turbo_stream.action(:redirect, board_topic_path(@board.name, @topic)) }
+      end
+    else
+      flash.now.alert = "Something went wrong"
+      respond_to do |format|
+        format.html { render :show }
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("notifications", partial: "shared/notifications") }
+      end
+    end
+  end
+
   def show_admin
     @topic = Topic.find(params[:id])
 
@@ -58,41 +75,41 @@ class TopicsController < ApplicationController
     end
   end
 
-  def close
-    @topic = Topic.find(params[:id])
-    @topic.closed = true
-    if @topic.save
-      flash.notice = "Topic closed"
-      respond_to do |format|
-        format.html { redirect_to board_topic_path(@board.name, @topic) }
-        format.turbo_stream { render turbo_stream: turbo_stream.action(:redirect, board_topic_path(@board.name, @topic)) }
-      end
-    else
-      flash.now.alert = "Topic could not be closed"
-      respond_to do |format|
-        format.html { render :show }
-        format.turbo_stream { render turbo_stream: turbo_stream.replace("notifications", partial: "shared/notifications") }
-      end
-    end
-  end
+  # def close
+  #   @topic = Topic.find(params[:id])
+  #   @topic.closed = true
+  #   if @topic.save
+      # flash.notice = "Topic closed"
+      # respond_to do |format|
+      #   format.html { redirect_to board_topic_path(@board.name, @topic) }
+      #   format.turbo_stream { render turbo_stream: turbo_stream.action(:redirect, board_topic_path(@board.name, @topic)) }
+      # end
+  #   else
+    #   flash.now.alert = "Topic could not be closed"
+    #   respond_to do |format|
+    #     format.html { render :show }
+    #     format.turbo_stream { render turbo_stream: turbo_stream.replace("notifications", partial: "shared/notifications") }
+    #   end
+    # end
+  # end
 
-  def open
-    @topic = Topic.find(params[:id])
-    @topic.closed = false
-    if @topic.save
-      flash.notice = "Topic opened"
-      respond_to do |format|
-        format.html { redirect_to board_topic_path(@board.name, @topic) }
-        format.turbo_stream { render turbo_stream: turbo_stream.action(:redirect, board_topic_path(@board.name, @topic)) }
-      end
-    else
-      flash.now.alert = "Topic could not be opened"
-      respond_to do |format|
-        format.html { render :show }
-        format.turbo_stream { render turbo_stream: turbo_stream.replace("notifications", partial: "shared/notifications") }
-      end
-    end
-  end
+  # def open
+  #   @topic = Topic.find(params[:id])
+  #   @topic.closed = false
+  #   if @topic.save
+  #     flash.notice = "Topic opened"
+  #     respond_to do |format|
+  #       format.html { redirect_to board_topic_path(@board.name, @topic) }
+  #       format.turbo_stream { render turbo_stream: turbo_stream.action(:redirect, board_topic_path(@board.name, @topic)) }
+  #     end
+  #   else
+  #     flash.now.alert = "Topic could not be opened"
+  #     respond_to do |format|
+  #       format.html { render :show }
+  #       format.turbo_stream { render turbo_stream: turbo_stream.replace("notifications", partial: "shared/notifications") }
+  #     end
+  #   end
+  # end
 
   def destroy
     if @topic = Topic.find_by(id: params[:id])
@@ -111,6 +128,10 @@ class TopicsController < ApplicationController
 
   def topic_params
     params.require(:topic).permit(:board_id, post_attributes: [:name, :text, { images: [] }])
+  end
+
+  def topic_update_params
+    params.require(:topic).permit(:closed)
   end
 
   def create_topic!

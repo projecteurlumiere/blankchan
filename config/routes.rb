@@ -11,11 +11,9 @@ Rails.application.routes.draw do
             path: '/',
             only: %i[show],
             param: :name do
-    post "threads/close/:id", to: "topics#close", as: "close_topic"
-    post "threads/open/:id", to: "topics#open", as: "open_topic"
     get "threads/show_admin/:id", to: "topics#show_admin", as: "admin_show_topic"
     resources :threads,
-              only: %i[show new create destroy],
+              only: %i[show new create update destroy],
               as: :topics,
               controller: :topics do
       resources :posts, only: %i[new create update destroy]
