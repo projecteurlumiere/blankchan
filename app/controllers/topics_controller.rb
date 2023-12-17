@@ -2,7 +2,7 @@ class TopicsController < ApplicationController
   before_action :get_board_by_name!, except: %i[destroy]
 
   before_action :require_authentication, only: %i[destroy]
-  before_action :authorize_topic!, except: %i[destroy]
+  before_action :authorize_topic!, except: %i[update destroy]
 
   after_action :verify_authorized
 
@@ -48,6 +48,8 @@ class TopicsController < ApplicationController
 
   def update
     @topic = Topic.find(params[:id])
+    authorize_topic!
+
     if @topic.update(topic_update_params)
       flash.notice = "Topic changes were made"
 
