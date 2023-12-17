@@ -19,10 +19,11 @@ module Admin
       if @new_board.save
         flash.notice = "Board created"
 
-        response.status = :see_other
         respond_to do |format|
           format.html { redirect_to board_path(@new_board.name) }
-          format.turbo_stream { render turbo_stream: turbo_stream.action(:redirect, board_path(@new_board.name)) }
+          format.turbo_stream do
+            render turbo_stream: turbo_stream.action(:redirect, board_path(@new_board.name)), status: :see_other
+          end
         end
       else
         flash.now.alert = "Board has not been created"
@@ -38,11 +39,12 @@ module Admin
       @board = Board.find_by(name: params[:name])
       if @board.update(board_update_params)
         flash.notice = "Board changes were made"
-        response.status = :see_other
 
         respond_to do |format|
           format.html { redirect_to admin_boards_path_with_anchor }
-          format.turbo_stream { render turbo_stream: turbo_stream.action(:redirect, admin_boards_path_with_anchor) }
+          format.turbo_stream do
+            render turbo_stream: turbo_stream.action(:redirect, admin_boards_path_with_anchor), status: :see_other
+          end
         end
       else
         flash.alert = "Something went wrong"
@@ -60,7 +62,7 @@ module Admin
 
       if @board.destroy
         flash.notice = "Board deleted"
-        redirect_to admin_boards_path, status: :see_other
+        redirect_to admin_boards_path
       else
         flash.now.alert = "Board could not be deleted"
         response.status = :unprocessable_entity

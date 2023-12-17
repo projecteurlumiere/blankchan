@@ -29,7 +29,7 @@ class TopicsController < ApplicationController
       respond_to do |format|
         format.html { redirect_to board_topic_path(@board.name, @topic.id) }
         format.turbo_stream do
-          render turbo_stream: turbo_stream.action(:redirect, board_topic_path(@board.name, @topic.id))
+          render turbo_stream: turbo_stream.action(:redirect, board_topic_path(@board.name, @topic.id)), status: :see_other
         end
       end
     else
@@ -49,12 +49,13 @@ class TopicsController < ApplicationController
   def update
     @topic = Topic.find(params[:id])
     if @topic.update(topic_update_params)
-      flash.now.notice = "Topic changes were made"
-      response.status = :see_other
+      flash.notice = "Topic changes were made"
 
       respond_to do |format|
         format.html { redirect_to board_topic_path(@board.name, @topic) }
-        format.turbo_stream { render turbo_stream: turbo_stream.action(:redirect, board_topic_path(@board.name, @topic)) }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.action(:redirect, board_topic_path(@board.name, @topic)), status: :see_other
+        end
       end
     else
       flash.now.alert = "Something went wrong"
@@ -73,7 +74,7 @@ class TopicsController < ApplicationController
 
     if @topic.destroy
       flash.notice = "Topic deleted"
-      redirect_to board_path(params[:board_name]), status: :see_other
+      redirect_to board_path(params[:board_name])
     else
       flash.now.alert = "Something went wrong"
       render board_path(params[:board_name]), status: :unprocessable_entity

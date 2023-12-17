@@ -5,7 +5,7 @@ module Admin
     after_action :verify_authorized
 
     def index
-      undesired_column_names = ["passcode_digest", "remember_token_digest" ]
+      undesired_column_names = ["passcode_digest", "remember_token_digest"]
       @user_columns = User.column_names.reject { |column| undesired_column_names.any?(column) }
 
       @users = users_by_role || (redirect_to admin_users_path(params: { by_role: "all" }))
@@ -19,18 +19,17 @@ module Admin
         flash.notice = "User successfully created"
         flash.notice += " in case you didn't recieve (and this is dev env) an email here is your passcode: #{@user.passcode}" if Rails.env.development?
         PasscodeMailer.with(email: params[:user][:email], passcode: @user.passcode).issue_passcode_email.deliver_later
-        response.status = :see_other
 
         respond_to do |format|
           format.html { redirect_to admin_users_path_with_anchor }
-          format.turbo_stream { render turbo_stream: turbo_stream.action(:redirect, admin_users_path_with_anchor) }
+          format.turbo_stream { render turbo_stream: turbo_stream.action(:redirect, admin_users_path_with_anchor), status: :see_other }
         end
       else
         flash.now.alert = "Something went wrong"
         response.status = :unprocessable_entity
 
         respond_to do |format|
-          format.html { render :new, status: :unprocessable_entity }
+          format.html { render :new }
           format.turbo_stream { render turbo_stream: turbo_stream.replace("notifications", partial: "shared/notifications") }
         end
       end
@@ -48,8 +47,8 @@ module Admin
       end
 
       respond_to do |format|
-        format.html { redirect_to admin_users_path_with_anchor, status: :see_other }
-        format.turbo_stream { render turbo_stream: turbo_stream.action(:redirect, admin_users_path_with_anchor) }
+        format.html { redirect_to admin_users_path_with_anchor }
+        format.turbo_stream { render turbo_stream: turbo_stream.action(:redirect, admin_users_path_with_anchor), status: :see_other }
       end
     end
 
@@ -57,7 +56,7 @@ module Admin
       @user = User.find(params[:id])
       if !@user.admin_role? && @user.destroy
         flash[:success] = "User was successfully deleted."
-        redirect_to admin_users_path, status: :see_other
+        redirect_to admin_users_path
       else
         flash[:error] = "Something went wrong"
         redirect_to admin_users_path(anchor: "user-id-#{@user.id}"), status: :unprocessable_entity

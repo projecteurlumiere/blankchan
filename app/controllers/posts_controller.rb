@@ -19,18 +19,18 @@ class PostsController < ApplicationController
 
     if @post.save
       flash.notice = "Post created successfully"
-      response.status = :see_other
 
       respond_to do |format|
         format.html { redirect_to post_with_anchor_path }
-        format.turbo_stream { render turbo_stream: turbo_stream.action(:redirect, post_with_anchor_path) }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.action(:redirect, post_with_anchor_path), status: :see_other
+        end
       end
     else
       flash.now.alert = "Could not create post"
       @errors = @post.errors.full_messages
       response.status = :unprocessable_entity
 
-      # @posts = @topic.posts.all
       respond_to do |format|
         format.html { render :new }
         format.turbo_stream do
@@ -50,23 +50,22 @@ class PostsController < ApplicationController
       @post.blessed = true
       @post.save!
 
-
       respond_to do |format|
         format.html do
           flash.notice = "Post blessed"
-          redirect_to board_topic_path(@board.name, @topic), status: :see_other
+          redirect_to board_topic_path(@board.name, @topic)
         end
         format.turbo_stream do
           flash.now.notice = "Post blessed"
-          response.status = :ok
         end
       end
+
     else
 
       respond_to do |format|
         format.html do
           flash.alert = "Post has already been blessed!"
-          redirect_to board_topic_path(@board.name, @topic), status: :see_other
+          redirect_to board_topic_path(@board.name, @topic)
         end
 
         format.turbo_stream do
@@ -85,15 +84,14 @@ class PostsController < ApplicationController
     if @post.destroy
       unless Topic.exists?(@topic.id)
         flash.notice = "Topic deleted"
-        redirect_to(board_path(@board.name), status: :see_other) and return
+        redirect_to(board_path(@board.name)) and return
       end
       respond_to do |format|
         format.html do
           flash.notice = "Post deleted"
-          redirect_to board_topic_path(@board.name, @topic), status: :see_other
+          redirect_to board_topic_path(@board.name, @topic)
         end
         format.turbo_stream do
-          response.status = :ok
           flash.now.notice = "Post deleted"
         end
       end
@@ -102,7 +100,7 @@ class PostsController < ApplicationController
       respond_to do |format|
         format.html do
           flash.alert = "Post not found"
-          redirect_to board_topic_path(params[:board_name], params[:topic_id]), status: :see_other
+          redirect_to board_topic_path(params[:board_name], params[:topic_id])
         end
         format.turbo_stream do
           flash.now.alert = "Post not found"
