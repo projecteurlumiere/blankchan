@@ -57,6 +57,10 @@
   gap: var(--space-1);
 }
 
+td.deleted {
+  text-align: center;
+}
+
 td.actions button {
   width: 100px;
 }

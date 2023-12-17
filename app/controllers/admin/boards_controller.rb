@@ -61,8 +61,15 @@ module Admin
       @board = Board.find_by(name: params[:name])
 
       if @board.destroy
-        flash.notice = "Board deleted"
-        redirect_to admin_boards_path
+        respond_to do |format|
+          format.html do
+            flash.notice = "Board deleted"
+            redirect_to admin_boards_path
+          end
+          format.turbo_stream do
+            flash.now.notice = "Board deleted"
+          end
+        end
       else
         flash.now.alert = "Board could not be deleted"
         response.status = :unprocessable_entity
