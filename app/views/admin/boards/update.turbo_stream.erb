@@ -1,5 +1,6 @@
 <%= turbo_stream.replace "board-id-#{@board.id}" do %>
-<tr><td colspan="6" class="deleted">Board deleted</td></tr>
+<%= render partial: "board", locals: { board: @board, board_columns: @board_columns } %>
 <% end %>
+
 
 <%= turbo_stream.replace("notifications", partial: "shared/notifications") %>

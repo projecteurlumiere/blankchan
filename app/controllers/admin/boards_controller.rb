@@ -36,14 +36,20 @@ module Admin
     end
 
     def update
+      undesired_column_names = []
+      @board_columns = Board.column_names.reject { |column| undesired_column_names.any?(column) }
+
       @board = Board.find_by(name: params[:name])
       if @board.update(board_update_params)
-        flash.notice = "Board changes were made"
 
         respond_to do |format|
-          format.html { redirect_to admin_boards_path_with_anchor }
+          format.html do
+            flash.notice = "Board changes were made"
+            redirect_to admin_boards_path_with_anchor
+          end
           format.turbo_stream do
-            render turbo_stream: turbo_stream.action(:redirect, admin_boards_path_with_anchor), status: :see_other
+            flash.now.notice = "Board changes were made"
+            @board.reload
           end
         end
       else
