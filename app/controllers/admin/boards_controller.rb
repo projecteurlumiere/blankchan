@@ -7,7 +7,6 @@ module Admin
     after_action :verify_authorized
 
     def index
-
       @boards = Board.all.order(:id)
     end
 

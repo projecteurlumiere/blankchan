@@ -3,9 +3,8 @@
     <% next if user_columns.none?(key) %>
     <%= tag.td value, class: key %>
   <% end %>
-
   <% if user.moderator_role? %>
-    <%= tag.td user.moderator.supervised_board %>
+    <%= render partial: "supervised_board_form", locals: { user: user } %>
   <% elsif board_column %>
     <%= tag.td %>
   <% end %>

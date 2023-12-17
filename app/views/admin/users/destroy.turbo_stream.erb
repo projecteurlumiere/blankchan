@@ -1,0 +1,4 @@
+<%= turbo_stream.replace "user-id-#{@user.id}" do %>
+<tr><td colspan="6" class="deleted"><%= "User ##{@user.id} deleted" %></td></tr>
+<% end %>
+<%= turbo_stream.replace("notifications", partial: "shared/notifications") %>

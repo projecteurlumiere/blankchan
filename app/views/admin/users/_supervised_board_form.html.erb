@@ -1,0 +1,26 @@
+<%= tag.td do %>
+  <%= form_with model: user.moderator, url: admin_user_path(user.id), method: :patch, id: "moderator-#{user.moderator.id}-form" do |form| %>
+    <%= form.hidden_field :supervised_board, value: "#{user.moderator.supervised_board}" %>
+    <%= form.submit "#{user.moderator.supervised_board}", class: "supervised-board" %>
+  <% end %>
+
+  <script>
+    (() => {
+      let formQuery = "#moderator-<%= user.moderator.id%>-form";
+
+      let form = document.querySelector(formQuery);
+      let formField = document.querySelector(`${formQuery} #moderator_supervised_board`);
+      let formInput = document.querySelector(`${formQuery} input[type="submit"]`);
+
+
+      formInput.onclick = (e) => {
+        console.log("clicked!");
+        if (formField.value == formInput.value) {
+          e.preventDefault();
+          formField.value = prompt("Enter existing board's name");
+          formInput.click();
+        }
+      }
+    })();
+  </script>
+<% end %>

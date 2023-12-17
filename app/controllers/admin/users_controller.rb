@@ -38,12 +38,20 @@ module Admin
 
     def update
       @user = User.find(params[:id])
+      @errors = nil
 
       case params[:directive]
       when "promote to moderator"
         promote_to_moderator
       when "dismiss moderator"
         dismiss_moderator
+      else
+        if @user.moderator.update(moderator_update_params)
+          flash.notice = "Moderator updated"
+        else
+          flash.alert = "Moderator could not be updated"
+          flash.notice = @user.moderator.errors.full_messages.join(" ")
+        end
       end
 
       respond_to do |format|
@@ -55,15 +63,26 @@ module Admin
     def destroy
       @user = User.find(params[:id])
       if !@user.admin_role? && @user.destroy
-        flash[:success] = "User was successfully deleted."
-        redirect_to admin_users_path
+        respond_to do |format|
+          format.html do
+            flash.notice = "User was successfully deleted"
+            redirect_to admin_users_path
+          end
+          format.turbo_stream do
+            flash.now.notice = "User was successfully deleted"
+          end
+        end
       else
-        flash[:error] = "Something went wrong"
+        flash.alert = "Something went wrong"
         redirect_to admin_users_path(anchor: "user-id-#{@user.id}"), status: :unprocessable_entity
       end
     end
 
     private
+
+    def moderator_update_params
+      params.require(:moderator).permit(:supervised_board)
+    end
 
     def users_by_role
       case params[:by_role]

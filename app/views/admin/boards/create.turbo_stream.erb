@@ -1,5 +1,0 @@
-<%= turbo_stream.append_all(".admin_table > tbody") do %>
-  <%= render partial: "board", locals: { board: @board, board_columns: @board_columns } %>
-<% end %>
-
-<%= turbo_stream.replace("notifications", partial: "shared/notifications") %>

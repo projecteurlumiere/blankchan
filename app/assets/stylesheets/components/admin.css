@@ -61,6 +61,11 @@ td.deleted {
   text-align: center;
 }
 
+td input.supervised-board {
+  all: unset !important;
+  cursor: pointer !important;
+}
+
 td.actions button {
   width: 100px;
 }
