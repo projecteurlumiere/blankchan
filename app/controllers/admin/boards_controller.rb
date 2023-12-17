@@ -2,12 +2,11 @@ module Admin
   class BoardsController < ApplicationController
     before_action :require_authentication
     before_action :authorize_board!
+    before_action :define_column_names, only: %i[index create update]
 
     after_action :verify_authorized
 
     def index
-      undesired_column_names = []
-      @board_columns = Board.column_names.reject { |column| undesired_column_names.any?(column) }
 
       @boards = Board.all.order(:id)
     end
@@ -15,14 +14,16 @@ module Admin
     def new; end
 
     def create
-      @new_board = Board.new(board_params)
-      if @new_board.save
+      @board = Board.new(board_params)
+      if @board.save
         flash.notice = "Board created"
 
         respond_to do |format|
-          format.html { redirect_to board_path(@new_board.name) }
+          format.html do
+            redirect_to board_path(admin_boards_path_with_anchor)
+          end
           format.turbo_stream do
-            render turbo_stream: turbo_stream.action(:redirect, board_path(@new_board.name)), status: :see_other
+            render turbo_stream: turbo_stream.action(:redirect, admin_boards_path_with_anchor), status: :see_other
           end
         end
       else
@@ -36,9 +37,6 @@ module Admin
     end
 
     def update
-      undesired_column_names = []
-      @board_columns = Board.column_names.reject { |column| undesired_column_names.any?(column) }
-
       @board = Board.find_by(name: params[:name])
       if @board.update(board_update_params)
 
@@ -102,7 +100,12 @@ module Admin
     end
 
     def admin_boards_path_with_anchor
-      admin_boards_path(params: { anchor: "board-id-#{@board.id}" })
+      admin_boards_path(anchor: "board-id-#{@board.id}")
+    end
+
+    def define_column_names
+      undesired_column_names = []
+      @board_columns = Board.column_names.reject { |column| undesired_column_names.any?(column) }
     end
   end
 end
