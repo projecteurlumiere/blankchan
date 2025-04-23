@@ -1,16 +1,57 @@
 # README
 
-This toy imageboard is my first time playing with the Rails framework.
+This toy imageboard is my first time playing with the Ruby on Rails.
 The name comes from it having no styles and being all white and blank
 before I cloned one of the existing designs.
 
-It has basic functions of creating posts and topics, attaching images, replying to posts, and so on.
-It also has some form of (custom) authentication in place, and admin & moderator roles.
+While it works, it's never been supposed to be deployed.
+
+It has basic forum functions: 
+creating posts and topics, attaching images, replying to posts, text formatting, user roles, and so on. 
+Some sprinkles of Hotwire JS deliver user expiernce comparable to the existing imageboards: 
+users can do infinite scroll for new topics and magnify attached images by clicking on them.
+
+Blankchan also features a form of (custom) authentication for admin & moderator roles as well as for "premium" users.
 
 With aggressive caching of single posts, it has acceptable performance when cache is warmed up.
 While first visits to dev seeded pages are going to be fairly slow,
 the subsequent visits to the same updated page tend to be quick enough.
 Relying on CDN for image load would improve the performance considerably.
+
+# Screenshots
+<details>
+  <summary>
+    Posts (mobile layout)
+  </summary>
+  
+  ![Posts](https://github.com/user-attachments/assets/87673f13-2295-4c32-8dc9-bfe42a088bc4)
+
+</details>
+<details>
+  <summary>
+     Topics (desktop layout)
+  </summary>
+
+  ![Topics](https://github.com/user-attachments/assets/4d91f27f-2983-4b3a-bb32-8d7880cab245)
+
+</details>
+<details>
+  <summary>
+    Foldable new post form; design is as old school as the genre suggests
+  </summary>
+  
+  ![Admin dashboard](https://github.com/user-attachments/assets/d844ac66-f519-4ab6-9d85-f9030305e66b)
+
+</details>
+
+<details>
+  <summary>
+    One of the two grim admin dashboards
+  </summary>
+
+  ![Admin dashboard](https://github.com/user-attachments/assets/e6ac9994-b6ce-4215-8c53-98a487c1ba53)
+
+</details>
 
 ## Dependencies
 - Ruby 3.2.2
