@@ -1,7 +1,7 @@
 # README
 
 This toy imageboard is my first time playing with the Ruby on Rails.
-The name comes from it having no styles and being all white and blank
+The name **Blankchan** comes from it having no styles and being all white and blank
 before I cloned one of the existing designs.
 
 While it works, it's never been supposed to be deployed.
@@ -9,7 +9,7 @@ While it works, it's never been supposed to be deployed.
 It has basic forum functions: 
 creating posts and topics, attaching images, replying to posts, text formatting, user roles, and so on. 
 Some sprinkles of Hotwire JS deliver user expiernce comparable to the existing imageboards: 
-users can do infinite scroll for new topics and magnify attached images by clicking on them.
+users can do infinite scroll for new topics and magnify attached images by clicking on them and scrolling to zoom in or out.
 
 Blankchan also features a form of (custom) authentication for admin & moderator roles as well as for "premium" users.
 
@@ -43,7 +43,6 @@ Relying on CDN for image load would improve the performance considerably.
   ![Admin dashboard](https://github.com/user-attachments/assets/d844ac66-f519-4ab6-9d85-f9030305e66b)
 
 </details>
-
 <details>
   <summary>
     One of the two grim admin dashboards
